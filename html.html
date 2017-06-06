@@ -10,8 +10,13 @@
 <!--为搜索引擎定义关键词 name-content-->
 <meta name="keywords" content="HTML, CSS, XML, XHTML, JavaScript">
 <base href="www.runoob.com"/>
+<style type="text/css">
+body {backgroud-color:yellow;}
+p {color:blue;}
+</style>
 </head>
 <body>
+<div style="background-color:black">
 <!--body中的内容才是可见页面-->
 <p>head元素包含了所有头部标签元素，如title,style,meta,link,script,noscript,base</p>
 <p>title 元素:<br/>
@@ -23,15 +28,18 @@
 标签提供了元数据.元数据也不显示在页面上，但会被浏览器解析。<br/>
 META 元素通常用于指定网页的描述，关键词，文件的最后修改时间，作者，和其他元数据。<br/>
 元数据可以使用于浏览器（如何显示内容或重新加载页面），搜索引擎（关键词），或其他Web服务。</p>
-<p>link宣言文档与外部资源间的关系,常用于链接到样式表</p>
+<p>link定义资源引用地址,常用于链接到样式表</p>
 <p>script用于加载脚本文件</p>
 <p>在head里使用base标签，定义页面所有链接的默认地址</p>
+</div>
+<div style="background-color:red; width=100; float:left">
 <h1>h1</h1>
 <h2>h2</h2>
 <h3>h3</h3>
 <h4>h4</h4>
 <h5>h5</h5>
 <h6>h6</h6>
+</div>
 <p>所有空格都解释为一个空格, 包括tab， 换行               等         </p>
 
 <p>段落：文档后缀.html .htm两个没有区别. .htm来源于老的文件格式</p>
@@ -45,7 +53,6 @@ target="_blank"使得在新窗口打开文档</p>
 <a href="#tips">用#tips访问上面的书签</a>
 <p>tip:请始终将正斜杠添加到子文件夹。假如这样书写链接：href="http://www.runoob.com/html"，就会向服务器产生两次 HTTP 请求。这是因为服务器会添加正斜杠到这个地址，然后创建一个新的请求，就像这样：href="http://www.runoob.com/html/"</p>
 <br/>
-<img src="./1.jpg" width="400"/>
 <p>HTML文档由HTML元素定义。HTML元素由开始标签开始，由结束 标签终止。大多数HTML元素拥有属性</p>
 <br/>
 <hr/>
@@ -59,5 +66,108 @@ target="_blank"使得在新窗口打开文档</p>
 <sup>sup</sup>
 <ins>ins</ins>
 <del>del</del>
+<!--img的alt属性用来替换当图片无法载入时显示的文字-->
+<!--usemap 把img定义成图像映射，值为map的name值-->
+<img src="./1.jpg" alt="alt img" width="400" usemap="#mapping"/>
+<!--map图像映射指带有可点击区域的一幅图像-->
+<map name="mapping">
+  <!--area定义图像地图中的可点击区域-->
+  <area shape="rect" coords="200,200,282,326" href="sun.htm">
+  <area shape="circle" coords="290,258,203" href="mercur.htm">
+  <area shape="circle" coords="324,258,208" href="venus.htm">
+</map>
+<!--thead, tbody, tfoot不改变表布局，只是做一个分区表示-->
+<table border="1">
+	<caption>表名字</caption>
+	<thead style="color:red">
+	<tr>
+		<th>header 1</th>
+		<th>header 2</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>1, 1</td>
+		<td>1, 2</td>
+	</tr>
+	<tr>
+		<td>2, 1</td>
+		<td>2, 2</td>
+	</tr>	
+	</tbody>
+	<tfoot style="color:blue">
+	<tr>
+		<td>3, 1</td>
+		<td>3, 2</td>
+	</tr>
+	</tfoot>
+</table>
+<hr/>
+<h4>列表</h4>
+<ul>
+<li>ul无序</li>
+<li>ul无序</li>
+<li>ul无序</li>
+</ul>
+<ol type="A">
+<li>ol列表A</li>
+<li>ol列表A</li>
+<li>ol列表A</li>
+</ol>
+<ol type="a">
+<li>ol列表a</li>
+<li>ol列表a</li>
+<li>ol列表a</li>
+</ol>
+<ol type="i">
+<li>ol列表i</li>
+	<ol type="I">
+		<li>嵌套</li>
+		<li>嵌套</li>
+	</ol>
+<li>ol列表i</li>
+<li>ol列表i</li>
+</ol>
+<dl type="A">
+<dt>自定义列表</dt>
+<dd>- 解释</dd>
+<dt>自定义列表</dt>
+<dd>- 解释</dd>
+</dl>
+<div>
+<p>div是块级元素，用于组合其它元素的容器</p>
+<p>p span <span>放在span中，它可用作文本的容器</span> span p</p>
+<p>大多数 HTML 元素被定义为<ins>块级元素</ins>或<ins>内联元素</ins></p>
+<p>块级元素显示时，通常以新行来开始（和结束）。实例: h1, p, ul, table</p>
+<p>内联元素显示时通常不以新行开始。实例: b, td, a, img</p>
+</div>
+<form style="background-color:yellow">
+<p>表单form用于搜集不同类型的用户输入</p>
+name: <input type="text" name="name">
+password: <input type="password" name="password"><br/>
+Male: <input type="radio" name="sex" value="male"><br/>
+<input type="checkbox" name="vehicle" value="car">i have a car<br/>
+<select name="cars">
+<option value="car1">car1</option>
+<option value="car2">car2</option>
+<option value="car3">car3</option>
+</select>
+<br/>
+<input type="submit" value="提交">
+</form>
+<br/>
+<p>下面是用script写出来的</p>
+<script>
+document.write("Hello World!")
+</script> 
+<noscript>当浏览器不支持js时，才会显示这里的信息</noscript>
+<p>html字符实体，有些预留字符，比如小于号，不能直接用只能通过字符实体名 &lt 办出来，实体名称对大小写敏感</p>
+<p>URL 编码使用 "%" 其后跟随两位的十六进制数来替换非 ASCII 字符。<br/>
+URL 不能包含空格。URL 编码通常使用 + 来替换空格。</p>
+<p>用iframe框架来显示另一个html文档的数据</p>
+<p>iframe可以显示一个目标链接的页面，让href的页面显示在iframe_a框架中</p>
+<a href="http://www.runoob.com" target="iframe_a">runoob.com</a>
+<br/>
+<iframe src="./iframe.html" heigth="200" name="iframe_a"/>
 </body>
 </html>
