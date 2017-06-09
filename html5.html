@@ -1,16 +1,47 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<title>html5</title>
 	<meta charset="utf-8">
+	<style type="text/css">
+	#div1,#div2 {width:350px;height:70px;padding:10px;border:1px solid #aaaaaa;}
+	</style>
+	<script>
+	function allowDrop(ev)
+	{
+		ev.preventDefault();
+	}
+	function drag(ev)
+	{
+		<!--数据类型Text 值是可拖动元素的id-->
+		ev.dataTransfer.setData("Text", ev.target.id);
+	}
+	function drop(ev)
+	{
+		<!--调用 preventDefault() 来避免浏览器对数据的默认处理（drop 事件的默认行为是以链接形式打开）-->
+		ev.preventDefault();
+		<!--getData("Text") 方法获得被拖的数据。返回在 setData() 方法中设置为相同类型的任何数据-->
+		var data=ev.dataTransfer.getData("Text");
+		ev.target.appendChild(document.getElementById(data));
+	}
+	function playpause()
+	{
+		var video1=document.getElementById("video1");
+		if(video1.paused)
+			video1.play();
+		else
+			video1.pause();
+	}
+	</script>
 </head>
 <body>
-	<!--canvas��һ����ά��������Ϊ(0��0)��js������canvas�л���ͼ��-->
-	<!--���<canvas  />������Ҳ����رձ�ǩ������Ļ��غϵ������canvas��-->
+	<!--canvas是一个二维网格，左上为(0，0)，js可以在canvas中绘制图像-->
+	<!--如果<canvas  />好像会找不到关闭标签，下面的会重合到上面的canvas中-->
 	<canvas id="mycanvas" width="200" height="200" style="border:1px solid black"></canvas>
 	<script>
 		var c=document.getElementById("mycanvas");
 		var ctx=c.getContext("2d");
+		<!--画矩形-->
 		ctx.fillStyle="#FF0000";
 		ctx.fillRect(0,0,150,75);
 	</script>	
@@ -19,21 +50,23 @@
 	<script>
 		var c=document.getElementById("mycanvas2");
 		var ctx=c.getContext("2d");
-		<!--��Բ stroke��ink����-->
+		<!--画圆 stroke是ink方法-->
 		ctx.beginPath();
 		<!--arc(x,y,r,start,stop)-->
 		ctx.arc(95,50,40,0,2*Math.PI);		
-		<!--���� moveTo��ʼ��lineTo���� -->
+		<!--画线 moveTo开始，lineTo结束 -->
 		ctx.moveTo(0,0);
 		ctx.lineTo(200,200);
 		ctx.stroke();
-		<!--����-->
+		<!--文字-->
 		ctx.font="30px Arial";
 		ctx.fillText("Hello world", 10, 50);	
 		ctx.strokeText("None", 10, 100);	
 	</script>	
+	<p>渐变</p>
 	<canvas id="mycanvas3" width="200" height="200" style="boder: 1px solid black"></canvas>
 	<script>
+		<!--画渐变-->
 		var c=document.getElementById("mycanvas3");
 		var ctx=c.getContext("2d");
 		var grd=ctx.createRadialGradient(75,50,5,90,60,100);
@@ -42,12 +75,121 @@
 		ctx.fillStyle=grd;
 		ctx.fillRect(10,10,150,80);
 	</script>
-	<!--svg:scalable vector grapics������ʸ��ͼ�Σ���xml��ʽ�����ͼ��-->
-	<!--svg����xml��ÿ��ͼ�ζ���һ������-->
-	<!--xmlnsָ��xml�����ռ� versionָ���汾��-->
+	<!--svg:scalable vector grapics可伸缩矢量图形，用xml格式定义的图形-->
+	<!--svg基于xml，每个图形都是一个对象-->
+	<!--xmlns指出xml命名空间 version指出版本号-->
+	<p>svg</p>
 	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="200" width="200">
 		<polygon points="100,10 40,180 190,60 10,60 160,180"
 		style="fill:lime;stroe:purple;stroke-width:5;fill-rule:evenodd;">
-	</svg>
+	</svg><br/>
+	<!--mathML互联网上书写数学符号和公式的置标语言-->
+	<a href="https://developer.mozilla.org/en-US/docs/Web/MathML/Element">mathML官网element介绍</a>
+	<math xmlns="http://www.w3.org/1998/Math/MathML">
+		<mrow>
+			<!--mi: identifier   mn: number-->
+			<msup><mi>a</mi><mn>2</mn></msub>
+			<!--mo: operator-->
+			<mo>=</mo>
+		</mrow>
+		<mfence open="[" close="]">
+			<mtable>
+				<mtr>
+					<mtd><mi>x</mi></mtd>
+				</mtr>
+				<mtr>
+					<mtd><mi>x</mi></mtd>
+				</mtr>
+			</mtable>
+		</mfence>		
+	</math>
+	<!--图片拖放-->
+	<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">拉到此处</div><br/>
+	<div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"><img id="drag1" src="./1.jpg" draggable="true" ondragstart="drag(event)" widht="336" height="69"></div>
+	<!--视频controls 会加上控制的按键-->
+	<button onclick="playpause()">播放/暂停</button>
+	<video id="video1" width="320" height="240" controls>
+		<!--source定义媒体资源-->
+		<source src="movie.mp4" type="video/mp4">
+	</video>
+	<!--音频-->		
+	<audio controls>
+		<source src="horse.ogg" type="audio/ogg">
+	</audio>
+	<h4>input新表单类型</h4>
+	<form>		
+	<table>
+	<tr>
+		<td>date<input type="date"></td>
+		<td>datetime UTC 时间<input type="datetime"></td>
+	</tr>
+	<tr>
+		<td>datetime-local 无时区<input type="datetime-local"></td>		
+		<td>month选择一个月份<input type="month"></td>
+	</tr>
+	<tr>
+		<td>time选择一个时间<input type="time"></td>
+		<td>week选择周和年<input type="week"></td>
+	</tr>
+	<tr>
+		<td>number数值选择范围<input type="number" min="1" max="5"></td>
+		<td>range类似滑动条选择一个数值<input type="range" min="1" max="10"></td>
+	</tr>
+	<tr>	
+		<td>email<input type="email"></td>
+		<td>color<input type="color"></td>
+	</tr>
+	<tr>	
+		<td>search搜索 搜索框，后面有x可全部删除<input type="search"></td>
+		<td>电话号码字段<input type="tel"></td>
+	</tr>
+	<tr>
+		<td>url会自动验证url的值<input typ="url"></td>		
+		<td><input type="submit" value="提交"></td>
+	</tr>
+	</table>
+	</form>
+	<h4>html5新表单元素</h4>
+	</p>
+	<form oninput="x.value=parseInt(a.value)+parseInt(b.value)">
+		<p>input元素中用datalist来设置预定义值。input-list <—— datalist-id</p>
+		<input list="browsers">
+			<datalist id="browsers">
+				<option value="internet explorer">
+				<option value="chrome">
+				<option value="firefox">
+				<option value="opera">
+				<option value="safari">
+			</datalist>
+		<p>keygen标签规定用于表单的密钥对生成器字段。当提交表单时，会生成两个键，一个是私钥，一个公钥。私钥（private key）存储于客户端，公钥（public key）则被发送到服务器。
+		用户名: <input type="text" name="usr_name">
+		  加密: <keygen name="security">
+		  <input type="submit"><br/>
+		0<input type="range" id="a" value="50">100
+		+<input type="number" id="b" value="50" step="2">
+		=<output name="x" for="a b"></output>
+	</form>
+	<h4>form/input新属性</h4>
+	<p >autocomplete是使得用户在输入域开始输入时可以在该域中显示填写的选项。<span style="color:red">autocomplete怎么实现的</span><br/>
+	但是输入域应该设置name这个属性，不然找不到</p>
+	<form autocomplete="on">
+		firstname: <input type="text" name="fname" autofocus>autofocus使得页面加载光标会自动出现在设置的input输入框中<br/>
+		lastname: <input type="text" name="lname"><br/>
+		email: <input type="email" name="email" autocomplete="off"><br/>
+		<input type="submit">
+		<p>input中用file属性，multiple属性使得可以选择多个文件</p>
+		<input type="file" multiple>
+		<p>pattern指定输入的正则表达式，placeholder是写在输入框中的hint, required指定输入框必须填写</p>
+		<input type="text" pattern="[A-Z] [a-z]" placeholder="[A-Z] [a-z]" required>
+	</form>
+	<h5>input的form属性</h5>
+	<p>位于form表单外的 input 字段引用了 HTML form (该 input 表单仍然属于form表单的一部分)<br/>
+	定义一个form，设置一个id<br/>
+	定义一个input form=上面定义的form的id<br/>
+	</p>
+	<h5>嵌入第三方插件</h5>
+	<p>object元素可以定义浏览器插件，用data来指定嵌入的对象<br/>
+	embed也可嵌入，用src来指定。embed在html4中无效</p>
+	<object width="400" height="300" data="./html.html"/>
 </body>
 </html>
