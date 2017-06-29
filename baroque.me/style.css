@@ -1,0 +1,38 @@
+/*选择所有元素*/
+*{
+	margin:0;
+	padding:0;
+}
+/*对整个页面设置颜色*/
+html, body{
+	font-family:Helvetica, Arial, san-serif;/*字体*/
+	cursor:default;/*鼠标样式*/
+	background:#b02e2e;
+}
+canvas{
+	position:absolute;/*绝对位置，不影响文本流*/
+	top:0;
+	left:0;
+}
+#main-layer{
+	position:absolute;
+}
+#loader{
+	position: absolute;
+	font-weight: bold;
+	width:150px;
+	color:#ffffff;
+	font-size:11px;
+}
+a, a:visited, a:hover, a:active{
+	text-decoration: none;
+	color:#ffffff;
+}
+a:hover{
+	color:#ffffff;
+}
+#about{
+	position:absolute;
+	font-weight:bold;
+	font-size:16px;
+}
