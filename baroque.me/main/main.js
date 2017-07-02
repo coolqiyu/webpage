@@ -166,4 +166,93 @@ suite.init = function(){
 	bufferLoader.load();
 };
 
-    
+/**
+ * 将MIDI_MAP转换成一个数字索引的查找数组
+ */
+suite.initMidiMap = function(){
+    suite.arrMidiMap = new Array();
+    var n;
+    for(key in MIDI_MAP){
+        n = parseInt(key);
+        suite.arrMidiMap[n] = MIDI_MAP[key];
+    }
+};
+
+/**
+ * 通过serInterval更新循环运行(查看everythingIsReady)
+ */
+var updateLoop = function(){
+    suite.machine.upd();
+};
+
+//临时-把这个放到init函数，它是由body.onLoad调用
+init = function(){
+    suite.init();
+};
+
+/**
+ * 用给定的pitch,volume,pan放note
+ */
+suite.playSound = function(pitchPm, volPm, panPm){
+    var n = pitchPm;
+    var buffer = arrBuffers[n];
+    var source = context.createBufferSource();
+    source.buffer = buffer;
+    //创建一个gain节点
+    var gainNode = context.createGain();
+    source.connect(gainNode);
+    gainNode.connect(context.destination);
+    //设置volume
+    gainNode.gain.value = volPm;
+    source.start();
+};
+
+function finishedFile(bufferPm){
+    bufferLoader.finishedFile(bufferPm);
+    //要加载的下一个声音
+    suite.indNoteLd++;
+};
+
+//当完成声音加载后应该做什么
+function finishedLoading(bufferListPm) {
+	arrBuffers = bufferListPm;
+    suite.soundAvailable = true;
+    suite.soundReady = true;
+    suite.everythingIsReady();
+	//suite.machine.setGroup(0);
+};
+
+/**
+ * 重置大小事件
+ * 存储新的窗口宽度和高度
+ */
+var rsize = function(){
+    width = window.innerWidth;
+    height = window.innerHeight;
+    if(suite.machine != null)
+        suite.machine.rsize();
+};
+
+/**
+ * 为了版本测试目的，给出一个变量out of URL
+ * @param {Element} string变量("id")
+ * @return {number} 变量值(25)
+ */
+function getQueryVariable(variable){
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for(var i = 0; i < vars.length; i++){
+        var pair = vars[i].split("=");
+        if(pair[0] == variable){
+            return pair[1];
+        }
+    }
+    return null;
+}
+
+//允许控制台debug
+if (!window.console) console = {};
+console.log = console.log || function(){};
+console.warn = console.warn || function(){};
+console.error = console.error || function(){};
+console.info = console.info || function(){};
