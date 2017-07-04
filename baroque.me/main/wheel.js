@@ -5,6 +5,9 @@
  */
  
 /**
+ * wheel：包括了nub这是那个圆圈，同时也包含了轨迹
+ */
+/**
  * 建造一个新的wheel
  * @class 这个是Wheel类
  * @constructor
