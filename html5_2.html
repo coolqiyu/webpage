@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>html5学习</title>
+<style type="text/css">
+#videoBtn{
+	width: 50px;
+	height:30px;
+}
+</style>
+<script src="./video.js"></script>
+</head>
+<body>
+<h1>html5新特性</h1>
+<hr/>
+<a href="#video">视频video</a>
+<a href="#canvas">绘画canvas</a>
+<a href="#audio">音频audio</a>
+<a href="#content">内容元素</a>
+<a href="#form">表单控件</a>
+<div name="video" style="width:400px; height:400px" onload="playV(this,document)">
+video 元素允许多个 source 元素。source 元素可以链接不同的视频文件。浏览器将使用第一个可识别的格式
+<video id="videoId" style="height:100%; width:100%" preload poster=./baidu.jpg>
+<source src="./movie.mp4" type="video/mp4"></video>
+<div id="videoControls">
+	<button id="play" title="Play">&#x25BA;</button>
+	<div id="process">
+		<div id="progress_box">
+			<span id="play_progress"></span>
+		</div>
+	</div>
+</div>
+<button id="playVideoBtn" onclick="playVideo()">播放</button>
+<button id="fullScreenBtn" onclick="toFullScreen()">全屏</button>
+</div>
+</body>
+</html>
