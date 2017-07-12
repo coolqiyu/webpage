@@ -1,7 +1,7 @@
 function playV(window, document){
 	var video = document.getElementsByTagName('video')[0],
 	videoControls = document.getElementById('videoControls'),
-	play = document.getElementById('play'),
+	play = document.getElementById('playBtn'),
 	progressContainer = document.getElementById('progress'),
 	progressHolder = document.getElementById('progress_box');
 	playProgressBar = document.getElementById('play_progress');
@@ -14,21 +14,32 @@ function playV(window, document){
 			/*EventTarget.addEventListener() 方法将指定的监听器注册到 EventTarget上，当该对象触发指定的事件时，指定的回调函数就会被执行。
 			target.addEventListener(type, listener[, options]);
 			*/ 
-			video.addEventListener('loadeddata', this.initializeControls, false);
-			this.handleButtonPresses();
+			//video.addEventListener('loadeddata', this.initializeControls, false);//视频加载完成后，显示控制按钮
+			this.initializeControls();
+			this.handleButtonPresses();//控制按钮事件
+			this.videoScrubbing();
 		},
 		initializeControls:function(){
 			videoPlayer.showHideControls();
 		},
+		//添加按件监听器，显示或隐藏
 		showHideControls:function(){
-			video.addEventListener('mouseover', function(){videoControls.style.opacity=1;}, false);
-			videoControls.addEventListener('mouseover', function(){videoControls.style.opacity=1;}, false);
-			video.addEventListener('mouseout', function(){videoControls.style.opacity=0;}, false);
-			videoControls.addEventListener('mouseover', function(){videoControls.style.opacity=0;}, false);
+			video.addEventListener('mouseover', function(){
+				videoControls.style.opacity=1;
+			}, false);
+			videoControls.addEventListener('mouseover', function(){
+				videoControls.style.opacity=1;
+			}, false);
+			video.addEventListener('mouseout', function(){
+				videoControls.style.opacity=0;
+			}, false);
+			videoControls.addEventListener('mouseout', function(){
+				videoControls.style.opacity=0;
+			}, false);
 		},
 		handleButtonPresses:function(){
-			video.addEventListener('click', this.playPause, false);
-			play.addEventListener('click', this.playPause, false);
+			video.addEventListener('click', this.playPause, false);//视频位置点击事件
+			play.addEventListener('click', this.playPause, false);//播放按钮点击事件
 			//播放时
 			video.addEventListener('play', function(){
 				play.title='Pause'; 
@@ -80,7 +91,7 @@ function playV(window, document){
 				progressHolder.onmouseup = function(e){
 					document.onmouseup = null;
 					document.onmousemove = null;
-					video.paly();
+					video.play();
 					videoPlayer.setPlayProgress(e.pageX);
 					videoPlayer.trackPlayProgress();
 				}
@@ -98,6 +109,9 @@ function playV(window, document){
 				curleft += progressHolder.offsetLeft;
 			}
 			return curleft;
+		},
+		stopTrackingPlayProgress:function(){
+			clearTimeout(playProgressInterval);
 		}
 	};
 	videoPlayer.init();

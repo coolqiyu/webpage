@@ -4,8 +4,42 @@
 <title>html5学习</title>
 <style type="text/css">
 #videoBtn{
-	width: 50px;
+	width: 40px;
 	height:30px;
+}
+#videoControls{	
+	bottom:0%;
+	opacity:0;
+	width:500px;
+	height:35px;
+}
+#playBtn{
+	float:left;
+}
+#process{
+	display: inline;
+	width:450px;
+	height:30px;
+	float:right;
+}
+#progress_box{
+	background-color: blue;
+	position: relative;
+    width:100%; 
+    height:20px;
+}
+#play_progress{
+	/*设置让进度条可以垂直居中*/
+	position: absolute; 
+	top:25%;
+	background-color: white; 	
+	z-index:1; 
+	height:10px; 
+}
+#videoId{
+	height:100%; 
+	width:100%;
+	background: gray;
 }
 </style>
 <script src="./video.js"></script>
@@ -18,18 +52,19 @@
 <a href="#audio">音频audio</a>
 <a href="#content">内容元素</a>
 <a href="#form">表单控件</a>
-<div name="video" style="width:400px; height:400px" onload="playV(this,document)">
+<div name="video" style="width:500px; height:500px" >
 video 元素允许多个 source 元素。source 元素可以链接不同的视频文件。浏览器将使用第一个可识别的格式
-<video id="videoId" style="height:100%; width:100%" preload poster=./baidu.jpg>
+<video id="videoId" preload poster=./baidu.jpg onload="playV(window, document)">
 <source src="./movie.mp4" type="video/mp4"></video>
 <div id="videoControls">
-	<button id="play" title="Play">&#x25BA;</button>
+	<button id="playBtn" title="Play">&#x25BA;</button>
 	<div id="process">
 		<div id="progress_box">
 			<span id="play_progress"></span>
 		</div>
 	</div>
 </div>
+<button onclick="playV(this, document)">运行</button>
 <button id="playVideoBtn" onclick="playVideo()">播放</button>
 <button id="fullScreenBtn" onclick="toFullScreen()">全屏</button>
 </div>

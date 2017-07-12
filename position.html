@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script type="text/javascript">
+function abc(){
+	var a = new Object();
+	alert(Object);
+}
+</script>
 <style type="text/css">
 p
 {
@@ -34,11 +40,12 @@ position:relative;
 color:white;
 background-color:black;
 position:absolute;
-left:900px;
+left:850px;
+z-index:-1;
 }
 </style>
 </head>
-<body>
+<body onload="abc()">
 <p>fixed前面</p>
 <div id="fixed_div"><p>
 position:fixed;<br/>
@@ -69,9 +76,10 @@ background-color:red;<br/>
 <div id="absolute_div"><p>
 position:absolute;<br/>
 top:200px;<br/>
-left:900px;<br/>
+left:850px;<br/>
+z-index:-1;<br/>
 background-color:black;<br/>
-相对父元素偏移，不占空间</p>
+相对最近非static的父元素偏移，不占空间。z-index为-1，向里</p>
 </div>
 <p>absolute后面</p>
 </body>
