@@ -3,12 +3,42 @@
 <head>
 <title>html5学习</title>
 <style type="text/css">
+#runBtn{
+	position:relative;
+}
+#audioDiv{
+	position: relative;
+	top: 150px;
+	width: 500px;
+	height: 30px;
+	background-color: black;
+}
+#audioBtn{
+	float:left;
+	position: absolute;
+}
+#audioProcess_box{
+	display: inline;
+	position: absolute;
+	left: 55px;
+	z-index: 1;
+	width: 80%;
+	height: 6px;
+	float:right;
+	background-color: gray;
+	border-radius: 2px;
+	top:50%;
+}
+#videoDiv{
+	width: 500px;
+	height: 500px;
+}
 #videoBtn{
 	width: 40px;
 	height:30px;
 }
 #videoControls{	
-	bottom:0%;
+	bottom:0;
 	opacity:0;
 	width:500px;
 	height:35px;
@@ -23,18 +53,21 @@
 	float:right;
 }
 #progress_box{
-	background-color: blue;
+	background-color: gray;
 	position: relative;
     width:100%; 
-    height:20px;
+    height:7px;
+    top:20%;
+    border-radius:2px;
 }
 #play_progress{
 	/*设置让进度条可以垂直居中*/
 	position: absolute; 
-	top:25%;
+	top:10%;
 	background-color: white; 	
 	z-index:1; 
-	height:10px; 
+	height:5px;
+	padding:0 1px 0 1px; 
 }
 #videoId{
 	height:100%; 
@@ -52,7 +85,7 @@
 <a href="#audio">音频audio</a>
 <a href="#content">内容元素</a>
 <a href="#form">表单控件</a>
-<div name="video" style="width:500px; height:500px" >
+<div name="video" id="videoDiv">
 video 元素允许多个 source 元素。source 元素可以链接不同的视频文件。浏览器将使用第一个可识别的格式
 <video id="videoId" preload poster=./baidu.jpg onload="playV(window, document)">
 <source src="./movie.mp4" type="video/mp4"></video>
@@ -64,9 +97,20 @@ video 元素允许多个 source 元素。source 元素可以链接不同的视�
 		</div>
 	</div>
 </div>
-<button onclick="playV(this, document)">运行</button>
+<button id="runBtn" onclick="playV(this, document)">运行</button>
 <button id="playVideoBtn" onclick="playVideo()">播放</button>
 <button id="fullScreenBtn" onclick="toFullScreen()">全屏</button>
+</div>
+<div id="audioDiv">
+<audio>
+<source src="./audio.ogg" type="audio/ogg">
+</audio>
+<div id="audioControl">
+<button id="audioBtn">播放</button>
+<div id="audioProcess_box">
+<div id="audioProcess"></div>
+</div>
+</div>
 </div>
 </body>
 </html>

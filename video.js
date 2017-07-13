@@ -37,13 +37,14 @@ function playV(window, document){
 				videoControls.style.opacity=0;
 			}, false);
 		},
+		//控制点击视频和播放按钮事件
 		handleButtonPresses:function(){
 			video.addEventListener('click', this.playPause, false);//视频位置点击事件
 			play.addEventListener('click', this.playPause, false);//播放按钮点击事件
 			//播放时
 			video.addEventListener('play', function(){
 				play.title='Pause'; 
-				play.innerHTML='<span id="pauseButton">&#x2590;&#x2590;</span>';
+				play.innerHTML="<span id='pauseButton'>&#x2590;&#x2590;</span>";
 				videoPlayer.trackPlayProgress();//播放时不停更新进度条
 			}, false);
 			//暂停时
@@ -67,24 +68,37 @@ function playV(window, document){
 				video.pause();
 			}
 		},
-		//循环更新，每50毫秒
-		trackPlayProgress:function(){
-			//用setTimeout来实现每50ms调用一次update
-			(function progressTrack(){
+		//循环更新进度条，每50ms调用一次update
+		//第一种：用setInterval来实现
+		// trackPlayProgress:function(){
+		// 	playProgressInterval = setInterval(videoPlayer.updatePlayProgress, 50);
+		// },
+		// 第二种：利用setTimeout，定义具名函数并调用自己
+		trackPlayProgress:function progressTrack(){
+			//用setTimeout来实现每50ms调用一次update			
 				videoPlayer.updatePlayProgress();
-				playProgressInterval = setTimeout(progressTrack, 50);
-			})();
+				playProgressInterval = setTimeout(progressTrack, 50);			
 		},
-		//更新进度条的方法：设置一个bar的宽度
+		//第三种：用setTimeout，在匿名函数中定义一个自执行函数
+		// trackPlayProgress:function(){
+		// 	(function progressTrack(){
+		// 		videoPlayer.updatePlayProgress();
+		// 		playProgressInterval = setTimeout(progressTrack, 50);
+		// 	})();
+		// },
+		// 更新进度条的方法：设置一个bar的宽度
+		//视频在播放过程中，可以根据currentTime来获得应设的宽度比率
 		updatePlayProgress:function(){
 			playProgressBar.style.width=((video.currentTime/video.duration) * (progressHolder.offsetWidth)) + "px";
 		},
 		//手动拉动视频进度条
 		videoScrubbing:function(){
+			//鼠标在placeHolder里按下时触发
 			progressHolder.addEventListener("mousedown", function(){
 				videoPlayer.stopTrackingPlayProgress();//停止更新
 				videoPlayer.playPause();//停止播放
-				document.onmousemove = function(e){
+				//为什么这里不用addEventListener
+				document.onmousemove = function(e){//鼠标移动时
 					videoPlayer.setPlayProgress(e.pageX);
 				}
 				//鼠标恢复时，继续视频播放
@@ -97,6 +111,7 @@ function playV(window, document){
 				}
 			}, true);
 		},
+		//不能根据视频的播放时间来设置，需要根据鼠标的x坐标
 		setPlayProgress:function(clickX){
 			var newPercent = Math.max(0, Math.min(1, (clickX - this.findPosX(progressHolder))/progressHolder.offsetWidth));
 			video.currentTime = newPercent * video.duration;//播放的时间

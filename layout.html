@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>layout</title>
+	<style>
+	#first{
+		width: 500px;
+		height: 500px;
+		background-color: gray;
+	}
+	#first #center1{
+		width: 400px;
+		height: 400px;
+		background-color: red;
+		margin:auto;/*水平默认是居中，垂直方向是最靠上*/
+		text-align:center;/*规定自己的内部元素布局方式*/
+	}
+	#center2{
+		width: 300px;
+		height: 300px;
+		background-color: blue;
+		position: relative;
+		/*display:block的特点：
+		1、block元素会独占一行，多个block元素会各自新起一行。默认情况下，block元素宽度自动填满其父元素宽度。
+		2、block元素可以设置width,height属性。块级元素即使设置了宽度,仍然是独占一行。
+		3、block元素可以设置margin和padding属性。
+
+		display:inline的特点：
+		1、inline元素不会独占一行，多个相邻的行内元素会排列在同一行里，直到一行排列不下，才会新换一行，其宽度随元素的内容而变化。
+		2、inline元素设置width,height属性无效。
+		3、inline元素的margin和padding属性，水平方向的padding-left, padding-right, margin-left, margin-right都产生边距效果；但竖直方向的padding-top, padding-bottom, margin-top, margin-bottom不会产生边距效果。
+		*/
+		display: inline-block;
+	}
+	#center3{
+		width: 200px;
+		height: 200px;
+		background-color: green;
+		/*用absolute定位方式*/
+		position: absolute;
+		left: 50%;/*让当前元素的最左边位于父元素宽度50%的位置*/
+		/*transform：旋转  translate定义旋转方式*/
+		/*translateX只在x变化，让元素向左移动相对自身宽度的50%*/
+		transform: translateX(-50%);
+		display: flex;
+		justify-content: center;
+	}
+	#center4{
+		width: 100px;
+		height: 100px;
+		background-color: purple;
+	}
+	#center5{
+		width: 50px;
+		height: 50px;
+		background-color: white;
+		margin:0 auto;
+	}
+	</style>
+</head>
+<body>
+<div id="first">
+	<div id="center1">
+	<div id="center2">
+	<div id="center3">
+	<div id="center4">
+	<div id="center5"></div>
+	</div>
+	</div>
+	</div>
+	</div>
+</div>
+</body>
+</html>
