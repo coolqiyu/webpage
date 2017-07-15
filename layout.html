@@ -2,13 +2,14 @@
 <html>
 <head>
 	<title>layout</title>
+	<meta charset="utf-8">
 	<style>
-	#first{
+	#horizon{
 		width: 500px;
 		height: 500px;
 		background-color: gray;
 	}
-	#first #center1{
+	#center1{
 		width: 400px;
 		height: 400px;
 		background-color: red;
@@ -56,19 +57,120 @@
 		background-color: white;
 		margin:0 auto;
 	}
+	#center6{
+		width: 25px;
+		height: 25px;
+		background-color: black;
+		display: table;
+		margin: 0 auto;
+	}
+	#vertical{
+		width: 500px;
+		height: 500px;
+		background-color: black;
+		display: table-cell;
+		vertical-align: middle;
+		
+	}
+	#v1{
+		width: 400px;
+		height: 400px;
+		background-color: red;
+		
+		position: relative;
+	}
+	#v2{
+		width: 300px;
+		height: 300px;
+		background-color: blue;	
+				
+		position: absolute;
+		top:50%;
+		transform: translateY(-50%);
+		display: flex;
+		align-items: center;
+	}
+	#v3{
+		width: 200px;
+		height: 200px;
+		background-color: green;	
+	}
+	#equal{
+		width: 500px;
+		height: 200px;
+		background-color: gray;
+		display: flex;
+	}
+	#equal .column{
+		width: 100px;
+		height: 100px;
+		background-color: red;
+		flex: 1;
+	}
+	.column+ .column{
+		margin-left: 20px;
+	}
 	</style>
 </head>
 <body>
-<div id="first">
+<div id="horizon">
 	<div id="center1">
 	<div id="center2">
 	<div id="center3">
 	<div id="center4">
-	<div id="center5"></div>
+	<div id="center5">
+	<div id="center6"></div>
+	</div>
 	</div>
 	</div>
 	</div>
 	</div>
 </div>
+<div id="vertical">
+	<div id="v1">
+	<div id="v2">
+	<div id="v3">
+	
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+</div>
+<div id="equal">
+<div class="column"></div>
+<div class="column"></div>
+<div class="column"></div>
+<div class="column"></div>
+</div>
+<div id="displayDiv" style="width: 400px; height: 400px;">
+前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前
+<!-- <img style="float:right; width: 100px;height: 100px;" src="./greenbg.jpg"/>-->
+<div style="float:right; width: 100px;height: 100px; bottom: 1px solid purple; background-color: green;"/></div>
+后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后后
+</div>
+<div>
+元素：<input id="elementId" type="text"/>
+<button onclick="var v = document.getElementById('elementId'); var compute=document.getElementById(v.value); alert(compute.clientWidth);">计算</button>
+</div>
+<p id="pId" style="width: 20em; height: 9em; border: solid aqua;">
+<span id="spanEmpty" style="position:static; float:left; width: 5em; height: 5em; border: 5px solid black;"></span>
+<!-- span在p中span设置为float left -->
+<span id="spanId" style="border: 2px solid red;padding: 10px">span,p中,span设置为float left</span>
+</p>
+<div>
+<style type="text/css">
+    .divDisplayClass{
+        width:200px;
+        height: 40px;
+        border: 2px solid purple;
+    }
+</style>
+<div class="divDisplayClass" style="display: block; "">blockblockblockblockblock</div>
+<div class="divDisplayClass" style="display: inline; ">inlineinlineinlineinlineinlineinlineinlineinline</div>
+<div class="divDisplayClass" style="display: inline-block; ">inlineblockinlineblockinlineblock</div>
+</div>
+<div style="display: none; width: 100px; height: 100px; background-color: red;"></div>
+<div style="width: 100px; height: 100px; background-color: blue;"></div>
 </body>
 </html>
