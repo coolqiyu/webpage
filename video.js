@@ -150,3 +150,25 @@ function toFullScreen(){
 	videoDiv.webkitRequestFullscreen();
 	//videoDiv.webkitEnterFullscreen();
 }
+
+//播放音频
+function playA(document){
+	var audio = document.getElementsByTagName("audio")[0];//这个tagname找到的是数组，要用[0]来取出第一个
+	var audioBtn = document.getElementById("audioBtn");
+	var audioObj ={
+		init: function(){
+			audioBtn.addEventListener("click", audioObj.playPauseAudio);
+		},
+		playPauseAudio: function(){
+			if(audio.paused){
+				audio.play();
+				audioBtn.innerText = "暂停";				
+			}
+			else{
+				audio.pause();
+				audioBtn.innerText = "播放";
+			}
+		}
+	}
+	audioObj.init();
+}
