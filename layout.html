@@ -110,6 +110,123 @@
 	.column+ .column{
 		margin-left: 20px;
 	}
+	#adaptive1{
+		width: 100%;
+		height: 200px;
+		background-color: black;
+		padding: 10px 10px 10px 10px;
+	}
+	#adaptive1 #fixed_left{			
+		background-color: blue;
+		height: 100%;
+		float: left;
+		width: 150px;
+	}
+	#adaptive1 #adaptive_right{
+		background-color: blue;		
+		height: 100%;
+		margin-right: 10px;
+		margin-left: 200px;/*相对父元素*/
+	}
+	#adaptive2{
+		width: 100%;
+		height: 200px;
+		background-color: black;
+		padding: 10px 10px 10px 10px;
+		margin-top: 10px;
+	}
+	#adaptive2 #fixed_left{
+		background-color: blue;
+		width: 150px;
+		height: 100%;
+		float: left;	
+		margin-right: -100%;	
+	}
+	#adaptive2 #adaptive_right{
+		float: left;
+		height: 100%;
+		width: 100%;		
+	}
+	#adaptive_inner{
+		margin-left: 200px;
+		height: 100%;
+		background-color: blue;
+	}
+	#equalColumns1{
+		width: 100%;
+		height: 200px;
+		background-color: black;
+	}
+	#equalColumns1 div{
+		float: left;
+		width: 25%;
+		height: 100%;
+		padding-left: 20px;
+		box-sizing: border-box;
+	}
+	#equalColumns1 div>div{
+		background-color: blue;
+		width: 100%;
+		height: 100%;
+	}
+	#equalColumns2{
+		display: flex;
+		width: 100%;
+		height: 200px;
+		background-color: black;
+		justify-content: space-around;		
+	}
+	#equalColumns2 div{
+		height: 100%;
+		background-color: blue;
+		flex: 1;
+		margin-left: 5px;
+	}
+	#equalColumns3{
+		display: table;
+		width: 100%;
+		height: 200px;
+		background-color: black;
+		table-layout: fixed;
+	}
+	#equalColumns3 div{		
+		display: table-cell;		
+		padding-left: 10px;
+	}
+	#equalColumns3 div>div{
+		width: 500px;
+		height: 200px;
+		background-color: blue;
+	}
+	.parent{
+		width: 400px;
+		height: 400px;
+		display: table;
+	}
+	.row{
+		display: table-row;
+	}
+	.item{
+		display: table-cell;
+		border: 2px solid red;
+	}
+	.parent2{
+		width: 100%;
+		height: 200px;
+		display: flex;
+		flex-direction: column;
+		/*flex-wrap: wrap;*//*如果用这个，它会延伸出去，每一行的高度和设置的高度一致*/	
+	}
+	.row2{
+		height: 100%;
+		width: 100%;
+		display: flex;
+		justify-content: space-around;
+	}
+	.item2{
+		flex: 1;
+		border: 2px solid blue;
+	}
 	</style>
 </head>
 <body>
@@ -129,8 +246,7 @@
 <div id="vertical">
 	<div id="v1">
 	<div id="v2">
-	<div id="v3">
-	
+	<div id="v3">	
 	</div>
 	</div>
 	</div>
@@ -143,6 +259,78 @@
 <div class="column"></div>
 <div class="column"></div>
 </div>
+<div id="adaptive1">
+<div id="fixed_left">左边固定</div>
+<div id="adaptive_right">右边自适应</div>
+</div>
+<div id="adaptive2">
+<div id="fixed_left">左边固定</div>
+<div id="adaptive_right">
+<div id="adaptive_inner">右边自适应</div></div>
+</div>
+<div id="equalColumns1">
+<div id="first"><div></div></div>
+<div id="second"><div></div></div>
+<div id="third"><div></div></div>
+<div id="fourth"><div></div></div>
+</div>
+<div id="equalColumns2">
+<div id="first"></div>
+<div id="second"></div>
+<div id="third"></div>
+<div id="fourth"></div>
+</div>
+<div id="equalColumns3">
+<div id="first"><div></div></div>
+<div id="second"><div></div></div>
+<div id="third"><div></div></div>
+<div id="fourth"><div></div></div>
+</div>
+<div class="parent">
+    <div class="row">
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+    </div>
+    <div class="row">
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+    </div>
+    <div class="row">
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+    </div>
+</div>
+<div class="parent2">
+    <div class="row2">
+        <div class="item2"></div>
+        <div class="item2"></div>
+        <div class="item2"></div>
+    </div>
+    <div class="row2">
+        <div class="item2"></div>
+        <div class="item2"></div>
+        <div class="item2"></div>
+    </div>
+    <div class="row2">
+        <div class="item2"></div>
+        <div class="item2"></div>
+        <div class="item2"></div>
+    </div>
+</div>
+
+<table style="background-color: red; width: 200px; height: 200px;">
+<tr>
+<td style="width: 50%; border: 2px solid blue"></td>
+<td style="width: 50%; border: 2px solid blue"></td>
+</tr>
+</table>
+<div style="width:300px; height: 300px; border: 2px solid black;">
+<div style="margin: 10px 10px 10px 10px; border: 2px solid red;"></div>
+</div>
+
 <div id="displayDiv" style="width: 400px; height: 400px;">
 前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前前
 <!-- <img style="float:right; width: 100px;height: 100px;" src="./greenbg.jpg"/>-->
