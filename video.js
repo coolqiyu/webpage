@@ -160,25 +160,25 @@ function playA(document){
 	var audioObj ={
 		init: function(){
 			audioBtn.addEventListener("click", audioObj.playPauseAudio, false);
-			audio.addEventListener("ended", playPauseAudio, false);
+			audio.addEventListener("ended", audioObj.playPauseAudio, false);
 		},
-		playPauseAudio: function(){	
-		if(audio.ended)
-		{
-			break;
-		}		
-			if(audio.paused){//处于暂停状态
-				audio.play();
-				audioBtn.innerText = "暂停";	
-				audioObj.setPlayProgress();			
-			}
-			else{//处于播放状态，或停止
-
+		playPauseAudio: function(){		
+			var ww = audio.currentTime - audio.duration;
+			if(!audio.paused || audio.ended){//处于播放状态，或停止
 				audio.pause();
 				audioBtn.innerText = "播放";
-				audioObj.stopPlayProgress();
-				
-			}
+				audioObj.stopPlayProgress();				
+			}	
+			else{//处于暂停状态
+				audioObj.setPlayProgress();
+				audioBtn.innerText = "暂停";
+				audio.play();				
+				//不要把进度条更新和play()放在一起
+				//问题1. 先执行play()，再更新进度条，会出现更新不即时的情况
+				//问题2. 如果音频很短的话，play后很快变成ended
+				//问题3. ended时也是pause状态，如果不加以区分的话，ended时就会进入这里，又开始执行play，导致音频一直循环播放	
+				//audioObj.setPlayProgress();
+			}			
 		},
 		setPlayProgress: function(){
 			var w = audioProcess_box.clientWidth;					
