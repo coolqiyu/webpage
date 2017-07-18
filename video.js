@@ -155,19 +155,41 @@ function toFullScreen(){
 function playA(document){
 	var audio = document.getElementsByTagName("audio")[0];//这个tagname找到的是数组，要用[0]来取出第一个
 	var audioBtn = document.getElementById("audioBtn");
+	var audioProcess_box = document.getElementById("audioProcess_box");
+	var audioProcess = document.getElementById("audioProcess");
 	var audioObj ={
 		init: function(){
-			audioBtn.addEventListener("click", audioObj.playPauseAudio);
+			audioBtn.addEventListener("click", audioObj.playPauseAudio, false);
+			audio.addEventListener("ended", playPauseAudio, false);
 		},
-		playPauseAudio: function(){
-			if(audio.paused){
+		playPauseAudio: function(){	
+		if(audio.ended)
+		{
+			break;
+		}		
+			if(audio.paused){//处于暂停状态
 				audio.play();
-				audioBtn.innerText = "暂停";				
+				audioBtn.innerText = "暂停";	
+				audioObj.setPlayProgress();			
 			}
-			else{
+			else{//处于播放状态，或停止
+
 				audio.pause();
 				audioBtn.innerText = "播放";
+				audioObj.stopPlayProgress();
+				
 			}
+		},
+		setPlayProgress: function(){
+			var w = audioProcess_box.clientWidth;					
+			timeStamp = setInterval(
+				function(){
+					var currentTime = audio.currentTime;	
+					audioProcess.style.width = ( currentTime / audio.duration ) * w + "px";
+				}, 50);
+		},
+		stopPlayProgress: function(){
+			clearInterval(timeStamp);
 		}
 	}
 	audioObj.init();
