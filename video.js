@@ -157,10 +157,13 @@ function playA(document){
 	var audioBtn = document.getElementById("audioBtn");
 	var audioProcess_box = document.getElementById("audioProcess_box");
 	var audioProcess = document.getElementById("audioProcess");
+	var processBtn = document.getElementById("processBtn");
+	var timeText = document.getElementById("timeText");
 	var audioObj ={
 		init: function(){
 			audioBtn.addEventListener("click", audioObj.playPauseAudio, false);
 			audio.addEventListener("ended", audioObj.playPauseAudio, false);
+			audio.addEventListener("play", audioObj.setPlayProgress, false);
 		},
 		playPauseAudio: function(){		
 			var ww = audio.currentTime - audio.duration;
@@ -170,7 +173,7 @@ function playA(document){
 				audioObj.stopPlayProgress();				
 			}	
 			else{//处于暂停状态
-				audioObj.setPlayProgress();
+				//audioObj.setPlayProgress();
 				audioBtn.innerText = "暂停";
 				audio.play();				
 				//不要把进度条更新和play()放在一起
@@ -185,8 +188,12 @@ function playA(document){
 			timeStamp = setInterval(
 				function(){
 					var currentTime = audio.currentTime;	
+					processBtn.style.left = (( currentTime / audio.duration ) * w - 3) + "px";
 					audioProcess.style.width = ( currentTime / audio.duration ) * w + "px";
-				}, 50);
+					var minute = parseInt(currentTime / 60);
+					var seconds = parseInt(currentTime % 60);
+					timeText.innerText =  (minute < 10 ? "0" + minute : minute)+":"+(seconds < 10 ? "0" + seconds : seconds);
+				}, 1);
 		},
 		stopPlayProgress: function(){
 			clearInterval(timeStamp);
