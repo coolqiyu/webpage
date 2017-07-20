@@ -163,7 +163,7 @@ function playA(document){
 	var audioObj ={
 		init: function(){
 			audioBtn.addEventListener("click", audioObj.playPauseAudio, false);
-			processBtn.addEventListener("mousedown", audioObj.audioScrub, false);
+			audioProcess_box.addEventListener("mousedown", audioObj.audioScrub, true);
 			audio.addEventListener("ended", function(){//播放结束时，重置进度条
 				audio.currentTime = 0; 
 				audio.pause();
@@ -213,21 +213,36 @@ function playA(document){
 			audioObj.stopPlayProgress();	
 			//2. 鼠标移动时，修改进度条长度
 			document.onmousemove = function(e){
-				var mouseX = e.pageX;//鼠标的x位置
-				//获取进度条的起点位置
-				var x = 0;
-				var parent = audioProcess_box;
-				while(parent){
-					x = x + parent.offsetLeft;
-					parent = parent.offsetParent;
-				}
-				audioProcess.width = (mouseX - x) + "px";
-				audio.currentTime = (mouseX - x) / audioProcess_box.offsetWidth * audio.duration;
+				audioObj.setMouse(e.pageX);				
 			}
 			//3. 鼠标释放时，开始播放音频
-			document.onmouseup = function(){
+			audioProcess_box.onmouseup = function(e){
+				//需要把这两个设置为null，否则mousedown以后，进度条上的按钮会一直跟随鼠标移动，即使鼠标已经放开
+				document.onmousemove = null;
+				document.onmouseup = null;
+				audioObj.setMouse(e.pageX);//需要这里也设置：这样当鼠标没有移动时，进度条也会变化 
 				audio.play();
 			}
+		},
+		setMouse: function(mouseX){
+			//mouseX:　鼠标的x位置
+			//获取进度条的起点位置
+			var x = 0;
+			var parent = audioProcess_box;
+			while(parent){
+				x = x + parent.offsetLeft;
+				parent = parent.offsetParent;
+			}
+			//需要对最大最小做限制，否则就可以把进度条拉到外面
+			var percent = Math.min(1, Math.max(0, (mouseX - x) / audioProcess_box.offsetWidth));
+			//这里忘记写style了，导致移动鼠标时，进度条没有同时更新
+			audioProcess.style.width = percent * audioProcess_box.offsetWidth + "px";
+			processBtn.style.left = percent * audioProcess_box.offsetWidth - 3 + "px";
+			audio.currentTime = percent * audio.duration;
+			var minute = parseInt(audio.currentTime / 60);
+			var seconds = parseInt(audio.currentTime % 60);
+			timeText.innerText =  (minute < 10 ? "0" + minute : minute)+":"+(seconds < 10 ? "0" + seconds : seconds);
+			
 		}
 	}
 	audioObj.init();

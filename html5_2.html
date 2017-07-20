@@ -44,15 +44,17 @@
 	top:50%;
 	transform: translateY(-50%);
 	margin: 0;
-	border: 0;
+	border: none;
 	padding: 0;	
+	outline: 0;/*这个可以清楚按钮内容的边框，否则点击圆形鼠标时，外面会有一个矩形边框*/
 	border-radius: 5px;
-	box-shadow: 0 0 4px black inset;
+	box-shadow: 0 0 10px black;
 	background-color: red;	
 }
 #processBtn:hover{
-	box-shadow: 0 0 10px white inset;
+	box-shadow: 0 0 8px white;
 	cursor: pointer;
+	border: none;
 }
 #timeText{
 	display: inline;
@@ -140,7 +142,7 @@ video 元素允许多个 source 元素。source 元素可以链接不同的视�
 </div>
 <div id="audioDiv">
 <audio>
-<source src="./audio.ogg" type="audio/ogg">
+<source src="./1.wav" type="audio/wav">
 </audio>
 <div id="audioControl">
 	<button id="audioBtn">播放</button>
