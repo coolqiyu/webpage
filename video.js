@@ -159,22 +159,24 @@ function playA(document){
 	var audioProcess = document.getElementById("audioProcess");
 	var processBtn = document.getElementById("processBtn");
 	var timeText = document.getElementById("timeText");
+	var processBtn = document.getElementById("processBtn");
 	var audioObj ={
 		init: function(){
 			audioBtn.addEventListener("click", audioObj.playPauseAudio, false);
-			audio.addEventListener("ended", audioObj.playPauseAudio, false);
-			audio.addEventListener("play", audioObj.setPlayProgress, false);
+			processBtn.addEventListener("mousedown", audioObj.audioScrub, false);
+			audio.addEventListener("ended", function(){//播放结束时，重置进度条
+				audio.currentTime = 0; 
+				audio.pause();
+			}, false);
+			audio.addEventListener("play", audioObj.playAudio, false);
+			audio.addEventListener("pause",audioObj.pauseAudio, false);
 		},
 		playPauseAudio: function(){		
-			var ww = audio.currentTime - audio.duration;
-			if(!audio.paused || audio.ended){//处于播放状态，或停止
-				audio.pause();
-				audioBtn.innerText = "播放";
-				audioObj.stopPlayProgress();				
+			if(!audio.paused){//处于播放状态
+				audio.pause();							
 			}	
 			else{//处于暂停状态
-				//audioObj.setPlayProgress();
-				audioBtn.innerText = "暂停";
+				//audioObj.setPlayProgress();				
 				audio.play();				
 				//不要把进度条更新和play()放在一起
 				//问题1. 先执行play()，再更新进度条，会出现更新不即时的情况
@@ -183,7 +185,12 @@ function playA(document){
 				//audioObj.setPlayProgress();
 			}			
 		},
-		setPlayProgress: function(){
+		pauseAudio: function(){
+			audioBtn.innerText = "播放";
+			audioObj.stopPlayProgress();	
+		},
+		playAudio: function(){
+			audioBtn.innerText = "暂停";
 			var w = audioProcess_box.clientWidth;					
 			timeStamp = setInterval(
 				function(){
@@ -197,6 +204,30 @@ function playA(document){
 		},
 		stopPlayProgress: function(){
 			clearInterval(timeStamp);
+		},
+		//调整音频轨道
+		audioScrub: function(){
+			//1. 鼠标按下时，停止播放
+			audio.pause();
+			audioBtn.innerText = "播放";
+			audioObj.stopPlayProgress();	
+			//2. 鼠标移动时，修改进度条长度
+			document.onmousemove = function(e){
+				var mouseX = e.pageX;//鼠标的x位置
+				//获取进度条的起点位置
+				var x = 0;
+				var parent = audioProcess_box;
+				while(parent){
+					x = x + parent.offsetLeft;
+					parent = parent.offsetParent;
+				}
+				audioProcess.width = (mouseX - x) + "px";
+				audio.currentTime = (mouseX - x) / audioProcess_box.offsetWidth * audio.duration;
+			}
+			//3. 鼠标释放时，开始播放音频
+			document.onmouseup = function(){
+				audio.play();
+			}
 		}
 	}
 	audioObj.init();
