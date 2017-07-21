@@ -8,15 +8,27 @@
 }
 #audioDiv{
 	position: relative;
-	top: 150px;
 	width: 500px;
 	height: 30px;
 	background-color: black;
+	border-radius: 3px 3px 3px 3px;
 }
 #audioBtn{
 	position: absolute;
+	left:10px;
 	top:50%;
 	transform: translateY(-50%);
+	width: 35px;
+	height: 15px;
+	text-shadow: 0 1px 1px rgba(0,0,0,0.25);
+	padding: 0;
+	font-size: 10px;
+	border: 0;
+	outline:0;
+	color: white;
+	background-color: rgb(101,159,69);
+	box-shadow: 0 0 5px yellow;
+	border-radius: 2px;
 }
 #audioProcess_box{
 	display: inline;
@@ -43,12 +55,12 @@
 	z-index: 2;
 	top:50%;
 	transform: translateY(-50%);
-	margin: 0;
+	margin: 0;	
+	padding: 0;		
 	border: none;
-	padding: 0;	
+	border-radius: 5px;/*内切圆的半径*/
+	box-shadow: 0 0 10px black;/*设置外部阴影 偏移量 阴影大小 阴影颜色*/
 	outline: 0;/*这个可以清楚按钮内容的边框，否则点击圆形鼠标时，外面会有一个矩形边框*/
-	border-radius: 5px;
-	box-shadow: 0 0 10px black;
 	background-color: red;	
 }
 #processBtn:hover{
@@ -66,6 +78,10 @@
 	top:50%;
 	margin: 0;
 	transform: translateY(-50%);
+}
+#audioList{
+	position: absolute;
+	top:400px;
 }
 #videoDiv{
 	width: 500px;
@@ -109,9 +125,37 @@
 	padding:0 1px 0 1px; 
 }
 #videoId{
-	height:100%; 
-	width:100%;
+	height:75%; 
+	width:75%;
 	background: gray;
+}
+#audioTable{
+	margin-top: 10px;
+	width: 400px;
+	border-spacing: 0;/*相邻格子的边框间距*/
+	border-collapse: collapse;/*合并边框*/
+	font-size: 10px;
+}
+.audioSource{
+	text-decoration: underline;	
+}
+.audioSource:link{/*未访问*/
+		
+}
+.audioSource:visited{/*访问过*/
+}
+.audioSource:hover{/*悬停时*/
+	cursor: pointer;
+	color: orange;
+}
+.audioSource:active{/*被点击时*/
+	background-color: green;
+}
+
+#audioTable td{	
+	width: 50%;
+	padding: 2px;
+	border: .5px solid blue;
 }
 </style>
 <script src="./video.js"></script>
@@ -153,6 +197,19 @@ video 元素允许多个 source 元素。source 元素可以链接不同的视�
 	<p id="timeText">00:00</p>
 </div>
 </div>
-
+<table id="audioTable">
+<tr>
+<td>音频名字</td>
+<td>大小</td>
+</tr>
+<tr>
+<td><span class="audioSource">1.wav</span></td>
+<td>26,582KB</td>
+</tr>
+<tr>
+<td><span class="audioSource">audio.ogg</span></td>
+<td>14KB</td>
+</tr>
+</table>
 </body>
 </html>

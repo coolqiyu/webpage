@@ -160,6 +160,7 @@ function playA(document){
 	var processBtn = document.getElementById("processBtn");
 	var timeText = document.getElementById("timeText");
 	var processBtn = document.getElementById("processBtn");
+	var audioSource = document.getElementsByClassName("audioSource");
 	var audioObj ={
 		init: function(){
 			audioBtn.addEventListener("click", audioObj.playPauseAudio, false);
@@ -170,6 +171,21 @@ function playA(document){
 			}, false);
 			audio.addEventListener("play", audioObj.playAudio, false);
 			audio.addEventListener("pause",audioObj.pauseAudio, false);
+			for(var i = 0; i < audioSource.length; i++){
+				audioSource[i].addEventListener("click", audioObj.setAudio, false);
+			}
+		},
+		setAudio: function(e){
+			audio.pause();//把原来的停止
+			//更换音频的源文件
+			audio.src = "./" + e.target.innerText;	
+			audio.load();	
+			//音频加载是异步操作，直接获取audio.duration会出现NaN结果
+			var handle = function(){
+				audioObj.setProcessState(0);
+				audio.removeEventListener("loadedmetadata", handle, false);
+			}
+			audio.addEventListener("loadedmetadata", handle, false);			
 		},
 		playPauseAudio: function(){		
 			if(!audio.paused){//处于播放状态
@@ -194,12 +210,14 @@ function playA(document){
 			var w = audioProcess_box.clientWidth;					
 			timeStamp = setInterval(
 				function(){
-					var currentTime = audio.currentTime;	
-					processBtn.style.left = (( currentTime / audio.duration ) * w - 3) + "px";
-					audioProcess.style.width = ( currentTime / audio.duration ) * w + "px";
-					var minute = parseInt(currentTime / 60);
-					var seconds = parseInt(currentTime % 60);
-					timeText.innerText =  (minute < 10 ? "0" + minute : minute)+":"+(seconds < 10 ? "0" + seconds : seconds);
+					var currentTime = audio.currentTime;
+					var percent = currentTime / audio.duration;
+					audioObj.setProcessState(percent);
+					// processBtn.style.left = (( currentTime / audio.duration ) * w - 3) + "px";
+					// audioProcess.style.width = ( currentTime / audio.duration ) * w + "px";
+					// var minute = parseInt(currentTime / 60);
+					// var seconds = parseInt(currentTime % 60);
+					// timeText.innerText =  (minute < 10 ? "0" + minute : minute)+":"+(seconds < 10 ? "0" + seconds : seconds);
 				}, 1);
 		},
 		stopPlayProgress: function(){
@@ -212,10 +230,12 @@ function playA(document){
 			audioBtn.innerText = "播放";
 			audioObj.stopPlayProgress();	
 			//2. 鼠标移动时，修改进度条长度
+			//这里用document的onmousemove属性而非button的，因为用button容易失去焦点
+			//这样当鼠标移出button时仍有效
 			document.onmousemove = function(e){
 				audioObj.setMouse(e.pageX);				
 			}
-			//3. 鼠标释放时，开始播放音频
+			//3. 鼠标在进度条的框内释放时，开始播放音频
 			audioProcess_box.onmouseup = function(e){
 				//需要把这两个设置为null，否则mousedown以后，进度条上的按钮会一直跟随鼠标移动，即使鼠标已经放开
 				document.onmousemove = null;
@@ -235,6 +255,9 @@ function playA(document){
 			}
 			//需要对最大最小做限制，否则就可以把进度条拉到外面
 			var percent = Math.min(1, Math.max(0, (mouseX - x) / audioProcess_box.offsetWidth));
+			audioObj.setProcessState(percent);
+		},
+		setProcessState:function(percent){
 			//这里忘记写style了，导致移动鼠标时，进度条没有同时更新
 			audioProcess.style.width = percent * audioProcess_box.offsetWidth + "px";
 			processBtn.style.left = percent * audioProcess_box.offsetWidth - 3 + "px";
@@ -242,8 +265,8 @@ function playA(document){
 			var minute = parseInt(audio.currentTime / 60);
 			var seconds = parseInt(audio.currentTime % 60);
 			timeText.innerText =  (minute < 10 ? "0" + minute : minute)+":"+(seconds < 10 ? "0" + seconds : seconds);
-			
 		}
 	}
 	audioObj.init();
 }
+
