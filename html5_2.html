@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8">
 <title>html5学习</title>
 <style type="text/css">
+html{
+	padding: 0;
+	margin: 0;
+}
 #runBtn{
 	position:relative;
 }
@@ -21,7 +26,6 @@
 	width: 35px;
 	height: 15px;
 	text-shadow: 0 1px 1px rgba(0,0,0,0.25);
-	padding: 0;
 	font-size: 10px;
 	border: 0;
 	outline:0;
@@ -84,6 +88,7 @@
 	top:400px;
 }
 #videoDiv{
+	position: relative;
 	width: 500px;
 	height: 500px;
 }
@@ -92,19 +97,37 @@
 	height:30px;
 }
 #videoControls{	
+	position: absolute;
+	background-color: black;
 	bottom:0;
 	opacity:0;
-	width:500px;
+	width:100%;
 	height:35px;
 }
-#playBtn{
+#playBtn{/*完全清除button的样式*/
+	color: white;
 	float:left;
+	border: 0;
+	background: transparent;/*整个背景透明，但文字不透明*/
+	/*opacity: 0.1;*//*对背景和颜色都设置透明度*/
+	outline: 0;
+	width: 10px;
+	height: 10px;
+}
+#volumnBar{
+	position: absolute;
+	height: 50px;
+	width: 10px;
+}
+#videoPlayButton{
+	font-size: 10px;
 }
 #process{
 	display: inline;
-	width:450px;
+	width:420px;
 	height:30px;
-	float:right;
+	float:left;
+	margin-left: 10px;
 }
 #progress_box{
 	background-color: gray;
@@ -125,9 +148,42 @@
 	padding:0 1px 0 1px; 
 }
 #videoId{
-	height:75%; 
-	width:75%;
+	height:100%; 
+	width:100%;
 	background: gray;
+}
+#volumnDiv{
+	display: inline;
+	position: absolute;
+	margin-left: 10px;
+	float: left;
+	height: 120px;
+	width: 5px;	
+	bottom: 24px;
+}
+#volumnBox{
+	position: relative;
+	width: 100%;
+	height: 90%;
+	border: 1px solid red;
+}
+#volumnProgress{
+	position: absolute;
+	z-index: 2;
+	height: 100%;
+	width: 2px;
+	background-color: white;
+	padding: 0;
+	opacity: 0.4;
+}
+#vprogress{
+	position: absolute;
+	z-index: 2;
+	background-color: blue;
+	bottom: 0;
+	height: 10px;
+	width: 2px;
+	border: 0;
 }
 #audioTable{
 	margin-top: 10px;
@@ -168,18 +224,29 @@
 <a href="#audio">音频audio</a>
 <a href="#content">内容元素</a>
 <a href="#form">表单控件</a>
+
+<span>video 元素允许多个 source 元素。source 元素可以链接不同的视频文件。浏览器将使用第一个可识别的格式</span>
 <div name="video" id="videoDiv">
-video 元素允许多个 source 元素。source 元素可以链接不同的视频文件。浏览器将使用第一个可识别的格式
-<video id="videoId" preload poster=./baidu.jpg onload="playV(window, document)">
+<video id="videoId" preload poster=./video.png onload="playV(window, document)">
 <source src="./movie.mp4" type="video/mp4"></video>
 <div id="videoControls">
-	<button id="playBtn" title="Play">&#x25BA;</button>
+	<button id="playBtn" title="Play"><span id="videoPlayButton">&#x25BA;</span></button>
 	<div id="process">
 		<div id="progress_box">
 			<span id="play_progress"></span>
 		</div>
 	</div>
+	<div id="volumnDiv">
+	<div id="volumnBox">
+		<div id="volumnProgress">
+			<span id="vprogress"></span>
+		</div>		
+	</div>
+	<button id="volumnBtn" style="font-size: 5px">音量</button>
+	</div>
 </div>
+</div>
+<div>
 <button id="runBtn" onclick="playV(this, document); playA(document)">运行</button>
 <button id="playVideoBtn" onclick="playVideo()">播放</button>
 <button id="fullScreenBtn" onclick="toFullScreen()">全屏</button>
@@ -211,5 +278,7 @@ video 元素允许多个 source 元素。source 元素可以链接不同的视�
 <td>14KB</td>
 </tr>
 </table>
+canvase只是一个容器，必须用脚本来实现
+<canvas id="firstCanvas"></canvas>
 </body>
 </html>

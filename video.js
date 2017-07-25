@@ -5,6 +5,8 @@ function playV(window, document){
 	progressContainer = document.getElementById('progress'),
 	progressHolder = document.getElementById('progress_box');
 	playProgressBar = document.getElementById('play_progress');
+	volumnBtn = document.getElementById('volumnBtn');
+	volumnBar = document.getElementById('volumnBar');
 
 	var videoPlayer={
 		init:function(){
@@ -18,6 +20,7 @@ function playV(window, document){
 			this.initializeControls();
 			this.handleButtonPresses();//控制按钮事件
 			this.videoScrubbing();
+			//要修改控件，把音量和视频进度两个的控制整合在一起
 		},
 		initializeControls:function(){
 			videoPlayer.showHideControls();
@@ -44,13 +47,13 @@ function playV(window, document){
 			//播放时
 			video.addEventListener('play', function(){
 				play.title='Pause'; 
-				play.innerHTML="<span id='pauseButton'>&#x2590;&#x2590;</span>";
+				play.innerHTML="<span id='videoPlayButton'>&nbsp;&#921;&#921;</span>";
 				videoPlayer.trackPlayProgress();//播放时不停更新进度条
 			}, false);
 			//暂停时
 			video.addEventListener('pause', function(){
 				play.title='Play';
-				play.innerHTML='&#x25BA';
+				play.innerHTML="<span id='videoPlayButton'>&#x25BA</span>";
 				videoPlayer.stopTrackingPlayProgress();//暂停了就不再更新进度条了
 			},false);
 			//结束时
