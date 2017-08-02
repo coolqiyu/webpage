@@ -2,144 +2,7 @@
 <html>
 <head>
 	<title>背景和边框</title>
-	<style type="text/css">
-	*{
-		margin: 0;
-		padding: 0;
-	}
-	body .demo{
-		height: 300px;
-		width: 400px;
-		background-color: red;
-		background-image: url("floor.png");
-		background-size: contain;/*设置背景图片的大小*/
-		background-repeat: repeat;/*图片小的话，加载比较快*/
-	}
-	#first{
-		background-image: url("mapbaidu.png");
-		background-position: bottom right;/*设置背景图像的开始点 从右下角开始*/
-		background-size: cover;/*背景图片会尽可能扩大，占满整个空间*/
-		width: 200px;
-		height: 200px;
-	}
-	#second{
-		background-image: url("mapbaidu.png");
-		background-position: 10% 50%;/*图片水平10%，垂直50%的位置开始*/
-		background-size: contain;/*空间会尽量去包含背景图片，图片比较小的话，会自动平铺repeat*/
-		width: 300px;
-		height: 300px;
-	}
-	#borderId{/*这个会构成一个梯形！*/
-		/*可以用这个来做各种图形*/
-		height: 300px;
-		width: 300px;
-		background-color: yellow;
-		border: 25px solid green;
-		border-top-color: red;
-		border-left-color: blue;
-		border-right-color: orange;
-		border-bottom-color: green;
-	}
-	#prompt{
-		margin: 70px 0;
-		width: 300px;
-		height: 80px;
-		background-color: orange;
-		position: relative;
-		border-radius: 15px;
-		box-shadow: 5px 5px 10px rgb(255, 204, 0);/*偏移位置x y 模糊程度 阴影颜色*/		
-	}
-	#prompt1{
-		position: absolute;
-		left: 25px;
-		top: -30px;
-		border: 15px solid orange;
-		border-top-color: transparent;
-		border-left-color: transparent;
-		border-right-color: transparent;
-	}
-	#gradient div{		
-		width: 150px;
-		height: 200px;
-		display: inline-block;
-	}
-	#horizon{/*线性渐变*/
-		background: -webkit-linear-gradient(left bottom, blue, rgb(0, 255, 102), rgba(235, 217, 15, 0.72))
-	}
-	#vertical{
-		background: -webkit-linear-gradient(top, blue, rgb(0, 255, 102), rgba(235, 217, 15, 0.72))
-	}
-	#deg45{
-		background: -webkit-linear-gradient(45deg, blue, rgb(0, 255, 102), rgba(235, 217, 15, 0.72))/*rgba最后一个a表示透明度*/
-	}
-	#deg90{
-		background: -webkit-linear-gradient(90deg, blue 40%, rgba(0, 255, 102,0.9), rgba(235, 217, 15, 1))/*颜色后面加一个百分比，表示这个颜色在哪个空间的什么位置停止*/
-	}
-	#deg{
-		background: linear-gradient(to right, red,orange,yellow,green,blue,indigo,purple);
-	}
-	#radial{/*径向渐变*/
-		background: radial-gradient(circle, red,orange,yellow,green,blue,indigo,purple);
-	}
-	#radialellipse{/*径向渐变*/
-		background: -webkit-radial-gradient(ellipse,red, yellow, purple); 
- 		background: -o-radial-gradient(ellipse, red, yellow, purple); 
-    	background: -moz-radial-gradient(ellipse, red, yellow, purple); /*ellipse表示椭圆*/
-    	background: radial-gradient(ellipse, red, yellow, purple); /* 标准的语法（必须放在最后） */
-	}
-	#grail{/*这个width不要设置成固定，不然改变窗口大小时，自适应的位置不能变化*/
-		width: 100%;
-		height: 300px;
-	}
-	#grail #header{
-		width: 100%;
-		height: 20%;
-		background-color: gray;
-	}
-	#grail #content{
-		width: 100%;
-		height: 60%;
-	}
-	#content div{
-		height: 100%;	
-	}
-	#content #content1{
-		width: 50px;
-		background-color: red;
-		float: left;
-	}
-	#content #content2{
-		background-color: blue;
-	}
-	#content #content3{
-		width: 50px;
-		background-color: green;
-		float: right;
-	}
-	#grail #footer{
-		width: 100%;
-		height: 20%;
-		background-color: gray;		
-	}
-	#newcontent{
-		width: 100%;
-		height: 100px;
-	}
-	#newcontent div{
-		height: 100%;	
-		width: 33.3%;
-		display: inline;
-	}
-	#newcontent #content1{
-		background-color: red;
-	}
-	#newcontent #content2{
-		background-color: blue;
-	}
-	#newcontent #content3{
-		background-color: green;
-	}
-	</style>
+	<link rel="stylesheet" type="text/css" href="./backgraoundandborder.css">
 </head>
 <body>
 	<div class="demo">
@@ -185,5 +48,71 @@
 	<div id="content3">bbb</div><!-- 右侧的要放在middle的上面，否则中间会把右侧挤下去 -->
 	<div id="content2">cccc</div>
 	</div>
+	
+
+<div id="grail1">	
+	<header id="header"><span>圣杯布局， 中间部分三列布局，左右固定宽度，中间自适应</span>
+	</header>
+	<article id="content">
+	    <div id="middle">我是中间</div>
+		<div id="left">我是左边</div>
+		<div id="right">我是右边</div><!-- 右侧的要放在middle的上面，否则中间会把右侧挤下去 -->
+	<!-- 为什么？
+	1. float是基于正常流，在此基础上尽量靠左/右
+	2. 左-中-右的顺序中的部分充满剩下空间，右的部分就会被挤出去 -->
+		
+	</article>
+	<footer id="footer"></footer>
+</div>
+<div></div>
+<div id="wing">	
+	<header id="header"><span>双飞翼布局，中间部分三列布局，左右固定宽度，中间自适应</span>
+	</header>
+	<article id="content">
+		<div class="main"><!-- 这个是网页的主要部分，要放在最前面，最先渲染 -->
+		<!-- 对middle部分再包裹一层div -->
+			<div class="middle">我是中间</div>
+		</div>
+		<div class="left">我是左边</div>
+		<div class="right">我是右边</div>
+	</article>
+	<footer id="footer">我是底部</footer>
+</div>
+<div></div>
+<table id="marginTable">
+<tr>
+<td>
+<div id="margin_parent"><div id="margin_son"><b>父margin-top: 80px，子margin-top: 50px，则最后margin-top为80px</b></div></div>
+</td>
+<td>
+<div id="margin_parent2"><div id="margin_son">父子margin-right: 50px</div></div></td>
+<td><div id="margin_parent3"><div id="margin_son">父margin-bottom: 80px，子margin-bottom: 50px，最后margin-bottom: 80px</div></div></td>
+<td><div id="margin_parent4"><div id="margin_son">父子margin-left: 50px</div></div></td>
+</tr>
+<tr>
+<td><div id="margin_b1"><b>margin-bottom: 50px;</b></div>
+<div><b>margin-top:50px;兄弟垂直方向两个margin重叠了</b></div>
+</td>
+<td><div id="margin_b2">float: left;
+	margin-right: 50px;</div><div>margin-left: 50px;
+	float: left;兄弟水平方向不重叠</div></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><div id="negtive_top"><div>margin-top: -50px;自身向上移动50px</div></div></td>
+<td><div id="negtive_right">margin-right: -50px;右边的元素向左移动50px</div><div></div></td>
+<td><div id="negtive_bottom">margin-bottom: -50px;下方的元素向上移动50px</div><div></div></td>
+<td><div id="negtive_left"><div>margin-left: -50px;自身向左移动50px</div></div></td>
+</tr>
+</table>
+<div style="margin-bottom: 20px;width: 200px; height: 200px; background-color: red;"><p style="margin-bottom: 40px;width: 200px; height: 200px; background-color: green;"></p></div>
+<span>11111111111111111111111111</span>
+<div id="margin_brother"></div>
+<p style="margin-bottom: 0px;background-color:green;">这个段落的和下面段落的距离将为50px</p>
+<div style="margin-top: 50px; margin-bottom: 50px;"></div>
+<p style="margin-top: 0px;background-color:green;">中间div的设置margin-top: 50px; margin-bottom: 50px;<br/>两个会折叠成一个50px</p>
+<div style="background-color: red; width: 200px; height: 200px;margin:0px 0px 0px 0px;float: left;"></div>
+<div style="float: left;background-color: blue; width: 50px; height: 200px;margin:0px 0px 0px 0px;"></div>
 </body>
 </html>

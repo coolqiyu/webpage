@@ -1,0 +1,352 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+body .demo{
+	height: 300px;
+	width: 400px;
+	background-color: red;
+	background-image: url("floor.png");
+	background-size: contain;/*设置背景图片的大小*/
+	background-repeat: repeat;/*图片小的话，加载比较快*/
+}
+#first{
+	background-image: url("mapbaidu.png");
+	background-position: bottom right;/*设置背景图像的开始点 从右下角开始*/
+	background-size: cover;/*背景图片会尽可能扩大，占满整个空间*/
+	width: 200px;
+	height: 200px;
+}
+#second{
+	background-image: url("mapbaidu.png");
+	background-position: 10% 50%;/*图片水平10%，垂直50%的位置开始*/
+	background-size: contain;/*空间会尽量去包含背景图片，图片比较小的话，会自动平铺repeat*/
+	width: 300px;
+	height: 300px;
+}
+#borderId{/*这个会构成一个梯形！*/
+	/*可以用这个来做各种图形*/
+	height: 300px;
+	width: 300px;
+	background-color: yellow;
+	border: 25px solid green;
+	border-top-color: red;
+	border-left-color: blue;
+	border-right-color: orange;
+	border-bottom-color: green;
+}
+#prompt{
+	margin: 70px 0;
+	width: 300px;
+	height: 80px;
+	background-color: orange;
+	position: relative;
+	border-radius: 15px;
+	box-shadow: 5px 5px 10px rgb(255, 204, 0);/*偏移位置x y 模糊程度 阴影颜色*/		
+}
+#prompt1{
+	position: absolute;
+	left: 25px;
+	top: -30px;
+	border: 15px solid orange;
+	border-top-color: transparent;
+	border-left-color: transparent;
+	border-right-color: transparent;
+}
+#gradient div{		
+	width: 150px;
+	height: 200px;
+	display: inline-block;
+	border: 0;
+	outline: 0;
+}
+#horizon{/*线性渐变*/
+	background: -webkit-linear-gradient(left bottom, blue, rgb(0, 255, 102), rgba(235, 217, 15, 0.72))
+}
+#vertical{
+	background: -webkit-linear-gradient(top, blue, rgb(0, 255, 102), rgba(235, 217, 15, 0.72))
+}
+#deg45{
+	background: -webkit-linear-gradient(45deg, blue, rgb(0, 255, 102), rgba(235, 217, 15, 0.72))/*rgba最后一个a表示透明度*/
+}
+#deg90{
+	background: -webkit-linear-gradient(90deg, blue 40%, rgba(0, 255, 102,0.9), rgba(235, 217, 15, 1))/*颜色后面加一个百分比，表示这个颜色在哪个空间的什么位置停止*/
+}
+#deg{
+	background: linear-gradient(to right, red,orange,yellow,green,blue,indigo,purple);
+}
+#radial{/*径向渐变*/
+	background: radial-gradient(circle, red,orange,yellow,green,blue,indigo,purple);
+}
+#radialellipse{/*径向渐变*/
+	background: -webkit-radial-gradient(ellipse,red, yellow, purple); 
+		background: -o-radial-gradient(ellipse, red, yellow, purple); 
+	background: -moz-radial-gradient(ellipse, red, yellow, purple); /*ellipse表示椭圆*/
+	background: radial-gradient(ellipse, red, yellow, purple); /* 标准的语法（必须放在最后） */
+}
+#grail{/*这个width不要设置成固定，不然改变窗口大小时，自适应的位置不能变化*/
+	width: 100%;
+	height: 300px;
+}
+#grail #header{
+	width: 100%;
+	height: 20%;
+	background-color: gray;
+}
+#grail #content{
+	width: 100%;
+	height: 60%;
+}
+#content #content1{
+	width: 50px;
+	background-color: red;
+	float: left;
+	height: 90%;	
+}
+#content #content2{
+	background-color: blue;
+	height: 100%;	
+}
+#content #content3{
+	width: 50px;
+	background-color: green;
+	float: right;
+	height: 90%;	
+}
+#grail #footer{
+	width: 100%;
+	height: 20%;
+	background-color: gray;		
+}
+#newcontent{
+	width: 100%;
+	height: 100px;
+}
+#newcontent div{
+	height: 100%;	
+	width: 33.3%;
+	display: inline;
+}
+#newcontent #content1{
+	background-color: red;
+}
+#newcontent #content2{
+	background-color: blue;
+}
+#newcontent #content3{
+	background-color: green;
+}
+#grail1{/*这个width不要设置成固定，不然改变窗口大小时，自适应的位置不能变化*/
+	width: 100%;
+	height: 300px;
+}
+#header{
+	width: 100%;
+	height: 20%;
+	background-color: gray;
+}
+#grail1 #content{
+	/*1 中间部分分成三块，且按顺序垂直分布*/
+	height: 60%;	
+	/*2 为左、右两边预留空间，确定middle的位置*/
+	padding: 0 50px;
+}
+
+#grail1 #content #left{
+	/*1*/
+	width: 50px;
+	background-color: red;
+	height: 90%;
+	/*2*/
+	float: left;
+	position: relative;
+	left: -50px;/*相对于正常流左移50px*/
+	margin-left: -100%;/*让left从middle后面移到到前面*/
+}
+#grail1 #content #middle{
+	/*1*/
+	background-color: blue;
+	height: 100%;
+	/*2*/
+	width: 100%;
+	float: left;
+}
+#grail1 #content #right{
+	/*1*/
+	width: 50px;
+	background-color: green;
+	height: 90%;
+	/*2*/
+	float: left;	
+	margin-left: -50px;
+	position: relative;
+	right: -50px;
+}
+#footer{
+	width: 100%;
+	height: 20%;
+	background-color: gray;		
+}
+#wing{
+	height: 200px;
+	width: 100%;
+}
+#wing article{
+	width: 100%;
+	height: 60%;
+	/**/
+}
+#wing article .main{
+	float: left;
+	height: 100%;
+	width: 100%;
+}
+#wing article .main .middle{
+	margin: 0 200px 0 200px;
+	background-color: green;
+	height: 100%;
+/*	width: 100%;*//*设置后宽度不能自动变化，会要求一定是100%*/
+}
+#wing article .left{
+	background-color: red;
+	width: 200px;
+	float: left;
+	height: 80%;
+	/**/
+	margin-left: -100%;
+}
+#wing article .right{
+	background-color: blue;
+	width: 200px;
+	float: left;
+	height: 80%;
+	/**/
+	margin-left: -200px;
+}
+#marginTable td{
+	border: 2px solid black;
+}
+#marginTable div{	
+	width: 200px;
+	height: 200px;
+}
+#margin_parent{
+	background-color: green;
+	margin-top:80px;
+}
+#margin_parent div{
+	background-color: yellow;
+	margin-top:50px;
+	opacity: 0.5;
+}
+
+#margin_parent2{
+	background-color: green;
+	margin-right: 50px;
+}
+#margin_parent2 div{
+	background-color: yellow;
+	margin-right:50px;
+	opacity: 0.5;
+}
+#margin_parent3{
+	background-color: green;
+	position: relative;
+	margin-bottom: 50px;
+}
+#margin_parent3 div{
+	background-color: yellow;
+	margin-bottom:50px;
+	opacity: 0.5;
+}
+#margin_parent4{
+	background-color: green;
+	position: relative;
+	margin-left: 50px;
+}
+#margin_parent4 div{
+	background-color: yellow;
+	margin-left:50px;
+	opacity: 0.5;
+}
+#margin_b1{
+	background-color: green;	
+	margin-bottom: 50px;
+}
+#margin_b1+div{
+	background-color: yellow;
+	margin-top:50px;
+}
+
+#margin_b2{
+	background-color: green;	
+	float: left;
+	margin-right: 50px;
+}
+#margin_b2+div{
+	background-color: yellow;	
+	opacity: 0.5;
+	margin-left: 50px;
+	float: left;
+}
+#margin_b3{
+	background-color: green;
+	position: relative;
+	margin-bottom: 50px;
+}
+#margin_b3 div{
+	background-color: yellow;
+	margin-bottom:50px;
+	opacity: 0.5;
+}
+#margin_b4{
+	background-color: green;
+	margin-left: 50px;
+}
+#margin_b4 div{
+	background-color: yellow;
+	margin-left:50px;
+	opacity: 0.5;
+}
+#negtive_top{
+	background-color: green;
+	border: 2px solid red;
+}
+#negtive_top div{
+	background-color: yellow;
+	border: 2px solid red;
+	opacity: 0.5;
+	margin-top: -50px;
+}
+#negtive_right{
+	background-color: green;
+	border: 2px solid red;
+	float: left;	
+	margin-right: -50px;
+}
+#negtive_right+div{
+	background-color: yellow;
+	opacity: 0.5;
+	border: 2px solid red;
+	float: left;
+}
+#negtive_bottom{
+	background-color: green;
+	border: 2px solid red;	
+	margin-bottom: -50px;
+}
+#negtive_bottom +div{
+	background-color: yellow;
+	opacity: 0.5;
+	border: 2px solid red;
+}
+#negtive_left{
+	background-color: green;
+	border: 2px solid red;
+}
+#negtive_left div{
+	background-color: yellow;
+	opacity: 0.5;
+	margin-left: -50px;
+	border: 2px solid red;
+}
