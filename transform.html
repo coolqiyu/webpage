@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>
+	</title>
+	<style>
+		h1{
+			font-size: 30px;
+			font-family: Arial;
+			clear: both;
+			padding-top: 30px;
+		}
+		.outer{
+			width: 300px;
+			height: 300px;
+			background-color: green;
+			position: relative;
+		}
+		.inner{
+			width: 300px;
+			height: 300px;
+			background-color: orange;
+			position: absolute;
+			transform: translate(10px, 10px);
+		}
+		.outer1{
+			width: 300px;
+			height: 300px;
+			background-color: green;
+			position: relative;
+		}
+		.inner1{
+			width: 200px;
+			height: 200px;
+			background-color: orange;
+			position: absolute;
+			transform: rotate(-30deg);
+			transform-origin: 40% 20%;/*改变旋转中心的点*/
+			transform-origin: 10px 10px;/*这个要写单位才行*/
+			/*默认原点是自身的左上角位置*/
+		}
+		.outer2{
+			width: 300px;
+			height: 300px;
+			background-color: green;
+			position: relative;
+		}
+		.inner2{
+			width: 300px;
+			height: 300px;
+			background-color: orange;
+			position: absolute;
+			transform: scale(0.8);
+		}
+		.outer3{
+			width: 300px;
+			height: 300px;
+			background-color: green;
+			position: relative;
+		}
+		.inner3{
+			width: 300px;
+			height: 300px;
+			background-color: orange;
+			position: absolute;
+			transform: skew(10deg);
+		}
+		.outer4{
+			width: 300px;
+			height: 300px;
+			background-color: green;
+			position: relative;
+		}
+		.inner4{
+			width: 300px;
+			height: 300px;
+			background-color: orange;
+			position: absolute;
+			transform: matrix(1, 0, 0, 1, 30, 30);
+		}
+		.outer5{
+			width: 300px;
+			height: 300px;
+			background-color: green;
+			position: relative;
+		}
+		.inner5{
+			width: 300px;
+			height: 300px;
+			background-color: orange;
+			position: absolute;
+			transition-property: width;
+			transition-duration: 2s;
+			transition-timing-function: linear;
+			transition-delay: 2s;
+		}
+		.inner5:hover{/*两个之间不要有间隙*/
+			width: 500px;
+			height: 300px;
+		}
+		.outer6{
+			width: 300px;
+			height: 300px;
+			background-color: green;
+			position: relative;
+		}
+		.inner6{
+			width: 300px;
+			height: 300px;
+			background-color: orange;
+			position: absolute;
+			/*animation: mymove 5s infinite;*/
+			animation-name: mymove;
+			animation-timing-function: linear;
+			animation-duration: 5s;
+			animation-iteration-count: infinite;
+			animation-delay: 1s;
+		}
+		/*定义运动的规则*/
+		@keyframes mymove{
+			/*from{
+				left: 0px;
+			}
+			to{
+				left: 200px;
+			}*/
+			0%{
+				transform: translate(0px);
+			}
+			25%{
+				transform: rotate(60deg);
+			}
+			50%{
+				background-color: blue;
+			}
+			100%{
+				transform: translate(200px);
+			}
+		}
+		.pp{
+			background: radial-gradient(green, black);
+			width: 800px;
+			height: 800px;
+			position: relative;
+		}
+		/*展示舞台*/
+		.stage{
+			width: 20em;
+			height: 20em;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			margin-left: -10em;
+			margin-top: -10em;
+		}
+		/*让整个cube 3D呈现*/
+		.cube{
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			transform-style: preserve-3d;
+			transform: rotateX(-20deg) rotateY(-20deg);
+		}
+		/*cube中各个面的基本样式*/
+		.cube div{
+			background: linear-gradient(left, rgba(54, 226, 248, 0.5), rgba(90, 226, 248, 0.5));
+			background-size: 5em 5em;
+			/*background-color: rgba(0, 0, 0, 0.5);*/
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			border: 2px solid rgba(54, 226, 248, 0.5);
+			box-shadow: 0 0 5em rgba(0, 128, 0, 0.4);
+		}
+	</style>
+</head>
+<body>
+	<h1>平移</h1>
+	<div class="outer">
+		<div class="inner"></div>
+	</div>
+	<h1>旋转 顺时针为正 逆时针为负（x方向，y方向）</h1>
+	<div class="outer1">
+		<div class="inner1"></div>
+	</div>
+		<h1>缩放 scale （x方向，y方向）</h1>
+	<div class="outer2">
+		<div class="inner2"></div>
+	</div>
+	<h1>倾斜 skew 右/下为正 （y方向, x方向)</h1>
+	<div class="outer3">
+		<div class="inner3"></div>
+	</div>
+	<h1>混合矩阵 matrix    水平坐标：ax+cy+e 垂直坐标：bx+dy+f  可以用来做其它效果</h1>
+	<div class="outer4">
+		<div class="inner4"></div>
+	</div>
+	<h1>transition 过渡</h1>
+	<div class="outer5">
+		<div class="inner5"></div>
+	</div>
+	<h1>动画 animation</h1>
+	<p>过渡和变换只能定义开头和结尾两个形状，动画可以在中间有很多过程变化</p>
+	<div class="outer6">
+		<div class="inner6"></div>
+	</div>
+
+	<h1>魔方</h1>
+	<div class="pp">
+	<div class="stage">
+		<div class="cube Animation-spin">
+			<div class="front"></div>
+			<div class="back"></div>
+			<div class="left"></div>
+			<div class="right"></div>
+			<div class="top"></div>
+			<div class="bottom"></div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>
