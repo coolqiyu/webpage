@@ -138,6 +138,13 @@
 				transform: translate(200px);
 			}
 		}
+		/*.pp{
+			background: radial-gradient(green, black);
+			width: 800px;
+			height: 800px;
+			position: relative;
+		}*/
+		/*背景*/
 		.pp{
 			background: radial-gradient(green, black);
 			width: 800px;
@@ -146,6 +153,7 @@
 		}
 		/*展示舞台*/
 		.stage{
+			perspective: 1000px;/*设置透视距离*/
 			width: 20em;
 			height: 20em;
 			position: absolute;
@@ -154,24 +162,81 @@
 			margin-left: -10em;
 			margin-top: -10em;
 		}
-		/*让整个cube 3D呈现*/
 		.cube{
+			position: absolute;
+			width: 20em;
+			height: 20em;
+			transform-style: preserve-3d;/* 在父元素中设置*/
+			top: 50%;
+			left: 50%;	
+			transform: translateX(-50%) translateY(-50%) rotateX(-20deg) rotateY(-20deg) scale(0.5);/*也设置的旋转角度，这样不动的时候也可以看到三维效果*/			
+		}
+		.cube div{
+			position: absolute;
+			width: 100%;
+			height: 100%;			
+			background: linear-gradient(to right, rgba(54, 226, 248, 0.5) 0px, rgba(0, 0, 0, 0) 3px), linear-gradient(to bottom, rgba(54, 226, 248, 0.5) 0px, rgba(0, 0, 0, 0) 3px);
+			background-size: 5em 5em;/*设置linear-gradient，前面颜色按照设定，后面的尽量占满空间*/
+			border: 2px solid rgba(54, 226, 248, 0.5);
+			box-shadow: 0 0 5em rgba(0, 128, 0, 0.4);
+			background-color: rgba(0, 0, 0, 0.5);
+		}
+		/*让整个cube 3D呈现*/
+		/*.cube{
 			position: absolute;
 			width: 100%;
 			height: 100%;
 			transform-style: preserve-3d;
 			transform: rotateX(-20deg) rotateY(-20deg);
-		}
+		}*/
 		/*cube中各个面的基本样式*/
-		.cube div{
-			background: linear-gradient(left, rgba(54, 226, 248, 0.5), rgba(90, 226, 248, 0.5));
+		/*下面这个可以画出表格：水平/垂直分别画*/
+		/*设置背景图片大小*/
+		/*.cube div{
+			
+			background: linear-gradient(to left, rgba(54, 226, 248, 0.5) 0px, rgba(54, 226, 248, 0.5) 3px, rgba(0, 0, 0, 0) 0px), linear-gradient(to bottom, rgba(54, 226, 248, 0.5) 0px, rgba(54, 226, 248, 0.5) 3px, rgba(0, 0, 0, 0) 0px);
 			background-size: 5em 5em;
-			/*background-color: rgba(0, 0, 0, 0.5);*/
+			background-color: rgba(0, 0, 0, 0.5);
 			position: absolute;
 			width: 100%;
 			height: 100%;
 			border: 2px solid rgba(54, 226, 248, 0.5);
 			box-shadow: 0 0 5em rgba(0, 128, 0, 0.4);
+		}*/
+		/*设置每个面的位置*/
+		.front{
+			transform: translateZ(10em);
+		}
+		.back{
+			transform: translateZ(-10em);
+		}
+		.left{
+			transform: rotateY(-90deg) translateZ(10em);/*坐标是基于平面，旋转后，坐标系的方向也相应改变*/
+		}
+		.right{
+			transform: rotateY(90deg) translateZ(10em);
+		}
+		.top{
+			transform: rotateX(90deg) translateZ(10em);
+		}
+		.bottom{
+			transform: rotateX(-90deg) translateZ(10em);
+		}
+		/*定义动画帧*/
+		@keyframes spin{
+			0%{
+					
+			}
+			100%{
+				transform: translateX(-50%) translateY(-50%) rotateX(360deg) rotateY(360deg);	
+				/*cube类中设置了translateX和translanteY。如果这里不设置相同的translate，那么动画中它默认回到cube未移动前的位置*/
+			}
+		}
+		.Animation-spin{
+			animation-name: spin;
+			animation-iteration-count: infinite;
+			animation-duration: 6s;
+			animation-timing-function: ease-in-out;
 		}
 	</style>
 </head>
@@ -206,18 +271,27 @@
 		<div class="inner6"></div>
 	</div>
 
-	<h1>魔方</h1>
+	<h1>魔方</h1>	
+	<!-- 背景 -->
+	<p>
+	重写魔方<br/>
+	1. linear-gradient(to right, rgba(54, 226, 248, 0.5) 0px, rgba(0, 0, 0, 0) 3px)：前面颜色宽度按照设定，后面的尽量占满空间（background_size）<br/>
+	2. rotateY(-90deg)： 坐标基于平面，旋转后，坐标系的方向也相应改变<br/>
+	3. 动画的前后，如果变形没有设置的话，就会回到默认值（没有设置变形）。比如，没有移动、没有放大缩小（scale），没有旋转等<br/>
+	4. 原来的代码中会把cube再放在一个stage中，这样就可以避免因为3的原因而导致动画过程中发生不可预期的位置变动（其实是想基于原来的中间位置做些动画）
+	</p>
 	<div class="pp">
-	<div class="stage">
-		<div class="cube Animation-spin">
-			<div class="front"></div>
-			<div class="back"></div>
-			<div class="left"></div>
-			<div class="right"></div>
-			<div class="top"></div>
-			<div class="bottom"></div>
+	
+			<!-- 把6个平面放在一个div变成cube -->
+			<div class="cube Animation-spin">
+				<div class="front">1</div>
+				<div class="back">2</div>
+				<div class="left">3</div>
+				<div class="right">4</div>
+				<div class="top">5</div>
+				<div class="bottom">6</div>
+	
 		</div>
-	</div>
 	</div>
 </body>
 </html>
