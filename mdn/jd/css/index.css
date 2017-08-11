@@ -2,6 +2,9 @@
 	margin: 0;
 	padding: 0;
 }
+body{
+	background: #f6f6f6;
+}
 ul li{
 	list-style-type: none;
 	text-align: center;
@@ -53,6 +56,9 @@ header{
 .shortcuts-nav li{
 	float: left;
 }
+section{
+	position: relative;
+}
 .left, .middle, .right{
 	float: left;
 	/*实现三列等高，还要在父元素中用voerflow: hidden*/
@@ -70,6 +76,16 @@ header{
 	height: auto;
 	margin-left: -100%;
 	background: #b61d1d;
+}
+.llr{
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 210px;
+	width: 800px;
+	height: 500px;
+	background: green;
+	z-index: 1;
 }
 .right{
 	width: 250px;
@@ -95,7 +111,18 @@ header{
 .middle_b1, .middle_b2{
 	width: 50%;
 	height: 140px;
-	float:left;
+	display: inline-block;
+	box-sizing: border-box;
+}
+.middle_b1{
+	padding-right: 5px;
+}
+.middle_b2{
+	padding-left: 5px;
+}
+.middle_b1 img, .middle_b2 img{
+	width: 100%;
+	height: 100%;
 }
 .ad-con{
 	overflow: hidden;
@@ -105,6 +132,7 @@ header{
 	font: 400 14/31px "microsoft yahei";
 	color: #ffffff;
 	position: relative;
+	cursor: pointer;
 }
 .left .item i{
 	position: absolute;
@@ -123,11 +151,87 @@ header{
 	right: -320px;
 	top: 0;
 }
+.right{
+	box-sizing: border-box;
+	padding: 10px;
+}
 .right-pic{
 	margin-top: 7.5px;
 }
+.login{
+	padding: 0  10px;
+}
+.welcome-img{
+	float:left;
+	margin-right: 10px;
+}
+.welcome-info1{
+	font-size: 15px;
+	color: gray;
+	height: 40px;
+	line-height: 20px;
+}
+.welcome-info2{
+	clear: both;
+	padding: 10px;
+}
+.welcome-info2 a{
+	border: 2px solid #e01222;
+	color: #e01222;
+	padding: 3px;
+	margin: 8px;
+	font-size: 15px;
+}
+.welcome-info2 a:hover{
+	color: white;
+	background: #e01222;
+	cursor: pointer;
+}
 .m-news{
+	margin-top: 15px;
+}
+.news-class{
 	border: solid 1px #e4e4e4;
+	padding: 5px;
+	position: relative;
+	text-decoration: none;
+}
+.news-class a, .news-class div{
+	display: inline-block;
+	padding: 0 5px;	
+	color: black;
+}
+.news-class a:hover{
+	cursor: pointer;
+}
+.news-class a:first-child{
+	border-right: solid 1px #e4e4e4;
+}
+.news-class .active_a{
+	position: absolute;
+	background: #db192b;
+	height: 2px;
+	width: 25px;
+	left: 8px;
+	bottom: -2px;
+	transition: transform .3s ease-in-out;
+}
+.news-content{
+	padding: 10px 0 15px 0;	
+}
+.first-content{
+	display: none;
+}
+.news-content a{
+	display: block;
+	font: 200 15px/25px "microsoft yahei";
+	height: 25px;
+	color: black;
+	/*设置文字超过长度显示省略号ellipsis*/
+	width: 100%;	
+	text-overflow: ellipsis;
+	overflow: hidden;	
+	white-space: nowrap;/*不换行*/
 }
 .m-news .extra{
 	border-top: 1px dotted #e8e8e7;
@@ -143,7 +247,7 @@ header{
 	padding-left: 5px;
 }
 .order table{
-	height: 181px;
+	height: 192px;
 	border: 1px solid #e8e8e7;
 	border-top: none;
 	width: 100%;
@@ -153,3 +257,62 @@ header{
 	border: 1px solid grey;
 	text-align: center;
 }
+.table-icon{
+	display: block;
+	background-size: 150px 80px;/*设置背景图片大小*/
+	background-image: url("../img/sprite.png");	
+	width: 30px;
+	height: 25px;
+	margin: 0 auto;
+}
+.order span{
+	text-decoration: none;
+	color: gray;
+	font-size: 15px;
+}
+.icon-mobile{
+	background-position: 0 0;
+}
+.icon-plane{
+	background-position: -42px 0;
+}
+.icon-hotel{
+	background-position: -80px 0;
+}
+.icon-game{
+	background-position: -120px 0;
+}
+.icon-company{
+	background-position: 0 -28px;
+}
+.icon-oil{
+	background-position: -42px -28px;
+}
+.icon-movie{
+	background-position: -80px -28px;
+}
+.icon-train{
+	background-position: -120px -28px;
+}
+.icon-allchip{
+	background-position: 0 -54px;
+}
+.icon-fund{
+	background-position: -42px -54px;
+}
+.icon-present{
+	width: 34px;
+	background-position: -80px -54px;
+}
+.icon-blanknote{
+	background-position: -120px -54px;
+}
+
+
+
+
+
+
+
+
+
