@@ -8,30 +8,47 @@
 <body>
 	<div class="container">
 		<header>
+			<div class="logo">
+				<img src="../img/logo.png">
+			</div>
 			<div class="shortcuts">
 				<nav class="shortcuts-nav">
 					<ul>
 						<li>
-							<a href="">你好，请登录</a><span>免费注册</span>
+							<a href="#">你好，请登录</a><span>免费注册</span>
 						</li>
+						<li class="spacer">|</li>
 						<li>
-							<a href="">我的订单
+							<a href="#">我的订单
 							</a>
 						</li>
+						<li class="spacer">|</li>
 						<li>
-							<a href="">我的京东</a>
+							<a href="#">我的京东</a>
 						</li>
+						<li class="spacer">|</li>
 						<li>
-							<a href="">京东会员</a>
+							<a href="#">京东会员</a>
 						</li>
+						<li class="spacer">|</li>
 						<li>
-							<a href="">企业采购</a>
+							<a href="#">企业采购</a>
 						</li>
+						<li class="spacer">|</li>
 						<li>
-							<a href="">客户服务</a>
+							<a href="#">客户服务</a>
 						</li>
 					</ul>
 				</nav>
+			</div>
+			<div class="fx"></div>
+			<div class="search">
+				<form>
+					<input class="search-txt" type="text" hint="输入要查找的物品">
+					<span class="search-camera"></span><button class="search-btn" type="button">
+					<img src="../img/search.png">
+					</button>
+				</form>
 			</div>
 			<!-- 清除浮动 -->
 			<div class="fx"></div>
@@ -287,43 +304,97 @@
 										<a href="#">
 											<i class="table-icon icon-blanknote"></i>
 											<span>白条</span>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+										</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
-				</div>
+				</div>		
 				<!-- hover左侧的链接时用下面div覆盖原先的内容（middle+right) -->
 				<div class="llr">
-				家用电器
+					家用电器
 				</div>
 				<div class="llr">
-				手机、数码
+					手机、数码
 				</div>
+				<div class="llr">
+					电脑、办公
+				</div>
+				<div class="llr">
+					家居、家具、家装、厨具
+				</div>
+				<div class="llr">
+					男装、女装、童装、内衣
+				</div>
+				<div class="llr">
+					个护化妆、清洁用品、宠物
+				</div>
+				<div class="llr">
+					鞋靴、箱包、珠宝、奢侈品
+				</div>
+				<div class="llr">
+					运动户外、钟表
+				</div>
+				<div class="llr">
+					汽车、汽车用品
+				</div>
+				<div class="llr">
+					母婴、玩具乐器
+				</div>
+				<div class="llr">
+					食品、酒类、生鲜、特产
+				</div>
+				<div class="llr">
+					礼品鲜花、农资绿植
+				</div>
+				<div class="llr">
+					医药保健
+				</div>
+				<div class="llr">
+					图书、音像、电子书
+				</div>
+				<div class="llr">
+					彩票、旅行、充值、票务
+				</div>
+				<div class="llr">
+					理财、众筹、白条、保险
+				</div>				
 				<script>
 					var item = document.getElementsByClassName("left-inner")[0];	
 					var llrs = document.getElementsByClassName("llr");
 					var showLLR = function (e){
-						if(e.target == item.children[0]){
-							llrs[0].style.display = "block";
-							e.target.onmouseout = hideLLR(llrs[0]);
+						var etarget = e.target;
+						var parent = etarget;
+						while(parent.className != "item"){
+							parent = parent.parentNode;
 						}
-						else if(e.target == item.children[1]){
-							llrs[1].style.display = "block";
-							e.target.onmouseout = hideLLR(llrs[1]);
-						}
-					}
-					var hideLLR = function(ele){
+						for(let i = 0; i < item.children.length; i++){
+							if(parent == item.children[i])
+								setLLR(llrs[i], parent);
+						}										
+					};
+					function setLLR(llr, etarget){
+						llr.style.display = "block";
+						etarget.onmouseout = function(){
+							hideLLR(llr);
+						};
+					};
+					function hideLLR(ele){
 						ele.style.display = "none";
-					}
-					item.addEventListener("mouseover", showLLR, true);// 把子元素的事件由父元素capture				
-					</script>
-			</div>
+					};
+					item.addEventListener("mouseover", showLLR, false);//利用冒泡把子元素的事件由父元素capture				
+				</script>
+			</section>
 		</div>
-	</section>
-	<section>B</section>
-</div>
-</div>
+		<footer>
+		<div class="footer">
+			<p>
+			<span>Copyright&nbsp;©&nbsp;2004&nbsp;-&nbsp;2017&nbsp;&nbsp;XXXX.com&nbsp;版权所有
+			</span>
+			</p>
+			</div>
+		</footer>
+	</div>
 </body>
 </html>

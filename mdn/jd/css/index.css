@@ -48,13 +48,68 @@ header{
 	border-bottom: 4px solid #b1191a;
 	overflow: hidden;/*内部元素都是浮动的，所以要清除一下，不然会产生高度塌陷*/
 }
+.logo{
+	float: left;
+	width: 210px;
+}
+.logo img{
+	width: 100%;
+}
 .shortcuts{
 	width: 100%;
-	line-height: 30px;
-	background-color: grey;
+	height: 25px;
+	background: #e1e1e1;
 }
 .shortcuts-nav li{
 	float: left;
+	margin-left: 20px;
+}
+.shortcuts-nav li a, .shortcuts-nav li span {
+	text-decoration: none;
+	font: 200 15px/25px "microsoft yahei";
+	color: #848484;
+}
+.spacer{
+	font: 200 15px/25px "microsoft yahei";
+	color: #848484;
+}
+.search{
+	width: 100%;
+}
+.search form{
+	width: 600px;
+	height: 40px;
+}
+.search-txt{
+	width: 500px;
+	height: 40px;
+	border: 1px solid red;
+}
+.search-camera{
+	display: inline-block;
+	width: 22px;
+	height: 20px;
+	line-height: 30px;
+	vertical-align: middle;
+	margin-left: -35px;
+	background: url("../img/camera.png") no-repeat;
+	background-size: 22px 20px;
+}
+.search-btn{
+	display: inline-block;
+	position: relative;
+	border: none;
+	width: 50px;
+	height: 42px;
+	vertical-align: middle;
+	background: red;
+	margin-left: 8px;	
+}
+.search-btn img{
+	width: 25px;
+	height: 25px;
+	line-height: 42px;
+	vertical-align: middle;
 }
 section{
 	position: relative;
@@ -82,9 +137,9 @@ section{
 	position: absolute;
 	top: 0;
 	left: 210px;
-	width: 800px;
+	width: 1000px;
 	height: 500px;
-	background: green;
+	background: #c5c1c1;
 	z-index: 1;
 }
 .right{
@@ -307,7 +362,11 @@ section{
 .icon-blanknote{
 	background-position: -120px -54px;
 }
-
+.footer{
+	width: 100%;
+	height: 50px;
+	text-align: center;
+}
 
 
 
