@@ -1,0 +1,148 @@
+/*移动端浏览器对css3和h5支持比较好，内核为webkit*/
+/*布局使用webkit-box，使用怪异盒模型*/
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+body{
+	background: #f2f2f2;
+	/*定义字体样式*/
+}
+.nav-header{
+	background: #3385ff;
+}
+ul,li{
+	list-style: none;
+	border: none;
+}
+/*顶部导航*/
+.top-nav{
+	display: -webkit-box;/*直接作用于子元素，如果放在nav里面，li就不会水平放置*/
+	/*父为-webkit-box后，它的所有子元素就自动变成块级元素*/
+}
+.top-nav li{
+	height: 50px;
+	-webkit-box-flex: 1;
+	-webkit-box-pack: center;
+	-webkit-box-align: center;
+	display: -webkit-box;/*需要设置display，上面两个设置才能生效*/
+	font-size: 15px;
+}
+/*设置活跃时的样式*/
+ul.top-nav>li.active{
+	border-bottom: 0;
+	color: #4b8ff9;
+	background-color: #d1dcef;
+}
+.user{
+	border-left: #d4d4d4 solid 1px;
+}
+.search{
+	height: 67px;
+	line-height: 67px;
+	box-shadow: 0 2px 1px -1px rgba(0,0,0,2)!important;
+	color: #3b3b3b;
+	text-align: center;
+}
+.search .search-input{
+	width: 70%;
+	height: 45px;
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+	border: 1px solid #6bb1f7;
+	outline: none;/*需要设置outline，否则外面还会有一个默认框*/
+}
+.search .search-input:focus{
+	border: 1px solid #6fb5c3;
+}
+.search .search-button{
+	height: 43px;
+	font-size: 15px;
+	background-color: #69c7d0;
+	color: white;
+	border: none;
+	margin-left: -5px;/*让button和text边重合*/
+	padding: 0 6px;
+	vertical-align: -1px;/*input和button在垂直方向是有偏移的，需要自己来调一下，看下百度地图的做法?*/
+}
+.service-title{
+	padding: 10px 0 0 10px;
+	display: -webkit-box;
+	-webkit-box-pack: center;
+	-webkit-box-align: center;
+	-webkit-box-flex: 1;
+}
+/*这里用padding好像没有用，因为flex box*/
+.spliter{
+	width: 100%;/*这个有用吗？*/
+	height: 0;
+	-webkit-flex:1;
+	border-top: 1px solid #d4d4d4;
+	border-bottom: 1px solid #d4d4d4;
+	margin-left: 5px;
+}
+.tt{
+	-webkit-flex: 0;/*不占空间，按归文本多大占多在，其它的给spliter*/
+}
+/*下面这个需要用两个图，一个一倍一个两倍，因为分辨率的问题？*/
+.row{
+	display: -webkit-box;
+}
+.row>div{
+	-webkit-box-flex: 1;
+	height: 75px;
+}
+.item{
+/*	display: -webkit-box;
+	-webkit-box-pack:center;
+	-webkit-box-align: center;*/
+	/*text-align: center;
+	background-position: */
+	text-align: center;/*让非替换元素（文字）居中*/
+	margin-top: 10px;
+}
+.thumb-img{
+	height: 59px;
+	width: 59px;
+	background-image: url("../img/lifeservice.png");
+	background-size: 59px auto;
+	margin: 0 auto;/*让替换元素（图片居中)*/
+}
+.nearby-icon{
+	background-position: 0 0 !important;
+}
+.tg{
+	background-position: 0px -64px!important;
+}
+.scene{
+	background-position: 0px -128px!important;
+}
+.movie{
+	background-position: 0px 59px!important;
+}
+.bank{
+	background-position: 0px -320px!important;
+}
+.bath{
+	background-position: 0px -450px!important;
+}
+.market{
+	background-position: 0px 123px!important;
+}
+.more{
+	background-position: 0px -192px!important;
+}
+/*webcomponents 因为有重复的，所以要做组件*/
+.out{
+	margin-top: 20px;
+}
+.subway{
+	background-position: 0px -257px!important;
+}
+.bus{
+	background-position: 0px -385px!important;
+}
+.taxi{
+	background-position: 0px 187px!important;
+}
