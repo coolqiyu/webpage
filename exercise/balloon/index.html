@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="Author" content="">
+	<meta name="Keywords" content="">
+	<title>balloons</title>
+	<link rel="stylesheet" type="text/css" href="./index.css">
+</head>
+<body>
+	<!-- <div class='balloon'>
+	</div> -->
+	<script type="text/javascript">
+	/* js功能：
+	 1. 响应用户的操作
+	 2. 操作dom元素
+	 3. 数据交互 ajax发送数据 json数据格式 跨域数据操作 正则表达式可以提升性能
+	4. mv* react, angular vue nodeJS
+	*/
+	/*
+	功能点：
+	1. 很多气球向上移动
+	- 动态生成dom元素
+	- dom在底部，水平方向随机, Math.random():0-1，不包括1
+	- 取整：~~比Math.floor更快
+	- 随机运动
+	 - 这个我一开始的想法是想要
+	 -动态修改top值
+	 - 利用定时器
+	2. 点击气球，气球快速向上，并缩小、左右摇摆，动画完成后消失
+	- 点击气球时，要做动画
+	*/
+	//var num = 10;//初始化气球个数
+	var wH = window.innerHeight;//窗口高度
+	var wW = window.innerWidth;//窗口宽度
+	var bH = 160;//自身高度
+	var bW = 160;//自身宽度
+	var timer = null;
+
+	init(20);
+	document.body.addEventListener('click', function(e){
+		if(e.target.className.toLowerCase() ==="balloon"){
+			//这里是业务逻辑，最好不要把功能性的放在这里，可以把它抽出到一个单独函数
+			// e.target.parentNode.removeChild(e.target);//让父元素移除自己
+			boom.call(e.target, function(){
+				this.parentNode.removeChild(this);
+				init(1);//删除一个就添加一个，这样就不会结束
+			}.bind(e.target));//也可以在回调执行cb()中使用cb.call(this)
+		}
+	});	
+	/*
+	1. setInterval: 丢帧问题，所以一般不用它来做日历翻页等
+	2. requestAnimationFrame(move) h5帧动画
+	无法指定时间间隔  由cpu确定
+	兼容性问题 	浏览器缩小化后，动画就不动了
+	3. 循环递归setTimeout
+	最稳定 可操控  无兼容性问题
+	 */
+	timer = setInterval(move, 1000/10);
+	// (function a(){
+	// 	move();
+	// 	setTimeout(a, 1000/10);
+	// })();
+
+	//动态生成dom
+	function init(num){
+		for(var i = 0; i < num; i++){
+			//1. 创建标签
+			var oBalloon = document.createElement('div');
+			var randomX = (Math.random() * wW) - bW;
+			//2. 改变element样式，通过定义class属性
+			oBalloon.className='balloon';
+			oBalloon.style.top = wH - bH + 'px';
+			oBalloon.style.left = Math.max(0, randomX) + 'px';
+			oBalloon.speed = ~~(Math.random() * 8 + 1);//自定义速度属性 ~~可以对它进行整数化
+			//console.log(oBalloon.speed);
+			//3. 添加子节点
+			document.body.appendChild(oBalloon);
+		}
+	}	
+	
+	function boom(cb){//气球爆炸
+		this.timer = setInterval(function(){
+			//当气球足够小的时候，删除节点
+			if(this.offsetWidth < 10){
+				//this.parentNode.removeChild(this);考虑到组件化，这个地方不要写死，用回调函数来写
+				cb && cb();
+				clearInterval(this.timer);//要停止定时器
+				//return;
+			}
+			this.speed ++;
+			this.style.top = this.offsetTop - this.speed + 'px';
+			this.style.width = this.offsetWidth - 10 + 'px';
+			this.style.height = this.offsetHeight - 10 + 'px';
+		}.bind(this), 1000/60);
+		/*
+		1. setInterval.call(obj, params)
+		这种改变setInterval方法内的this是不可以的，setInterval只能由window调用 IIFE
+		2. var that = this;把动态的this对象变量，变成了变量
+		3. bind()  这个最好，延迟触发函数中使用
+		 */
+	}
+	function move(){
+		//获取所有气球
+		var aBalloons = document.querySelectorAll(".balloon");
+		for( var i = 0, len=aBalloons.length; i < len; i++){
+			/*当气球离开窗口后，则可以将其删除*/
+			if(aBalloons[i].offsetTop < -160){
+				aBalloons[i].parentNode.removeChild(aBalloons[i]);
+				init(1);
+			}
+			//var oT = aBalloons[i].offsetTop;
+			aBalloons[i].style.top = aBalloons[i].offsetTop - aBalloons[i].speed + 'px';
+			//console.log(aBalloons[i].offsetTop + "   " + oT);
+			// //如果对很多进行事件绑定会卡顿，所以要用委托 代理
+			// aBalloons[i].onClick = function(){
+			// }
+		}
+		//requestAnimationFrame(move);
+		/*
+		/h5 api 元素选择器  
+		1. 兼容到IE8
+		2. 使用方法 里面可以写很复杂的选择器值
+		  3. querySelector 这个只能获取第一个元素
+		  All 可以获取所有
+		*/
+	}
+	// var i = 0; 
+	// function auto(){
+	// 	timer=setTimeout(arguments.callee, 500);//arguments.callee = auto()
+	// }
+
+</script>
+</body>
+</html>

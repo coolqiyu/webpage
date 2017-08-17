@@ -1,0 +1,33 @@
+*{
+	margin:0;
+	padding: 0;
+}
+body{
+	overflow: hidden;/*单屏显示*/
+	background: #ccc;
+}
+.balloon{
+	position: absolute;
+	width: 160px;
+	height: 160px;
+	background: #faf9f9;
+	border-radius: 80px 80px 40px 80px;
+	transform: rotateZ(45deg);
+	box-shadow: -8px -8px 80px -8px #873940 inset;
+}
+/*:after伪类*/
+/*::after伪元素，div都有两个元素before,after*/
+.balloon::after{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	display: block;
+	content:'';/*激活伪元素*/
+	/*做一个三角形*/
+	width: 0px;
+	height: 0px;
+	border: 8px solid transparent;
+	border-right-color:#873940;
+	transform: rotateZ(45deg);
+	border-radius: 16px;
+}
