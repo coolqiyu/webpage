@@ -1,0 +1,75 @@
+<!-- canvas有默认的大小，右键公有另存为图片的提示
+它相当于一个图片植筋，具有图片的属性
+行内元素会默认垂直方向基线对齐
+图片与文本在水平方向上，文本会偏下一点点
+
+1. 不显示滚动条
+2. 随着窗口变化canva大小变化 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>raindrop</title>
+	<link rel="stylesheet" type="text/css" href="./index.css">
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+	<script type="text/javascript">
+	var can = document.getElementById("canvas");
+	var ctx = can.getContext("2d");
+	var w = can.width = window.innerWidth,
+		h = can.height = window.innerHeight;
+	// 随着窗口变化canva大小变化
+	window.onresize  = function(){
+		w = can.width = window.innerWidth,
+		h = can.height = window.innerHeight;
+	};
+	// ctx.fillStyle = "red";定义颜色
+	// 画实心（左上角x，左上角y, 宽，高）
+	// ctx.fillRect(100, 100, 100, 100);
+	// 画空心
+	// ctx.strokeStyle="#fff";
+	// ctx.strokeRect(200, 200, 100, 100);
+	// 绘制圆（圆心x, y, 半径，从0度，到2pi弧度制，顺时针
+	// ctx.arc(300, 300, 100, 0, Math.PI * 2, true);//设置圆的路径
+	// ctx.fill();
+	// ctx.stroke();
+	// ctx.fillStyle="red";
+	// var y = 0;
+	// setInterval(function(){
+	// 	y++;
+	// 	ctx.clearRect(50, 0, 100, y);//清除某个位置的矩形
+	// 	ctx.fillRect(50, y, 100, 100);
+	// 	//怎么判断ctx的位置在哪
+	// 	//怎么把它进行变形，应该是让它消失，然后换一种形状？
+	// }, 100);
+	
+	//构造函数
+	function Drop(){};
+	//定义原型
+	Drop.prototype = {
+		init: function(){
+			this.x = random(0, w);
+			this.y = 0;
+			this.speed = random(1, 10);
+		},
+		draw: function(){
+			ctx.fillStyle = "red";
+			ctx.fillRect(this.x, this.y, 50, 50);
+		},
+		update: function(){
+			ctx.clearRect(this.x, 0, 50, this.y);
+			this.y += this.speed;
+			this.draw();
+		}
+	};
+	function random(min, max){
+		return Math.random() * (max - min) + min;
+	}
+	var drop = new Drop();
+	drop.init();
+	drop.draw();
+	setInterval(drop.update, 20);//drop.update里面的this会被绑定到window上，所以出现了：Uncaught TypeError: this.draw is not a function at update (index.html:63)
+	</script>
+</body>
+</html>
