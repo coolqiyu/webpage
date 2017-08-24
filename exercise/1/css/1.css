@@ -1,0 +1,137 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+/*----两个矩形变动相关开始----*/
+/*主要使用：animation，flex，postion, absolute, rotateX，动画中先改变位置再改变形状*/
+#rectTrans{
+	display: flex;
+	width: 500px;
+	height: 500px;
+	background: #3cf;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+}
+#rectTrans .twoRect{
+	width: 50px;
+	height: 50px;
+	padding: 5px;
+	position: relative;	
+	display: none;	
+}
+#rectTrans .twoRect div{
+	width: 30px;
+	height: 30px;
+	background: white;
+	position: absolute;		
+}
+#rectTrans .twoRect .rect1{
+	animation: frame1 5s infinite;
+}
+#rectTrans .twoRect .rect2{
+	animation: frame2 5s infinite;
+	transform: rotateZ(45deg);
+}
+@keyframes frame1{
+	0%{
+
+	}
+	25%{				
+		transform: rotateZ(90deg) scaleX(.3);			
+	}
+	50%{				
+		transform: rotateZ(135deg) scaleX(.3);			
+	}
+	75%{
+		transform: rotateZ(135deg) translateY(12px) scaleX(.3);
+	}
+	100%{
+
+	}
+}
+@keyframes frame2{
+	0%{
+
+	}
+	25%{
+		/*不用这个来改大小*/
+		/*width: 20px;
+		height: 40px;*/
+		transform: rotateZ(90deg) scaleY(.3);		
+	}
+	50%{				
+		transform: rotateZ(135deg) scaleY(.3);			
+	}
+	75%{				
+		transform: rotateZ(135deg) translateY(-12px) scaleY(.3);			
+	}
+	100%{
+
+	}
+}
+/*----两个矩形变动相关结束----*/
+/*----抽屈效果开始----*/
+#drawer{
+	width: 100%;
+	height: 500px;
+	background: black;
+	position: relative;
+}
+#drawer .content{
+	width: 1095px;
+	height: 300px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	overflow: hidden;/*当内部内容移动时，多余的部分隐藏*/
+}
+#drawer .content>div{
+	width: 935px;
+	height: 100%;
+	background-size: 100% 100%;
+	position: absolute;
+	box-sizing: border-box;
+}
+#drawer .content1{
+	background: url('../images/1.jpg');	
+	z-index: 1;
+}
+#drawer .content2{
+	background: url('../images/2.jpg');
+	left: 40px;
+	z-index: 1;
+}
+#drawer .content3{
+	background: url('../images/3.jpg');
+	left: 80px;
+	z-index: 1;
+}
+#drawer .content4{
+	background: url('../images/4.jpg');
+	left: 120px;
+	z-index: 1;
+}
+#drawer .content5{
+	background: url('../images/5.jpg');
+	left: 160px;
+	z-index: 1;
+}
+#drawer .left{
+	width: 40px;
+	height: 100%;
+	border-left: 1px solid white;
+	position: absolute;
+	box-sizing: border-box;
+	background: rgba(0,0,0,.8);
+	padding: 75px 0 0 8px;
+}
+#drawer .left span{
+	font-size:20px;
+	color: white;	
+}
+#drawer .left span:hover{
+	cursor: pointer;
+}
+/*----抽屈效果结果----*/

@@ -97,18 +97,18 @@
 		return Math.random() * (max - min) + min;
 	}
 	var drops = [];
-	var dLen = 30;
-	//drops.length = 50;//这里不要预设长度，否则后面添加的时候，就是从51开始
+	var dLen = 400;
+	//drops.length = 50;//这里不要预设长度，否则后面添加的时候，就是从51开始	
 	for(var i = 0; i < dLen; i++){
-		//每个雨滴间隔一定时间创建
-		setTimeout(function(){
-			var drop = new Drop();
-			drop.init();
-			drops.push(drop);
-		}, i * 200);		
-	}
+	 	//每个雨滴间隔一定时间创建
+	 	setTimeout(function(){
+	 		var drop = new Drop();
+	 		drop.init();
+	 		drops.push(drop);
+	 	}, i * 200);		
+	}	
 
-	setInterval(function() {
+	/*setInterval(function() {
 		//1. 清空所有内容，重新绘制
 		//ctx.clearRect(0, 0, w, h);
 		//2. 不清空，而是加一个透明层，这样原来的部分就会被遮住一点，可以显示出后面渐变的效果 透明度小一点，这样不会遮挡太多
@@ -120,7 +120,24 @@
 		for(var i = 0; i < drops.length; i++){
 			drops[i].draw();
 		}
-	}, 1000/60);
+	}, 1000/60);*/
+	window.requestAnimationFrame = ( function(){
+		return window.requestAnimationFrame ||
+			window.webkitRequestAnimationFrame ||
+			window.mozRequestAminationFrame ||
+			function(callback){
+				window.setTimeout(callback, 1000/60);
+			};
+	})();
+	function move(){
+		ctx.fillStyle = "rgba(0, 0, 0, .1)";
+		ctx.fillRect(0, 0, w, h);
+		for(var i = 0; i < drops.length; i++){
+			drops[i].draw();
+		}
+		window.requestAnimationFrame(move);
+	}
+	move();
 	//setInterval(drop.update(), 10);
 	//drop.update里面的this会被绑定到window上，所以出现了：Uncaught TypeError: this.draw is not a function at update (index.html:63)
 	//如果浏览器中多个页面都有动画，那么为了提高当前页面的性能，会放慢隐藏的页面的定时器

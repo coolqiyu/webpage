@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CSS特效</title>
+	<link rel="stylesheet" type="text/css" href="./css/1.css">
+	<style>
+
+	</style>
+</head>
+<body>
+	<div id="rectTrans">
+		<div class="twoRect">
+			<div class="rect1"></div>
+			<div class="rect2"></div>
+		</div>
+	</div>
+	<div id="drawer">
+		<div class="content">
+			<div class="content1">
+				<div class="left">
+					<span>爱新鲜</span>
+				</div>
+				<div class="right"></div>
+			</div>
+			<div class="content2">
+				<div class="left">
+					<span>一衣多穿</span>
+				</div>
+				<div class="right"></div>
+			</div>
+			<div class="content3">
+				<div class="left">
+					<span>评测擂台</span>
+				</div>
+				<div class="right"></div>
+			</div>
+			<div class="content4">
+				<div class="left">
+					<span>达人心经</span>
+				</div>
+				<div class="right"></div>
+			</div>
+			<div class="content5">
+				<div class="left">
+					<span>大咖专场</span>
+				</div>
+				<div class="right"></div> 
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	/*====两个矩形变形====*/
+		var parent = document.getElementById('rectTrans');
+		var node = document.getElementsByClassName('twoRect')[0];
+		for(var i = 0; i < 64; i++){
+		// 复制第一个node，第一个node设置为display:none，新的appendChild
+		var newNode = node.cloneNode(true);
+		newNode.style.display = "block";
+		parent.appendChild(newNode);
+	}
+	/*====抽屈效果====*/
+	//中间整个内容的部分
+	var content = document.getElementsByClassName('content')[0];
+	var cWidth = content.clientWidth;
+	//不用childNodes，它也会获取到非真正的子节点
+	var subContents = content.children;
+	var subContentsLen = subContents.length;
+	//事件委托
+	content.addEventListener("click", function(e){
+		// eIndex = subContents.indexOf(eTarget.parentNode.parentNode);没有indexOf方法
+		/*
+		1. eParent.style.left 要内联设置style = "width: 20px" 时才能获得 20px
+		2. eParent.clientWidth  内联设置；style设置  获得20数值
+		3. eParent.offsetLeft  只读，和左侧的偏移量，与style.left值一样
+		*/
+		var eTarget = e.target;//点击的目标
+		var eParent = eTarget.parentNode.parentNode;
+		if(eTarget.parentNode.className == 'left'){
+			var i;
+			//目标在左侧，左侧的部分要左移
+			if(eParent.offsetLeft < 200){	
+				i = subContentsLen - 1;	
+				while(subContents[i] != eParent){
+					subContents[i].style.left = cWidth - (subContentsLen - i) * 40 + "px";
+					// 添加过度效果
+					subContents[i].style.transition = "left 1s";
+					i--;
+				}
+			}
+			//目标在右侧，右侧的部分也要右移
+			else{				
+				i = 0;
+				while(subContents[i] != eParent){
+					subContents[i].style.left = 40 * i + "px";
+					subContents[i].style.transition = "left 1s cubic-bezier(1, 1, 0, 0)";
+					i++;
+				}
+				eParent.style.left = 40 * i + "px";
+				eParent.style.transition = "left 1s cubic-bezier(1, 1, 0, 0)";	
+			}
+		}
+	});
+</script>
+</body>
+</html>
