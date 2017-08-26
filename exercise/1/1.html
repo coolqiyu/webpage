@@ -49,8 +49,11 @@
 			</div>
 		</div>
 	</div>
+	<div id="gradient">
+		定时背景色渐变
+	</div>
 	<script type="text/javascript">
-	/*====两个矩形变形====*/
+		/*====两个矩形变形====*/
 		var parent = document.getElementById('rectTrans');
 		var node = document.getElementsByClassName('twoRect')[0];
 		for(var i = 0; i < 64; i++){
@@ -60,6 +63,13 @@
 		parent.appendChild(newNode);
 	}
 	/*====抽屈效果====*/
+	/*
+	1. postion: absolute
+	2. overflow: hidden
+	3. left修改，offsetLeft
+	4. transition过渡
+	5. addEventListener事件委托
+	*/
 	//中间整个内容的部分
 	var content = document.getElementsByClassName('content')[0];
 	var cWidth = content.clientWidth;
@@ -101,6 +111,70 @@
 			}
 		}
 	});
-</script>
+	/*====渐变，利用定时器====*/
+	/*
+	问题：
+	1. 如果把rgb设置到background中？
+	- color = [r, g, b] 把rgb用数组表示，可独立修改
+	- 把color数组转换成16进制，这样可直接赋值
+	2. 何时修改？
+	- 定时器
+	*/
+	var gradient = document.getElementById("gradient");
+	var max = 220;
+	var min = 180;
+	var color = [max, min, min];//初始值
+	var length = color.length;
+	var colorL, colorR;//从左到右的颜色点
+	setInterval(changeColor, 20);
+	function changeColor(){
+		/*颜色变化规则
+		第一类
+		(G==255&&B==0){R++;} 1,2=>0
+		(B==255&&R==0){G++;} 2,0=>1
+		(R==255&&G==0){B++;} 0,1=>2
+		第二类		 
+		(G==0&&B==255){R--;}
+		(B==0&&R==255){G--;}
+		(R==0&&G==255){B--;}
+		*/
+		for(var i = 0; i < length; i++){
+			i %= length;
+			//根据第一位寻找后面两个
+			var i1 = (i + 1) % length;
+			var i2 = (i + 2) % length;
+			//第一类
+			if(color[i] == max && color[i1] == min){
+				color[i2]++;
+			}
+			//第二类
+			else if(color[i] == min && color[i1] == max){
+				color[i2]--;
+			}
+			//把color数组转换成16进制
+			colorL = '#' + convert(color[0]) + convert(color[1]) + convert(color[2]);
+			colorR = '#' + convert(color[2]) + convert(color[0]) + convert(color[1]);
+			//这里需要判断不同的浏览器
+			gColor(colorL, colorR);
+		}
+	}
+	// 把10进制color转换成16进制
+	function convert(color){
+		var str = color.toString(16);
+		//除了上一步直接转换成16进制串外，还要保证长度两位，不足的用0来补
+		return str.length == 2 ? str : 0 + str;
+	}
+	function gColor(colorL, colorR){
+		if(navigator.userAgent.match(/Trident/i) && navigator.userAgent.match(/MSIE [7|8|9].0/i)){
+			//通过正则检测浏览器信息是否是ie 并且 ie版本是不是 7或者8或者9 之一
+			gradient.style.filter = "progid:DXImageTransform.Microsoft.gradient( startColorstr=" + colorL + ", endColorstr=" + colorR + ",GradientType=0 )";
+		}else{
+				gradient.style.background='-webkit-linear-gradient(left,'+colorL+','+colorR+')' //谷歌
+				gradient.style.background='-ms-linear-gradient(left,'+colorL+','+colorR+')'  //ie 10 11
+				gradient.style.background='-moz-gradient(left,'+colorL+','+colorR+')'  //firefox
+				}
+			}
+		}
+	</script>
 </body>
 </html>

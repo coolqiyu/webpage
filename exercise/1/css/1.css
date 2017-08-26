@@ -134,4 +134,32 @@
 #drawer .left span:hover{
 	cursor: pointer;
 }
-/*----抽屈效果结果----*/
+/*----抽屈效果结束----*/
+/*----背景渐变开始----*/
+#gradient{
+	width: 100%;
+	height: 500px;
+	background: -webkit-linear-gradient(left, rgb(180, 206, 220), rgb(220, 180, 206));
+	background: -moz-linear-gradient(left, rgb(180, 206, 220), rgb(220, 180, 206));
+	background: linear-gradient(left, rgb(180, 206, 220), rgb(220, 180, 206));
+}
+/*颜色变动跳跃*/
+@keyframes gradientFrame{
+	0%{
+
+	}
+	25%{
+		background: -webkit-linear-gradient(left, blue, red);
+	}
+	50%{
+		background: -webkit-linear-gradient(left, yellow, blue);
+	}
+	75%{
+		background: -webkit-linear-gradient(left, purple, yellow);
+	}
+	100%{
+		background: -webkit-linear-gradient(left, blue, purple);
+	}	
+}
+
+/*----背景渐变结束----*/
