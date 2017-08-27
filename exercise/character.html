@@ -1,4 +1,4 @@
-1. 模块化开发
+<!-- 1. 模块化开发
 - 避免全局变量
 - 低耦合
 - 使用命名空间{}，添加各个模块
@@ -13,4 +13,101 @@ Canvas.anim = {};
 Canvas.//字线爆炸
 //作者：xx
 //最后更新：2017.8.01
-Canvas.banner = {};
+Canvas.banner = {}; -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>character bomb</title>
+	<style>
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	#canvas{
+		width: 1000px;
+		height: 1000px;
+		overflow: hidden;
+		background: black;
+	}
+	</style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+	<script type="text/javascript">
+	var Canvas = {};
+	//字母爆炸
+	//作者：zll
+	//最后更新：2017/08/27
+	Canvas.chrBomb = {};
+	Canvas.chrBomb.width = window.innerWidth;
+	Canvas.chrBomb.height = window.innerHeight;
+	//alert(Canvas.chrBomb.width + "   " + Canvas.chrBomb.height);
+	Canvas.chrBomb.canvas = document.getElementById('canvas');
+	// 如果不是在这里设置宽、高，canvas上画不出图像
+	// Canvas.chrBomb.canvas.width = Canvas.chrBomb.width;
+	// Canvas.chrBomb.canvas.height = Canvas.chrBomb.height;
+	alert(Canvas.chrBomb.canvas.width + "  " + Canvas.chrBomb.canvas.height); 
+	Canvas.chrBomb.ctx = Canvas.chrBomb.canvas.getContext("2d");
+	Canvas.chrBomb.particals = [];
+	Canvas.chrBomb.chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	Canvas.chrBomb.num = 2;
+	//粒子的构造函数
+	Canvas.chrBomb.partical = function(ctx, chars){
+		this.init(ctx, chars);
+	};
+	//粒子的原型
+	Canvas.chrBomb.partical.prototype = {
+		init: function(ctx, chars){
+			this.ctx = ctx;
+			this.x = Canvas.chrBomb.width / 2;//起始位置x
+
+			this.y = Canvas.chrBomb.height;//起始位置y
+			//this.chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; 要显示的字母
+			this.char = chars[Math.floor(Math.random() * chars.length)];
+			this.speedX = Math.floor(Math.random() * 20 + 1);//x方向速度
+			this.speedY = Math.floor(Math.random() * 20 + 1);//y方向速度
+			this.direct = Math.floor(Math.random()) == 0? 0:1;//向左还是向右
+		},
+		draw: function(ctx){
+			ctx.fillStyle = "blue";
+			ctx.font="50px Arial";
+			//alert(this.char + "  " + this.x + "   " + this.y);
+			ctx.fillText(this.char,this.x, this.y);
+			//ctx.fillText("A",100, 100);
+			//.update();
+		},
+		update: function(){
+			//更新坐标位置
+			if(this.direct){
+				this.x += this.speedX;
+			}
+			else{
+				this.x -= this.speedX;
+			}
+			this.Y -= this.speedY;
+		}
+	};
+	Canvas.chrBomb.charGen = function(){
+		// var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		// var num = 20;
+		//生成num个粒子
+		for(var i = 0; i < Canvas.chrBomb.num; i++){
+			Canvas.chrBomb.particals.push(new Canvas.chrBomb.partical(Canvas.chrBomb.ctx, Canvas.chrBomb.chars));			
+		}
+	};
+	Canvas.chrBomb.charEmit = function(){
+		Canvas.chrBomb.ctx.fillStyle = "blue";
+			// Canvas.chrBomb.ctx.font="100px Arial";
+			// Canvas.chrBomb.ctx.fillText("A",30, 300);
+			// Canvas.chrBomb.ctx.fillText("B",30, 300);
+			// Canvas.chrBomb.ctx.fillText("C",30, 300);
+		for(var i = 0; i < Canvas.chrBomb.num; i++){
+			Canvas.chrBomb.particals[i].draw(Canvas.chrBomb.ctx);
+		}
+	};
+	Canvas.chrBomb.charGen();	
+	setInterval(Canvas.chrBomb.charEmit, 30);
+	</script>
+</body>
+</html>
