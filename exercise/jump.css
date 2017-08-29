@@ -1,0 +1,233 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+html, body{
+	/*没有默认的高度，要html和body都设置才能让container的100%起作用*/
+	height: 100%;
+	background: black;
+	overflow: hidden;
+}
+#container{		
+	width: 100%;
+	height: 100%;
+	margin-top: 50%;
+	margin-left: 50%;
+	position: relative;
+	transform: translateX(-50%) translateY(-50%);
+}
+.squar{
+	width: 50px;
+	height: 50px;
+	position: absolute;
+}
+.s1{
+	background: red;
+	animation: squar 1s infinite;
+}
+.s2{
+	background: blue;
+	left: 80px;
+	animation: squar 1s 0.1s infinite;
+}
+.s3{
+	background: red;
+	left: 160px;
+	animation: squar 1s 0.2s infinite;
+}
+.s4{
+	background: blue;
+	left: 240px;
+	animation: squar 1s 0.3s infinite;
+}
+.s5{
+	background: red;
+	left: 320px;
+	animation: squar 1s 0.4s infinite;
+}
+.s6{
+	background: blue;
+	left: 400px;
+	animation: squar 1s 0.5s infinite;
+}
+.s7{
+	background: red;
+	left: 480px;
+	animation: squar 1s 0.6s infinite;
+}
+.s8{
+	background: blue;
+	left: 560px;
+	animation: squar 1s 0.7s infinite;
+}
+.s9{
+	background: red;
+	left: 640px;
+	animation: squar 1s 0.8s infinite;
+}
+.s10{
+	background: blue;
+	left: 720px;
+	animation: squar 1s 0.9s infinite;
+}
+@keyframes squar{
+	0%{
+		top: 0;
+	}
+	10%{
+		top: 10px;
+		transform: rotateZ(-10deg);
+		border-radius: 10px;
+	}
+	20%{
+		top: 50px;
+		transform: rotateZ(-30deg);
+		border-radius: 15px;
+	}
+	30%{
+		top: 70px;
+		transform: rotateZ(30deg);
+		border-radius: 25px;
+	}
+	40%{
+		top: 120px;
+		transform: rotateZ(30deg);
+		border-radius: 35px;
+	}
+	50%{
+		top: 180px;
+		transform: rotateZ(30deg);
+		border-radius: 40px;
+	}
+	60%{
+		top: 120px;
+		transform: rotateZ(0deg);
+		border-radius: 35px;
+	}
+	70%{
+		top: 70px;
+		transform: rotateZ(-30deg);
+		border-radius: 25px;
+	}
+	80%{
+		top: 50px;
+		transform: rotateZ(10deg);
+		border-radius: 15px;
+	}
+	90%{
+		top: 10px;
+		transform: rotateZ(60deg);
+		border-radius: 10px;
+	}
+	100%{
+		top: 5px;
+		transform: rotateZ(30deg);
+		border-radius: 0px;
+	}
+}
+/*@keyframes squar2{
+	0%{
+		top: 10px;
+		transform: rotateZ(-10deg);
+		border-radius: 10px;
+	}
+	10%{
+		top: 50px;
+		transform: rotateZ(-30deg);
+		border-radius: 15px;
+	}
+	20%{
+		top: 70px;
+		transform: rotateZ(30deg);
+		border-radius: 25px;
+	}
+	30%{
+		top: 120px;
+		transform: rotateZ(30deg);
+		border-radius: 35px;
+	}
+	40%{
+		top: 180px;
+		transform: rotateZ(30deg);
+		border-radius: 40px;
+	}
+	50%{
+		top: 120px;
+		transform: rotateZ(0deg);
+		border-radius: 35px;
+	}
+	60%{
+		top: 70px;
+		transform: rotateZ(-30deg);
+		border-radius: 25px;
+	}
+	70%{
+		top: 50px;
+		transform: rotateZ(10deg);
+		border-radius: 15px;
+	}
+	80%{
+		top: 10px;
+		transform: rotateZ(60deg);
+		border-radius: 10px;
+	}
+	90%{
+		top: 5px;
+		transform: rotateZ(30deg);
+		border-radius: 0px;
+	}
+	100%{
+		top: 0;
+	}
+}
+@keyframes squar3{
+	10%{
+		top: 50px;
+		transform: rotateZ(-30deg);
+		border-radius: 15px;
+	}
+	20%{
+		top: 70px;
+		transform: rotateZ(30deg);
+		border-radius: 25px;
+	}
+	30%{
+		top: 120px;
+		transform: rotateZ(30deg);
+		border-radius: 35px;
+	}
+	40%{
+		top: 180px;
+		transform: rotateZ(30deg);
+		border-radius: 40px;
+	}
+	50%{
+		top: 120px;
+		transform: rotateZ(0deg);
+		border-radius: 35px;
+	}
+	60%{
+		top: 70px;
+		transform: rotateZ(-30deg);
+		border-radius: 25px;
+	}
+	70%{
+		top: 50px;
+		transform: rotateZ(10deg);
+		border-radius: 15px;
+	}
+	80%{
+		top: 10px;
+		transform: rotateZ(60deg);
+		border-radius: 10px;
+	}
+	90%{
+		top: 5px;
+		transform: rotateZ(30deg);
+		border-radius: 0px;
+	}
+	100%{
+		top: 0;
+	}
+}
+*/
