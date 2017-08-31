@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>sdfslk</title>
+    <style>
+        .outer{
+            width: 400px;
+            height: 300px;
+            position: relative;
+            z-index:1;
+            overflow:hidden;
+        }
+        .inner{
+            width:100%;
+            height:100%;
+            position: absolute;
+        }
+        .inner:nth-child(1){
+            background:blue;
+        }
+        .inner:nth-child(2){
+            background:black;
+        }
+        .ulDiv{
+            position: absolute;
+            right: 10px;
+            bottom: 5px;
+            overflow: hidden;
+        }
+        .ulDiv li{
+            display: inline-block;
+            width: 20px;
+            height:20px;
+            background: gray;
+        }
+        .ulDiv   .liDefault{
+         cursor: pointer;
+     }
+     .ulDiv .liHover{
+        background: red;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+    <div class="outer">
+        <div class="inner">
+        </div>
+        <div class="inner" style="z-index:-1">
+        </div>
+        <div class="ulDiv">
+            <ul>
+                <li class="liHover">1</li>
+                <li class="liDefault">2</li>
+            </ul>
+        </div>
+        
+    </div>
+    <script>
+
+
+        var ul = document.getElementsByTagName('ul')[0];
+        var lis = ul.children;
+        var innerDivs = document.getElementsByClassName('inner');
+        var liLen = lis.length;
+        var index = 0, bfIndex = -1;
+        var ddefault="liDefault", hover="liHover";
+/*0： 上， 1：下， 2：左，  3：右
+图片消失*/
+function fadeMove(obj, direct){
+    var len;
+    if(direct == 0)
+    	len = obj.clientHeight;
+    obj.style.transform = "translateY("+len+"px)";
+    obj.style.transition = "transform 2s";
+}
+/*改变序号样式*/
+function changeIndex(){
+    if(bfIndex != -1){
+       var str = lis[bfIndex].getAttribute('class');
+       str = str.replace(hover, ddefault);
+       lis[bfIndex].setAttribute('class', str);
+   }
+   str = lis[index].getAttribute('class');
+   str = str.replace(ddefault, hover);
+   lis[index].setAttribute('class', str);
+   
+   
+}
+/*轮播时使用*/
+function change(){
+	if(index == liLen){
+       index = 0;
+   }
+   fadeMove(innerDivs[index], 0);
+   changeIndex();
+   bfIndex = index;
+   index++;
+}
+
+setInterval(function(){ change()}, 30)
+</script>
+</body>
+</html>
