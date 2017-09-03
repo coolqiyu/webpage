@@ -4,40 +4,44 @@
 	<meta charset="UTF-8">
 	<title>轮播图</title>
 	<link rel="stylesheet" href="carousel.css">
-	<style>
-		#dd:hover{
-			transform: translateY(50px); transition: transform 4s;
-		}
-	</style>
 	<script type="text/javascript" src = "carousel.js"></script>
 </head>
 <body>
-	<div id="dd" style="width:200px; height: 200px; background: red;  position: absolute; z-index: -1; top:300px;"></div>
 	<div id = "container">
 		<!-- 放置轮播的图 -->
-		<!-- <div class="bgs" style="transform: translateX(-4*6700px)"> -->
-			<div class="bg"></div>
-			<div class="bg"></div>
-			<div class="bg"></div>
-			<div class="bg"></div>
-			<div class="bg"></div>
-			
-			<div class="bg"></div
-		<!-- </div> -->
-		<!-- 下标 -->
-		<div class="index">
-			<ul>
-				<li class="_hover">1</li>
-				<li class="_li">2</li>
-				<li class="_li">3</li>
-				<li class="_li">4</li>
-				<li class="_li">5</li>
-				<li class="_li">6</li>
-			</ul>
+		<div id="list" style="top: -240px">
+			<img src="./images/6.jpg">
+			<img src="./images/1.jpg">
+			<img src="./images/2.jpg">
+			<img src="./images/3.jpg">
+			<img src="./images/4.jpg">
+			<img src="./images/5.jpg">
+			<img src="./images/6.jpg">
+			<img src="./images/1.jpg">
 		</div>
+		<!-- 下标 -->
+		<!-- 为每个span自定义属性index -->
+		<div id = "index">			
+			<span index = "1" class = "on">1</span>
+			<span index = "2">2</span>
+			<span index = "3">3</span>
+			<span index = "4">4</span>
+			<span index = "5">5</span>
+			<span index = "6">6</span>
+		</div>
+		<a id = "prev" href="javascript: void(0)">&lt;</a>
+		<a id = "next" href="javascript: void(0)">&gt;</a>
 	</div>
-	<script type="text/javascript">
-		init('_li', '_hover');
-	</script>
 </body>
 </html>
+
+<!-- 1. 布局  container,list,5个图
+左/右两个按钮
+下面5个小按钮
+2. 优化：当动画未完成时，不允许点击切换
+3. 对container:hover .左/右{display:block}
+鼠标移到container时，才显示左/右两个按钮
+4. 轮播大法：
+加两个辅助图：切换时先切到辅助图上，再修改left值
+5. 动画设置，不用tansition，而是自己写一个函数，设置每次修改left的值是多少 
+6. 自定义属性  index  用obj.getAttribute('index')来获得 -->

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	ul{
+		width: 400px;
+		margin: auto;
+	}
+	ul li{
+		height: 50px;
+		background-color: green;
+		margin-bottom: 5px;
+		list-style: none;
+	}
+	</style>
+</head>
+<body>
+	<script type="text/javascript">
+	//window.onload文件加载完毕，包括img(src)
+	window.onload = function(){
+	};
+	</script>
+	<div id="box">box</div>
+	<!-- 动态方法 -->
+	<ul>
+	<li class = 'a'></li>
+	<li class = 'a'></li>
+	<li class = 'a'></li>
+	<li class = 'a'></li>
+	<li class = 'a'></li>
+	</ul>
+</body>
+
+<script type="text/javascript">
+	//===========动态方法=========
+	var oBox = docuement.getElementById('box');
+	oBox.id = 'aa';
+	//如果在这修改id属性，下面依然有效
+	//getElementById是静态方法，id改完以后，它不会重新获取
+	//只有Byid和querySelector和torAll是静态的.
+	oBox.style.background = 'red';
+
+	var ali = docuement.getElementsByClassName('a');
+	ali[0].className = 'bbb';
+	alert(ali.length);//原来li是有5个，改后就变成4个
+	//getElementsByClassName是动态方法，在每次访问ali时，会重新用getElementsByClassName获取
+	//一般获取集合的是动态方法
+	//=======获取一些特别的标签==========
+	var title = document.title;//直接得到title的内容
+	var head = document.head;//一个对象
+	var body = document.body;//一个对象
+	//========自定义属性===========
+	alert(oBox.abc);//如果在<div abc='abc'></div>加一个属性abc，这里是无法获取的，undefined
+	oBox.aaa = "aaa";//自定义属性，不会出现在html中 ，可以用oBox.aaa访问
+	//========两种函数：有名，匿名=====
+	//function(){};//匿名函数不能这样直接写
+	function aaa(){
+		alert('ok');
+		//默认return undefined;
+	}
+	alert(aaa.name);//返回函数名称 aaa
+	alert(aaa);//返回函数所有的定义
+	function a = function(){};
+	alert(a.name);//a
+	var fn3 = function bbb(){alert('content')};
+	fn3();//可执行
+	bbb();//不可执行  bbb is not defined
+	alert(fn3.name);//这个是bbb！
+
+	//=======函数和方法=====
+	function fun(){
+		alert('函数');
+	}
+	obj.method = function(){
+		alert('方法');
+	}
+	obj.method();
+	//=====事件属性========
+	//onmouseenter，onmouseleave不会冒泡，不会被子元素捕获
+	//鼠标事件，键盘事件，表单事件，系统事件
+</script>
+</html>
