@@ -17,7 +17,7 @@
 	/*这里不设置overflow:hidden*/
 }
 #list img{
-	width: 100%;
+	width: 670px;
 	height: 240px;
 	margin-bottom: -4px;/*img之间有缝隙*/
 }
@@ -75,4 +75,24 @@
 }
 #container #next{
 	right: 10px;
+}
+#leaveType{
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+}
+
+#leaveType span{
+	padding: 10px;
+	background: black;
+	color: white;
+}
+#leaveType span:hover{
+	cursor: pointer;
+/*	span无法完成下面的动画*/
+/*	transform: rotateZ(360deg);
+	transition: transform 2s;*/
+}
+#leaveType .selected{
+	background: green;
 }
