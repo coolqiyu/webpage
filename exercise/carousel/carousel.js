@@ -151,33 +151,29 @@ window.onload = function(){
 		console.log('animate');
 		/*添加移出的动画*/
 		var duration = leaveType[2];//动画时长
-		var interval = 500;//每次的时间间隔
+		var interval = 100;//每次的时间间隔
 		var step = offset / (duration / interval);//每次的步长
-
 		var newPos = parseInt(list.style[leaveType[0]]) + offset;
 		//递归调用go来完成动画过程
-		function go(){
-			console.log('go');
-			if((step < 0 && parseInt(list.style[leaveType[0]]) > newPos)//变小
-				|| (step > 0 && parseInt(list.style[leaveType[0]]) < newPos)){//变大
-				list.style[leaveType[0]] = parseInt(list.style[leaveType[0]]) + step + 'px';
+		function go(){			
+			//parseFloat 不能用parseInt，会损失精度，导致最后移动的距离不正确
+			if((step < 0 && parseFloat(list.style[leaveType[0]]) > newPos)//变小
+				|| (step > 0 && parseFloat(list.style[leaveType[0]]) < newPos)){//变大
+				list.style[leaveType[0]] = parseFloat(list.style[leaveType[0]]) + step + 'px';
 				animated = true;
-				//console.log('gon on');
-				//切换后，这个定时器没有起作用，直接退出??????
 				timer2 = setTimeout(go, interval);
 			}
 			//移动到目标位置，对top值再修改，以实现无限轮播
 			//动画移到到辅助图上，然后修改top值，无动画，这样不会有切换的感觉
 			else{
-				console.log('go finish');
 				animated = false;
 				if(newPos <= -(count + 1) * imgSize[leaveType[1]])
 					newPos = -imgSize[leaveType[1]];
 				else if(newPos > -imgSize[leaveType[1]])
 					newPos = -count * imgSize[leaveType[1]];
 				list.style[leaveType[0]] = newPos + 'px';
+				//clearTimeout(timer2);//不用移除timeout计时器
 			}
-			console.log('stop go');
 		}
 		go();
 	}
@@ -232,7 +228,7 @@ window.onload = function(){
 	//点击prev，显示上一图
 	prev.onclick = function(){
 		if(animated)
-			return;
+			return;				
 		animate(imgSize[leaveType[1]]);
 		index--;
 		if(index == 0)
@@ -242,9 +238,9 @@ window.onload = function(){
 	//点击next，显示下一图
 	next.onclick = function(){
 		if(animated)
-			return;
+			return;		
 		animate(-imgSize[leaveType[1]]);
-		index++;
+		index++;		
 		if(index > count)
 			index = 1;
 		showButton();
@@ -264,10 +260,20 @@ window.onload = function(){
 	// 设置切换的类型
 	for(var i = 0; i < types.length; i++){
 		types[i].onclick = function(){
-			console.log('i click');
+			//停止原来的动画
 			clearTimeout(timer2);
-//			clearInterval(timer);
+			clearInterval(timer);			
 			animated = false;
+			//改变button样式
+			for(var j = 0; j < types.length; j++){
+				if(types[j].className){
+					types[j].className = '';
+					break;
+				}
+			}
+			this.className = "selected";
+
+			//为处理不同的移出方式，重置图像位置
 			var type = this.getAttribute('type');
 			leaveType = leaveTypes[type];
 			if(type == "right"){//向右移出
@@ -281,15 +287,15 @@ window.onload = function(){
 				list.style.height = imgSize['height'] + 'px';				
 			}
 			else if(type == "up"){//向上移出
-				for(var j = 0; j < cnt; j++){
-					imgs.style.float = "";
+				for(var j = 0; j < count + 2; j++){
+					imgs[j].style.float = "";
 				}
 				//重置位置
 				list.style.top = -imgSize['height'] + 'px';
 				list.style.left = '';
-				list.style.width = imgSize['height'] * (count + 2) + 'px';
-				list.style.height = imgSize['width'] + 'px';					
-			}
+				list.style.height = imgSize['height'] * (count + 2) + 'px';
+				list.style.width = imgSize['width'] + 'px';					
+			}			
 			index = 1;
 			showButton();
 			container.onmouseout();
