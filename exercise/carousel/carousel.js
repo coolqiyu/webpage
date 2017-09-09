@@ -97,7 +97,9 @@ window.onload = function(){
 		"height": imgs[0].clientHeight
 	};
 	/*切换小按钮*/
-	var buttons = document.getElementById('index').children;
+	// 不要直接用children，如果修改html，就会找不到想要的
+	var buttons = document.getElementById('index').getElementsByTagName('span');
+	var thumbnails = document.getElementById('index').getElementsByTagName('img');
 	var count = buttons.length;
 	/*左右两个按钮*/
 	var prev = document.getElementById('prev');
@@ -192,7 +194,7 @@ window.onload = function(){
 		//2. 遍历找到原来的on，清空并退出循环
 		for(var i = 0; i < count; i++){
 			if(buttons[i].className == "on"){
-				buttons[i].className = '';
+				buttons[i].className = '';				
 				break;
 			}
 		}
@@ -223,6 +225,15 @@ window.onload = function(){
 			index = myIndex;
 			showButton();
 		};
+		buttons[i].onmouseenter = function(){
+			//this 是当前被点击的对象
+			var myIndex = parseInt(this.getAttribute('index'));
+			thumbnails[myIndex - 1].style.display = 'block';
+
+			this.onmouseleave = function(){
+				thumbnails[myIndex - 1].style.display = 'none';
+			}
+		}
 	}
 
 	//点击prev，显示上一图

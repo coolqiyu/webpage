@@ -29,6 +29,37 @@
 	left: 50%;
 	transform: translateX(-50%);
 }
+#index img{
+	position: absolute;
+	width: 100px;
+	height: 50px;
+	bottom: 25px;
+}
+
+#index img:nth-child(1){
+	display: none;
+	left: -40px;
+}
+#index img:nth-child(2){
+	display: none;
+	left: -10px;
+}
+#index img:nth-child(3){
+	display: none;
+	left: 25px;
+}
+#index img:nth-child(4){
+	display: none;
+	left: 50px;
+}
+#index img:nth-child(5){
+	display: none;
+	left: 75px;
+}
+#index img:nth-child(6){
+	display: none;
+	left: 110px;
+}
 #index span{
 	display: inline-block;
 	width: 24px;
@@ -45,6 +76,7 @@
 }
 #index .on{
 	background: blue;
+	/*可以嵌套其它选择器的样式？*/
 }
 /*左右两个按钮*/
 #container a{
