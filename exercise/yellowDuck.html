@@ -144,14 +144,37 @@
 			border-radius: 120% 120% 20% 20%/150% 150% 20% 20%;
 			box-sizing: border-box;
 		}
-		#body::before{
+		#water-level{
 			position: absolute;
 			width: 400px;
 			height: 200px;
+			top: 100px;
+			left: -50px;
+			background: #2196f3;
+			opacity: .5;
+			animation: waterFrame 4s infinite reverse;
+		}
+		#water-level::after{
+			width: 500px;
+			height: 200px;
 			display: block;
 			content: '';
-			background: rgba(33, 150, 243, .3);
-			box-shadow: 
+			position: absolute;			
+			border-radius: 100%;
+			top: -240px;
+			left: -95px;
+			border: 40px solid #2196f3;		
+		}
+		@keyframes waterFrame{
+			20%{
+				transform: translateY(-5%) rotateZ(3deg);
+			}
+			50%{
+				transform: translateY(0) rotateZ(0);
+			}
+			80%{
+				transform: translateY(5%) rotateZ(-3deg);
+			}
 		}
 		#foot{
 			position: absolute;
@@ -215,6 +238,8 @@
 		<div id = 'body'>
 			<div id = 'wings'>
 			</div>
+			<div id = "water-level">
+			</div>
 		</div>
 		<div id = 'foot'>
 			<div id = 'left'>
@@ -225,3 +250,14 @@
 	</div>
 </body>
 </html>
+<!-- 
+1. 叶子：设置左上和右下的边框，然后旋转 border-radius: 100% 0;
+2. 头部有两个叶子：使用before和after 
+3. 头部的边框样式
+如果直接用border-radius: 50%，只能形成圆形的弧，用border-left-top-radius: 50% 70% 分别设置水平和垂直半径以此形成椭圆
+4. 头部以及身体有向内的阴影：另外设置border，阴影的部分不会占据该区域
+5. 嘴巴前还有一个相似的小部分，需要再添加另外一个div
+6. 水平线，用两个div块构成，div1设置border和border-radius形成圆弧，成为水平弧面。对div2设置透明度，对div1不设置透明度，这样两个之间的重合部分就不会颜色不同。
+因为对原来的设置opacity时，它的after也会设置相应的opacity
+7. 摇头晃脑的动画：rotateZ(3deg) translateY(5%)
+-->
