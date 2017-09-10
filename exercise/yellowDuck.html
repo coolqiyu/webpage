@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CSS小黄鸭</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			background: #2196f3;
+		}
+		body>div{
+			width: 500px;
+			height: 800px;			
+			margin: 0 auto;
+		}
+		#header{
+			width: 200px;
+			margin: 0 auto;
+			animation: headFrame 4s infinite ease reverse;
+		}
+		@keyframes headFrame{			
+			20%{
+				transform: translateY(-5%) rotate(3deg);
+			}
+			50%{
+				transform: translateY(0) rotate(3deg);
+			}
+			80%{
+				transform: translateY(-5%) rotate(-3deg);
+			}
+		}
+		#header #feather{
+			position: relative;
+			height: 60px;
+		}
+		#header #feather::before, #header #feather::after{
+			display: block;
+			position: absolute;
+			width: 50px;
+			height: 60px;
+			content: '';
+			background: rgba(247, 244, 143, 0.99);
+			border-radius: 100% 0;
+		}
+		#header #feather::before{
+			transform: rotateZ(-10deg);
+			left: 115px;
+			top: 30px;
+			z-index: 1
+		}
+		#header #feather::after{
+			transform: rotateZ(50deg);
+			left: 140px;
+			top: 50px;
+			background: #FCE481;
+		}
+		#head{
+			position: relative;
+			width: 100%;
+			height: 200px;
+			border-radius: 150% 150% 200px 200px/200% 200% 200px 200px;/*水平/垂直 可以对一个角给两个*/	
+			background: rgba(247, 244, 143, 0.99);box-shadow: -10px -10px 0 0px #FCE481 inset; border: 10px solid rgba(247, 244, 143, 0.99); box-sizing: border-box
+		}
+		#header .eyes{
+			display: block;
+			position: absolute;
+			z-index: 1;
+			width: 16px;
+			height: 16px;
+			top: 100px;
+			border-radius: 8px;
+			background: #2f3e80;		
+			animation: eyesFrame 2s infinite;	
+			/*margin: auto auto;*//*如果postion为absolut时，这个就无法居中*/ 
+		}
+		@keyframes eyesFrame{			
+			100%{
+				transform: scaleY(-1);
+			}
+		}
+		#header .eyes:nth-child(1){
+			left: 40px;
+		}
+		#header .eyes:nth-child(2){
+			right: 40px;
+		}
+		#header #mouth{
+			position: absolute;
+			width: 120px;
+			height: 30px;
+			top: 130px;
+			left: 50%;
+			transform: translateX(-50%);
+			background: #f3b13a;
+			border-radius: 200% 200% 100% 100%/300% 300% 100% 100%;
+			overflow: hidden;/*如果after的内容超过mouth就会隐藏，所以after应该是在mouth内部的*/
+			/*box-shadow: 0 60px 0 0 orange inset;*/
+		}
+		#header #mouth::after{			
+			width: 40px;
+			height: 10px;
+			/*除content外，要写display才能让after显示，位置与mouth一样*/
+			content: '';
+			display: block;
+			margin: 20px auto;
+			background: #fb7c04;
+			border-radius: 100% 100% 20% 20%/200% 200% 20% 20%;
+		}
+		/*定义后，就是设置position后，相对于没有设置的会出现在它的上层。比如div2在div1后，但是div1设置position:relative，则div2就会在div1在下一层*/
+		#body{
+			position: absolute;
+			z-index: -1;
+			width: 300px;
+			height: 200px;
+			left: 50%;
+			transform: translateX(-50%);
+			margin-top: -70px;
+			background: rgba(247, 244, 143, 0.99);
+			border-radius: 120% 120% 120% 120%/150% 150% 150% 150%;
+			box-sizing: border-box;
+			border: 10px solid rgba(247, 244, 143, 0.99);
+			box-shadow: -20px -20px 0 0 #fbe486 inset;
+			animation: bodyFrame 4s infinite ease reverse;
+		}
+		@keyframes bodyFrame{
+			20%{
+				transform: translateX(-50%) translateY(-5%) rotate(3deg);
+			}
+			50%{
+				transform: translateX(-50%) translateY(0) rotate(3deg);
+			}
+			80%{
+				transform: translateX(-50%) translateY(-5%) rotate(-3deg);
+			}
+		}
+		#body #wings{
+			width: 340px;
+			height: 120px;
+			margin: -10px 0 0 -30px;
+			background: rgba(247, 244, 143, 0.99);
+			border-radius: 120% 120% 20% 20%/150% 150% 20% 20%;
+			box-sizing: border-box;
+		}
+		#body::before{
+			position: absolute;
+			width: 400px;
+			height: 200px;
+			display: block;
+			content: '';
+			background: rgba(33, 150, 243, .3);
+			box-shadow: 
+		}
+		#foot{
+			position: absolute;
+			z-index: -2;
+			margin-top: 100px;
+			height: 40px;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+		#foot>div{
+			display: inline-block;
+			width: 60px;
+			height: 60px;
+			border-radius: 50% 50% 10px 10px;
+			background: orange;
+		}
+		#foot div:first-child{
+			margin-right: 25px;
+			transform: rotateZ(-10deg);
+			animation: leftFrame 4s infinite;
+		}
+
+		#foot div:nth-child(2){
+			margin-left: 25px;
+			transform: rotateZ(10deg);			
+			animation: rightFrame 4s infinite;
+		}
+		@keyframes leftFrame{
+			25% {
+				transform: rotateX(-45deg) rotateZ(0deg);
+			}
+			75% {
+				transform: rotateX(30deg) rotateZ(-20deg);
+			}
+		}
+		@keyframes rightFrame{
+			25% {
+				transform: rotateX(-45deg) rotateZ(0deg);
+			}
+			75% {
+				transform: rotateX(30deg) rotateZ(20deg);
+				z-index: 0;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<div id = 'header'>
+			<div id = 'feather'>		
+			</div>
+			<div id = 'head'>
+				<div class="eyes">
+				</div>
+				<div class="eyes">
+				</div>
+				<div id = "mouth">
+				</div>
+			</div>
+		</div>
+		<div id = 'body'>
+			<div id = 'wings'>
+			</div>
+		</div>
+		<div id = 'foot'>
+			<div id = 'left'>
+			</div>
+			<div id = 'right'>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
