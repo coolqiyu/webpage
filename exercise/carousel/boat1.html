@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>划桨轮播</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			border: 0;
+		}
+		#slide{
+			width: 300px;
+			height: 300px;
+			position: relative;
+			overflow: hidden;
+		}
+		#slide #imgs{
+			width: 1200px;
+			height: 100%;
+			/*transform: translateX(-800px);*/
+			animation: animate 4s infinite;
+		}
+		@keyframes animate{
+			0%{
+				transform: translateX(0px);
+			}
+			30%{
+				transform: translateX(-300px);
+			}
+			60%{
+				transform: translateX(-600px);
+			}
+			100%{
+				transform: translateX(-900px);
+			}
+		}
+		#slide #imgs .img{
+			/*设置成inline-block，换行后，相邻之间就会有间隙，如果外面的设置为900，则空间不够，最后的一个div会被换行*/
+			display: inline-block;
+			width: 300px;
+			height: 100%;
+			margin-right: -4px;
+		}
+		#imgs .img:nth-child(1){
+			background-color: red;
+		}
+
+		#imgs .img:nth-child(2){
+			background-color: blue;
+		}
+
+		#imgs .img:nth-child(3){
+			background-color: green;
+		}
+		#imgs .img:nth-child(4){
+			background-color: red;
+		}
+		#imgs .img:nth-child(5){
+			background-color: yellow;
+		}
+		/*放图片有个问题，它怎么让1.jpg在最上，而后面的在最后？？？*/
+		#index{
+			width: 200px;
+			height: 20px;
+			position: absolute;
+			bottom: 10px;
+			left: 50%;
+			transform: translateX(-50%);
+			z-index: 5;
+		}
+		#index span{
+			position: absolute;
+			display: inline-block;
+			width: 30%;
+			height: 100%;
+			background-color: orange;
+			animation: select 4s infinite;
+		}
+		@keyframes select{
+			0%{
+
+			}
+			30%{
+				transform: translateX(65px);
+			}
+			60%{
+				transform: translateX(130px);
+			}
+			/*100%{
+				transform: translateX(190px);
+			}*/
+		}
+		#index ul{
+			width: 100%;
+			height: 100%;
+		}
+		#index ul li{
+			list-style: none;
+			display: inline-block;
+			width: 30%;
+			height: 100%;
+			background-color: grey;
+		}
+
+		#opacity{
+			width: 300px;
+			height: 300px;
+		}
+		#opacity #imgs{
+			width: 100%;
+			height: 100%;
+			position: relative;
+		}
+		#opacity #imgs .img{
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			z-index: 0;
+			opacity: 0;
+			
+		}
+		#opacity #imgs .img:nth-child(1){
+			animation-delay: -1s;
+		}
+		#opacity #imgs .img:nth-child(2){
+			animation: opacityAnimate 20s infinite alternate;
+			animation-delay: 3s;
+		}
+		#opacity #imgs .img:nth-child(3){
+			animation-delay: 7s;
+		}
+		#opacity #imgs .img:nth-child(4){
+			animation-delay: 11s;
+		}	
+		#opacity #imgs .img:nth-child(5){
+			animation-delay: 15s;
+		}			
+		@keyframes opacityAnimate{
+			0%{
+				opacity: 0;
+				z-index: 2;
+			}
+			50%{
+				z-index: 2;
+				opacity: 1;
+			}
+			/*5%{
+				z-index: 2;
+				opacity: 1;
+			}
+			20%{
+				z-index: 2;
+				opacity: 1;
+			}
+			25%{
+				z-index: 0;
+				opacity: 0;
+			}
+			100%{
+				opacity: 0;
+				z-index: 0;
+			}*/
+		}
+	</style>
+</head>
+<body>
+<div id = 'slide'>
+<!-- 放置图片 -->
+<div id = "imgs">
+<div class = "img"></div>
+<div class = "img"></div>
+<div class = "img"></div>
+<div class = "img"></div>
+
+<!-- 
+<img src = "1.jpg">
+<img src = "2.jpg">
+<img src = "3.jpg"> -->
+</div>
+<div id = "index">
+<span></span>
+<ul>
+<li></li>
+<li></li>
+<li></li>
+</div>
+<!-- 动态添加划桨 -->
+<!-- <div id = 'oars'>
+</div> -->
+</div>
+
+
+<div id = 'opacity'>
+<!-- 放置图片 -->
+<div id = "imgs">
+<div class = "img"></div>
+<div class = "img"></div>
+<!-- <div class = "img"></div>
+<div class = "img"></div>
+<div class = "img"></div> -->
+<!-- 
+<img src = "1.jpg">
+<img src = "2.jpg">
+<img src = "3.jpg"> -->
+</div>
+<div id = "index"  style="width: 0">
+<span></span>
+<ul>
+<li></li>
+<li></li>
+<li></li>
+</div>
+<!-- 动态添加划桨 -->
+<!-- <div id = 'oars'>
+</div> -->
+</div>
+<script type="text/javascript">
+	var o = Date.now();
+	var imgs = document.getElementById('opacity').children[0].children;
+	var time = 1;
+	setInterval(function (){
+		console.log("time: " + time + "=========")
+		for(var i = 0, l = imgs.length; i < l; i++){
+			console.log(i + ":  " + window.getComputedStyle(imgs[i]).zIndex + "   " + window.getComputedStyle(imgs[i]).opacity);
+		}
+		time++;
+	}, 1000);
+
+</script>
+</body>
+</html>
