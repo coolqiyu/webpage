@@ -162,9 +162,9 @@ window.onload = function(){
 			if((step < 0 && parseFloat(list.style[leaveType[0]]) > newPos)//变小
 				|| (step > 0 && parseFloat(list.style[leaveType[0]]) < newPos)){//变大
 				list.style[leaveType[0]] = parseFloat(list.style[leaveType[0]]) + step + 'px';
-				animated = true;
-				timer2 = setTimeout(go, interval);
-			}
+			animated = true;
+			timer2 = setTimeout(go, interval);
+		}
 			//移动到目标位置，对top值再修改，以实现无限轮播
 			//动画移到到辅助图上，然后修改top值，无动画，这样不会有切换的感觉
 			else{
@@ -314,3 +314,52 @@ window.onload = function(){
 	}
 	container.onmouseout();
 }
+
+
+// 划桨式轮播效果
+var oars = document.getElementById('oars');
+var imgs = oars.getElementsByTagName('img');//获取所有图片
+var imgCnt = imgs.length;
+var show = document.getElementById('show');//在这里动态生成划桨
+var cnt = 4;//每一侧分成几块桨
+var w = oars.clientWidth / 2;//桨的宽度
+var h = oars.clientHeight / cnt;//桨的高度
+var imgIndex = 0;//当前显示的是第几张图
+
+//动态生成桨
+for(var i = 0; i < cnt * 2; i++){
+	var div = document.createElement('div');
+	
+	div.style.height = h + 'px';
+	if(i % 2 == 0){//偶数 左侧的桨
+		div.className = 'left-div';
+		div.innerHTML = "<span class = 'front'></span><span class = 'back'></span><span class = 'top'></span><span class = 'right'></span>";
+		div.children[0].style.backgroundPosition = '0 -' + Math.floor(i / 2) * h + 'px';
+		div.children[1].style.backgroundPosition = '0 -' + Math.floor(i / 2) * h + 'px';
+	}
+	else{//奇数 右侧的桨
+		div.className = 'right-div';	
+		div.innerHTML = "<span class = 'front'></span><span class = 'back'></span><span class = 'top'></span><span class = 'left'></span>";
+		div.children[0].style.backgroundPosition = '-' + w + 'px -' + Math.floor(i / 2) * h + 'px';
+		div.children[2].style.backgroundPosition = '-' + w + 'px -' + Math.floor(i / 2) * h + 'px';
+	}
+	div.style.animationDelay = Math.floor(i / 2) * 2 + 's';
+	show.appendChild(div);
+}
+
+//定时任务
+var btn = document.getElementById('btn');
+btn.onclick = function(){
+	var front = show.getElementsByClassName('front');
+	var back = show.getElementsByClassName('back');
+	var newIndex = (imgIndex + 1) % imgCnt;	
+
+	imgs[imgIndex].style.display = 'none';
+
+	//设置桨的背景图片
+	for(var i = 0; i < cnt * 2; i++){
+		front[i].style.backgroundImage = 'url(' + imgs[imgIndex].src + ')';
+		back[i].style.backgroundImage = 'url(' + imgs[newIndex].src + ')';
+	}
+	show.style.display = 'block';
+};
