@@ -117,13 +117,12 @@
 			position: absolute;
 			z-index: 0;
 			opacity: 0;
-			
+			animation: opacityAnimate 3s infinite alternate;
 		}
 		#opacity #imgs .img:nth-child(1){
 			animation-delay: -1s;
 		}
-		#opacity #imgs .img:nth-child(2){
-			animation: opacityAnimate 20s infinite alternate;
+		#opacity #imgs .img:nth-child(2){			
 			animation-delay: 3s;
 		}
 		#opacity #imgs .img:nth-child(3){
@@ -194,7 +193,7 @@
 <!-- 放置图片 -->
 <div id = "imgs">
 <div class = "img"></div>
-<div class = "img"></div>
+<!-- <div class = "img"></div> -->
 <!-- <div class = "img"></div>
 <div class = "img"></div>
 <div class = "img"></div> -->
