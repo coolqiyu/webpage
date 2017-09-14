@@ -333,13 +333,13 @@ for(var i = 0; i < cnt * 2; i++){
 	div.style.height = h + 'px';
 	if(i % 2 == 0){//偶数 左侧的桨
 		div.className = 'left-div';
-		div.innerHTML = "<span class = 'front'></span><span class = 'back'></span><span class = 'top'></span><span class = 'right'></span>";
+		div.innerHTML = "<span class = 'front'></span><span class = 'back'></span><span class = 'bottom'></span><span class = 'right'></span>";
 		div.children[0].style.backgroundPosition = '0 -' + Math.floor(i / 2) * h + 'px';
 		div.children[1].style.backgroundPosition = '0 -' + Math.floor(i / 2) * h + 'px';
 	}
 	else{//奇数 右侧的桨
 		div.className = 'right-div';	
-		div.innerHTML = "<span class = 'front'></span><span class = 'back'></span><span class = 'top'></span><span class = 'left'></span>";
+		div.innerHTML = "<span class = 'front'></span><span class = 'back'></span><span class = 'bottom'></span><span class = 'left'></span>";
 		div.children[0].style.backgroundPosition = '-' + w + 'px -' + Math.floor(i / 2) * h + 'px';
 		div.children[2].style.backgroundPosition = '-' + w + 'px -' + Math.floor(i / 2) * h + 'px';
 	}

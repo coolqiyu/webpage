@@ -150,6 +150,8 @@
 	height: 100%;
 	position: absolute;
 	display: block;
+	transform-style: preserve-3d;
+	perspective: 1000px;
 }
 #oars #show div{
 	width: 50%;
@@ -157,9 +159,8 @@
 	display: inline-block;
 	position: relative;
 	/*不能放在show里面*/
-	transform-style: preserve-3d;
-	perspective: 1000px;
-	transform: rotateY(180deg);	
+	
+	/*transform: rotateY(180deg);	*/
 }
 /*#oars .left-div{
 	float: left;
@@ -175,31 +176,37 @@
 	box-sizing: border-box;
 }
 #oars #show .front{
-	transform: translateZ(30px);	
+	transform: translateZ(10px);	
 }
 #oars #show .back{
-	transform: rotateX(180deg) translateZ(30px);
+	transform: rotateX(180deg) translateZ(px);
 }
-#oars #show .top, #oars .left, #oars .right{
+#oars #show .bottom, #oars .left, #oars .right{
 	background-color: gray;
 }
-#oars #show .top{
-	transform-origin: top;
-	transform: rotateX(-90deg);
+#oars #show .bottom{
+	height: 60px;
+	bottom: 0;
+	transform-origin: bottom;
+	transform: rotateX(90deg);
 }
 #oars #show .right{
+	width: 60px;
+	right: 0;
 	transform-origin: right;
 	transform: rotateY(-90deg); 
 }
 #oars #show .left{
+	width: 60px;
+	left: 0;
 	transform-origin: left;
 	transform: rotateY(90deg); 
 }
 #oars #show .left-div{
-	animation: leftOarFrame 4s 1 alternate;
+	/*animation: leftOarFrame 4s 1 alternate;*/
 }
 #oars #show .right-div{
-	animation: rightOarFrame 4s 1 alternate;
+	/*animation: rightOarFrame 4s 1 alternate;*/
 }
 
 @keyframes leftOarFrame{
