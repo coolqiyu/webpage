@@ -312,7 +312,7 @@ window.onload = function(){
 			container.onmouseout();
 		}
 	}
-	container.onmouseout();
+	//container.onmouseout();
 }
 
 
@@ -321,11 +321,11 @@ var oars = document.getElementById('oars');
 var imgs = oars.getElementsByTagName('img');//获取所有图片
 var imgCnt = imgs.length;
 var show = document.getElementById('show');//在这里动态生成划桨
-var cnt = 4;//每一侧分成几块桨
+var cnt = 6;//每一侧分成几块桨
 var w = oars.clientWidth / 2;//桨的宽度
 var h = oars.clientHeight / cnt;//桨的高度
 var imgIndex = 0;//当前显示的是第几张图
-
+var interval = 300;//每块桨的动画延迟
 //动态生成桨
 for(var i = 0; i < cnt * 2; i++){
 	var div = document.createElement('div');
@@ -340,15 +340,16 @@ for(var i = 0; i < cnt * 2; i++){
 	else{//奇数 右侧的桨
 		div.className = 'right-div';	
 		div.innerHTML = "<span class = 'front'></span><span class = 'back'></span><span class = 'bottom'></span><span class = 'left'></span>";
-		div.children[0].style.backgroundPosition = '-' + w + 'px -' + Math.floor(i / 2) * h + 'px';
-		div.children[2].style.backgroundPosition = '-' + w + 'px -' + Math.floor(i / 2) * h + 'px';
+		div.children[0].style.backgroundPosition = w + 'px -' + Math.floor(i / 2) * h + 'px';
+		div.children[1].style.backgroundPosition = w + 'px -' + Math.floor(i / 2) * h + 'px';
 	}
-	div.style.animationDelay = Math.floor(i / 2) * 2 + 's';
+	// div.style.animationDelay = Math.floor(i / 2) * 0.5 + 's';
 	show.appendChild(div);
 }
 
-//定时任务
 var btn = document.getElementById('btn');
+
+//下一张图点击事件
 btn.onclick = function(){
 	var front = show.getElementsByClassName('front');
 	var back = show.getElementsByClassName('back');
@@ -356,10 +357,57 @@ btn.onclick = function(){
 
 	imgs[imgIndex].style.display = 'none';
 
-	//设置桨的背景图片
+	
 	for(var i = 0; i < cnt * 2; i++){
+		//设置桨的背景图片
 		front[i].style.backgroundImage = 'url(' + imgs[imgIndex].src + ')';
 		back[i].style.backgroundImage = 'url(' + imgs[newIndex].src + ')';
 	}
-	show.style.display = 'block';
+	for(var i = 0; i < cnt * 2; i+= 2){
+		//添加动画，包括延时
+		show.children[i].style.transform = 'rotateX(0deg)';
+		show.children[i+1].style.transform = 'rotateX(0deg)';
+		var time = Math.floor(i / 2) * interval / 1000 + 's';
+		//if(i % 2 == 0)
+			setTime(show.children[i], time, 'leftOarFrame');
+			//show.children[i].style.animation = 'leftOarFrame 3s 1 ' + time;
+			//else
+				setTime(show.children[i+1], time, 'rightOarFrame');
+			//show.children[i].style.animation = 'rightOarFrame 3s 1 ' + time;
+		}
+		show.style.display = 'block';
+		imgIndex = newIndex;
+
+	//动画完成后，修改display属性
+	/*
+	因为下面的图片是延迟进行动画，3000ms只有第一块桨完成动画
+	导致下面桨最后的变化比较突兀
+	因此，应该每一块桨分别设置动画，等所有桨都旋转过来后才做下面的操作，
+	也就是时间除了动画时间还要加上延迟时间
+	setTimeout(function(){
+		show.style.display = "none";	
+		imgs[imgIndex].style.display = 'block';			
+	}, 3000);
+	*/
+	setTimeout(function(){
+		show.style.display = "none";	
+		imgs[imgIndex].style.display = 'block';			
+	}, 3000 + (cnt - 1) * interval);
 };
+
+function setTime(obj, time, frame){
+	//time时间后设置动画
+	obj.time = setTimeout(function(){
+		clearTimeout(obj.time);
+		obj.style.animation = frame + " 3s 1";
+
+		//动画执行完成后，清空动画属性，结束动画 
+		obj.time = setTimeout(function(){
+			//问题：动画执行后，会先回到原来front的图，再改变成back的图
+			//修改：添加下面一行，让动画执行完成后，保持在旋转后的状态
+			obj.style.transform = 'rotateX(180deg)';
+			clearTimeout(obj.time);
+			obj.style.animate = '';		
+		}, 3000);
+	}, time);
+}
