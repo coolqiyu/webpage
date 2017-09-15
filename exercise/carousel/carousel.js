@@ -312,7 +312,7 @@ window.onload = function(){
 			container.onmouseout();
 		}
 	}
-	//container.onmouseout();
+	container.onmouseout();
 }
 
 
@@ -325,7 +325,11 @@ var cnt = 6;//每一侧分成几块桨
 var w = oars.clientWidth / 2;//桨的宽度
 var h = oars.clientHeight / cnt;//桨的高度
 var imgIndex = 0;//当前显示的是第几张图
-var interval = 300;//每块桨的动画延迟
+var interval = 50;//每块桨的动画延迟
+var execTime = 1500;//动画执行时间  ms为单位
+var finish = true;//动画是否已经完成
+var nextBtn = document.getElementById('nextBtn');
+var prevBtn = document.getElementById('prevBtn');
 //动态生成桨
 for(var i = 0; i < cnt * 2; i++){
 	var div = document.createElement('div');
@@ -347,17 +351,26 @@ for(var i = 0; i < cnt * 2; i++){
 	show.appendChild(div);
 }
 
-var btn = document.getElementById('btn');
-
+//上一张图点击事件
+prevBtn.onclick = function(){
+	var newIndex = (imgIndex - 1) >= 0 ? (imgIndex - 1) : (imgCnt - 1);
+	changeImg(newIndex);
+}
 //下一张图点击事件
-btn.onclick = function(){
-	var front = show.getElementsByClassName('front');
-	var back = show.getElementsByClassName('back');
-	var newIndex = (imgIndex + 1) % imgCnt;	
+nextBtn.onclick = function(){
+	var newIndex = (imgIndex + 1) % imgCnt;
+	changeImg(newIndex);
+}
 
+//点击时切换图片——图片设置，以及动画设置
+function changeImg(newIndex){
+	if(!finish)
+		return;
+	finish = false;
+	var front = show.getElementsByClassName('front');
+	var back = show.getElementsByClassName('back');	
 	imgs[imgIndex].style.display = 'none';
 
-	
 	for(var i = 0; i < cnt * 2; i++){
 		//设置桨的背景图片
 		front[i].style.backgroundImage = 'url(' + imgs[imgIndex].src + ')';
@@ -391,15 +404,16 @@ btn.onclick = function(){
 	*/
 	setTimeout(function(){
 		show.style.display = "none";	
-		imgs[imgIndex].style.display = 'block';			
-	}, 3000 + (cnt - 1) * interval);
+		imgs[imgIndex].style.display = 'block';		
+		finish = true;	
+	}, execTime + (cnt - 1) * interval);
 };
 
 function setTime(obj, time, frame){
 	//time时间后设置动画
 	obj.time = setTimeout(function(){
 		clearTimeout(obj.time);
-		obj.style.animation = frame + " 3s 1";
+		obj.style.animation = frame + " " + execTime + "ms 1";
 
 		//动画执行完成后，清空动画属性，结束动画 
 		obj.time = setTimeout(function(){
@@ -408,6 +422,6 @@ function setTime(obj, time, frame){
 			obj.style.transform = 'rotateX(180deg)';
 			clearTimeout(obj.time);
 			obj.style.animate = '';		
-		}, 3000);
+		}, execTime);
 	}, time);
 }
