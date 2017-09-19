@@ -425,3 +425,46 @@ function setTime(obj, time, frame){
 		}, execTime);
 	}, time);
 }
+
+/*3d布局旋转*/
+var _3ddiv = document.getElementById('round-3d');
+var _3dimgs = _3ddiv.children;
+var _3dimgCnt = _3dimgs.length;
+var prev = document.getElementById('prevBtn2');
+var next = document.getElementById('nextBtn2');
+var currIndex = 0;//当前显示的最左侧是哪个
+next.onclick = function(){
+	var tmp = currIndex + 1;
+	_3dimgs[currIndex++].className = '';
+	currIndex = checkIndex(currIndex, _3dimgCnt);
+	_3dimgs[currIndex++].className = 'left';
+	currIndex = checkIndex(currIndex, _3dimgCnt);
+	_3dimgs[currIndex++].className = 'middle';
+	currIndex = checkIndex(currIndex, _3dimgCnt);
+	_3dimgs[currIndex].className = 'right';
+	currIndex = checkIndex(tmp, _3dimgCnt);
+}
+prev.onclick = function(){
+	var tmp = currIndex - 1;
+	currIndex = tmp = checkIndex(tmp, _3dimgCnt);
+	_3dimgs[currIndex++].className = 'left';
+	currIndex = checkIndex(currIndex, _3dimgCnt);
+	_3dimgs[currIndex++].className = 'middle';
+	currIndex = checkIndex(currIndex, _3dimgCnt);
+	_3dimgs[currIndex++].className = 'right';
+	currIndex = checkIndex(currIndex, _3dimgCnt);
+	_3dimgs[currIndex].className = '';
+	currIndex = tmp;
+}
+function checkIndex(current, bound){
+	if(current < 0){
+		current = bound - 1;
+	}
+	else if(current >= bound){
+		current = 0;
+	}
+	return current;
+}
+// for(var i = 0; i < _3dimgCnt; i++){
+// 	_3dimgs[i].style.transform = 'rotateY(-' + i * 360 / imgCnt + 'deg)';
+// }
