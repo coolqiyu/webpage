@@ -1,0 +1,132 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+/*把html的高度设置成100%，可以刚好把整个浏览器填满*/
+/*且可以自适应*/
+/*还有一种方法是通过js来设置*/
+html, body{
+	height: 100%;
+}
+body{
+	position: relative;
+}
+.container{
+	height: 100%;
+	overflow: hidden;
+}
+#container{
+	height: 100%;
+}
+#container>div{
+	height: 100%;
+	position: relative;
+}
+#page1{
+	background-color: rgb(254, 218, 137);
+}
+#container img{
+	position: absolute;
+}
+#page1 .c1{
+	top: 50%;
+	left: 30%;
+}
+#page1 .wheel1{
+	top: 25%;
+	left: 30%;
+}
+#page1 .wheel2{
+	top: 30%;
+	left: 60%;
+}
+#page1 .wheel3{
+	top: 65%;
+	left: 55%;
+}
+#page1 .wheel4{
+	top: 70%;
+	left: 55%;
+}
+#page1 .ph1{
+	right: 10%;
+	bottom: -15%;
+	z-index: 1;
+}
+#page2{
+	background-color: rgb(222, 79, 80);
+}
+#page2 .cloud{
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+}
+#page2 .map{
+	bottom: 5%;
+	left: 50%;
+	transform: translateX(-50%);
+}
+#page2 .nail{
+	right: 10%;
+	bottom: 5%;
+}
+#page3{
+	background-color: rgb(144, 74, 104);
+}
+#page3 .fun{
+	top: 30%;
+	left: 35%;
+}
+#page3 .shop{
+	top: 55%;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 1;
+}
+#page3 .v-phone{
+	bottom: -8%;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+#page4{
+	background-color: rgb(104, 195, 159);
+}
+#page4 .phone_1{
+	top: 40%;
+	left: 30%;
+	transform: rotateZ(20deg);
+}
+#page4 .phone_2{
+	bottom: 0;
+	left: 30%;
+}
+#page4 .gift_1{
+	bottom: 0;
+	left: 55%;
+}
+#page4 .gift_2{
+	top: 30%;
+	left: 55%;
+}
+#page4 .ballon{
+	top: 20%;
+	right: 15%;
+}
+#nav{
+	position: fixed;
+	top: 50%;
+	right: 4%;
+	transform: translateY(-50%);
+}
+#nav li{
+	width: 10px;
+	height: 10px;
+	margin-top: 200%;
+	border: 1px solid black;
+	border-radius: 50%;
+	list-style: none;
+}
+#nav .select{
+	background: black;
+}
