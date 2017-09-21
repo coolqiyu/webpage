@@ -1,0 +1,119 @@
+#cube{
+	width: 100px;
+	height: 100px;
+	margin: 200px;
+	position: relative;
+	transform-style: preserve-3d;
+	transform: rotateY(-45deg);
+	/*perspective: 2000px;*/
+	/*animation: rotateCuba 10s infinite;*/
+}
+@keyframes rotateCube{
+	25%{
+		transform: rotateY(180deg);
+	}
+	50%{
+		transform: rotateY(360deg);
+	}
+	75%{
+		transform: rotateX(180deg);
+	}
+	100%{
+		transform: rotateX(360deg);
+	}
+}
+#cube div{
+	width: 200px;
+	height: 100px;
+	position: absolute;
+}
+#cube #front{
+	background: red;
+	transform: translateZ(50px);
+}
+#cube #back{
+	background: blue;
+	transform: translateZ(-50px);
+}
+#cube #left{
+	width: 100px;
+	background: green;
+	transform: rotateY(-90deg) translateZ(50px);
+}
+#cube #right{
+	width: 100px;
+	background: purple;
+	transform: rotateY(90deg) translateZ(150px);
+}
+#cube #top{
+	background: yellow;
+	transform: rotateX(90deg) translateZ(50px);
+}
+#cube #bottom{
+	background: black;
+	transform: rotateX(-90deg) translateZ(50px);
+}
+#love{
+	width: 200px;
+	height: 260px;
+	position: relative;
+	margin: 100px auto;
+	transform-style: preserve-3d;
+	backface-visibility: visible;
+	/*不设置perspective，这样就不会有近大远小的效果*/
+	/*perspective: 1000px;*/
+	animation: loveFrame 10s infinite linear;
+}
+@keyframes loveFrame{
+	50%{
+		transform: rotateX(15deg) rotateZ(180deg);
+	}
+	100%{
+		transform: rotateZ(360deg);
+	}
+}
+#love div{
+	width: 200px;
+	height: 260px;
+	position: absolute;
+	border: solid red;			
+	/*设置圆角，且通过width来只显示border的一部分*/
+	border-width: 2px 2px 0 0;
+	border-radius: 50% 50% 0/ 40% 50% 0;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+/*熊猫图片3d旋转*/
+.pandaPlateform{
+    width: 800px;
+    height: 600px;
+    position: relative;
+    border: 2px solid black;
+}
+#panda{
+	width: 200px;
+	height: 300px;
+	left: 50%;
+	top: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	/*transform: translateX(-50%) rotateX(-30deg);*/
+	position: absolute;
+/*	transform-style: preserve-3d;
+	perspective: 1000px;*/
+	animation: pandaFrame 5s infinite;	
+}
+@keyframes pandaFrame{
+	0%{
+		transform: translateX(-50%) rotateX(-30deg);
+	}
+	100%{
+		transform: translateX(-50%) rotateX(-30deg) rotateY(-360deg);
+	}
+}
+#panda img{
+	width: 100%;
+	height: 100%;
+	position: absolute;	
+	border: 8px solid #ccc;
+}
