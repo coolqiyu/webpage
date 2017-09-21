@@ -99,6 +99,7 @@
 	top: 50%;
 	position: absolute;
 	transform-style: preserve-3d;
+	backface-visibility: hidden;
 	/*
 	不用这个，这样就不会有不想要的透视效果
 	设置后，旋转过程中原来的透视效果不会变化，原来大的还是大，小的还是小
@@ -109,10 +110,10 @@
 @keyframes pandaFrame{
 	0%{
 		/*rotateY(0)这个需要设置，否则下面旋转360deg，并不会旋转*/
-		transform: translateX(-50%) translateY(-50%) rotateX(-20deg) rotateY(0);
+		transform: translateX(-50%) translateY(-50%) rotateX(10deg) rotateY(0);
 	}
 	100%{
-		transform: translateX(-50%) translateY(-50%) rotateX(-20deg) rotateY(360deg);
+		transform: translateX(-50%) translateY(-50%) rotateX(10deg) rotateY(360deg);
 	}
 }
 #panda img{
