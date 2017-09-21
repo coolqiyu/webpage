@@ -58,5 +58,5 @@ var r = 300;
 for(var i = 0; i < pandaCnt; i++){
 	var x = -r * Math.sin(i * eachDeg);
 	var y = r * Math.cos(i * eachDeg);
-	// pandas[i].style.transform = 'translateX(' + x + 'px) translateZ(' + y + 'px) rotateY(' + i * each + 'deg)';
+	pandas[i].style.transform = 'translateX(' + x + 'px) translateZ(' + y + 'px) rotateY(' + i * each + 'deg)';
 }
