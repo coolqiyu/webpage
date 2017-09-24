@@ -86,10 +86,10 @@
 
 /*熊猫图片3d旋转*/
 .pandaPlateform{
-    width: 800px;
-    height: 600px;
-    position: relative;
-    border: 2px solid black;
+	width: 800px;
+	height: 600px;
+	position: relative;
+	border: 2px solid black;
 }
 /*包裹其中的img，并且大小与img一致，设置初始定位*/
 #panda{
@@ -122,3 +122,142 @@
 	position: absolute;	
 	border: 8px solid #ccc;
 }
+
+/*俄罗斯三角形*/
+#triangle{
+	width: 400px;
+	height: 400px;
+	padding: 50%;
+	position: relative;
+}
+#triangle #ball{
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	background-color: red;
+	border-radius: 50%;
+	transform: translateY(25px);
+	animation: ballRun 10s infinite linear;
+}
+@keyframes ballRun{
+	0%{
+		z-index: 3;
+		transform: translateY(25px);
+	}
+	9%{
+		z-index: 3;
+		transform: translateX(224px) translateY(154px);
+	}
+	18%{
+		z-index: -1;
+		transform: translateX(-10px) translateY(310px);
+	}
+	26%{
+		z-index: -1;
+		transform: translateX(-10px) translateY(-41px);
+	}
+	35%{
+		z-index: 50;
+		transform: translateX(293px) translateY(137px);
+	}
+	43%{
+		z-index: 5;
+		transform: translateX(70px) translateY(275px);
+	}
+	51%{
+		z-index: -50;
+		transform: translateX(70px) translateY(-12px);
+	}
+	59%{
+		z-index: 1;
+		transform: translateX(356px) translateY(158px);
+	}
+	67%{
+		z-index: 50;
+		transform: translateX(56px) translateY(334px);
+	}
+	75%{
+		z-index: 1;
+		transform: translateX(56px) translateY(80px);
+	}
+	82%{
+		z-index: 1;
+		transform: translateX(317px) translateY(217px);
+	}
+	91%{
+		z-index: 3;
+		transform: translateX(4px) translateY(380px);
+	}
+	100%{
+		z-index: 50;
+		transform: translateX(4px) translateY(25px);
+	}
+}
+#triangle div{
+	position: absolute;
+	transform-style: preserve-3d;
+	width: 50px;
+	height: 300px;
+}
+#triangle span{
+	display: block;
+	position: absolute;
+	width: 100px;
+	height: 400px;
+}
+#topHalf{
+	z-index: 0;
+}
+#topHalf, #bottomHalf{
+	position: absolute;
+}
+#topHalf span:first-child, #bottomHalf span:first-child{
+	height: 200px;
+	background-color: blue;
+}
+#topHalf span:last-child, #bottomHalf span:last-child{
+	width: 50px;
+	height: 200px;
+	background-color: black;
+}
+#bottomHalf{
+	transform: translateY(200px);
+	z-index: 6;
+	clip-path: polygon(0 170px, 0 0, 100px 0, 100px 170px, 50px 200px);
+}
+#right{
+	transform-origin: 50px 0;/*不会改变坐标系位置*/
+	z-index: 2;
+	transform: rotateZ(-60deg)  translateY(-44px) translateX(-24px);
+	clip-path: polygon(0px 29px, 50px 0px, 100px 30px, 100px 400px, 0px 400px);
+}
+#right span:first-child{
+	background-color: pink;
+}
+#right span:last-child{
+	width: 50px;
+	background-color: black;
+}
+#bottom{
+	transform-origin: 50px 400px;
+	z-index: 4;
+	transform: rotateZ(60deg) translateX(-50px);
+	clip-path: polygon(0 28px, 50px 0, 100px 26px, 100px 400px, 0 400px)
+}
+#bottom span:first-child{
+	background-color: blue;
+}
+#bottom span:last-child{
+	width: 50px;
+	background-color: pink;
+}
+/*
+1. 物体的坐标系原点是在它的左上角
+2. left,right之类的是相对于border的，如果设置了padding，也是相对于border
+3. 在10%-20%运动过程中会出现z方向下移的问题：
+   z-index前后不一样，会有过渡！！可以把z-index设置大一点，这样就不会在中间下移不见
+4. 怎么确定球的层级关系
+   确定不同平面之间的关系，哪两个面应该属于同一面
+5. 不可能图形
+（impossible figure又称undecidable figure或impossible object）或称二维图形，是在现实世界中，不可能客观存在的事物，只会在二维世界存在的一种图形。
+*/
