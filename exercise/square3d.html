@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>立方体变形</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			perspective: 1000px;
+			transform-style: preserve-3d;
+		}
+		#square-3d{		
+			width: 100px;
+			height: 150px;	
+			margin: 200px;
+			/*transform: rotateX(30deg) rotateY(-30deg) rotateZ(180deg);*/
+			transform-style: preserve-3d;
+			/*perspective: 1000px;*/
+			animation: rotate3d 8s infinite linear;			
+		}
+		@keyframes rotate3d{
+			0%{
+				transform: rotateX(30deg) rotateY(-30deg) rotateZ(0deg);
+			}
+			100%{
+				transform: rotateX(30deg) rotateY(-30deg) rotateZ(360deg);
+			}
+		}
+		#square-3d>div{/*rows*/
+			width: 30px;
+			height: 150px;	
+			position: relative;
+			display: inline-block;
+			perspective: 1000px;
+			/*让子元素获得透视*/				
+			transform-style: preserve-3d;
+			margin: -2px;	
+		}		
+		.square{
+			width: 30px;
+			height: 30px;	
+			position: relative;
+			transform-style: preserve-3d;/*让子元素布局在3d，不对子元素内的元素产生影响*/
+		}
+		.square span{
+			width: 30px;
+			height: 30px;
+			display: block;
+			position: absolute;
+		}
+		.front{
+			transform: translateZ(30px);
+			background: #0093ff;
+		}
+		.back{
+			background: #0093ff;
+		}
+		.top{
+			transform-origin: top;
+			transform: rotateX(90deg);
+			background: #4d31d2;
+		}
+		.bottom{
+			transform-origin: bottom;
+			transform: rotateX(-90deg);
+			background: #4d31d2;
+		}
+		.left{
+			transform-origin: left;
+			transform: rotateY(-90deg);
+			background: #4d31d2;
+		}
+		.right{
+			transform-origin: right;
+			transform: rotateY(90deg);
+			background: #4d31d2;
+		}
+		/*每一行显示5个，但是变化中中间位置会出现空，所以要再加一个，用来填充*/
+		.center{
+			top: 60px;
+			position: absolute;
+		}
+		/*运动分层，按照层级来写对应的变化*/
+		.layer1{
+			animation: animation1 8s infinite;
+		}
+		.layer2{
+			animation: animation2 8s infinite;
+		}
+		.layer3{
+			animation: animation3 8s infinite;
+		}
+		/*第4层的需要移动位置来填补其它层上移出现的空*/
+		.tlayer4{
+			animation: tanimation4 8s infinite;
+		}
+		.blayer4{
+			animation: banimation4 8s infinite;
+		}
+		@keyframes animation1{
+			50%{
+				transform: translateZ(90px);
+			}
+		}
+		@keyframes animation2{
+			50%{
+				transform: translateZ(60px);
+			}
+		}
+		@keyframes animation3{
+			50%{
+				transform: translateZ(30px);
+			}
+		}
+		@keyframes tanimation4{
+			50%{
+				transform: translateY(30px);
+			}
+		}
+		@keyframes banimation4{
+			50%{
+				transform: translateY(-30px);
+			}
+		}
+		#square-3d #white{
+			width: 20px;
+			height: 20px;
+			display: block;
+			position: absolute;
+			top: 60px;
+			left: 10px;
+			transform-style: preserve-3d;	
+			animation: whiteAnimate 8s infinite linear;
+		}
+		#square-3d #white .front{
+			transform: translateZ(20px);
+			display: block;
+		}
+		#square-3d #white span{
+			width: 100%;
+			height: 100%;
+			display: inline-block;
+			position: absolute;
+			background: yellow;
+			box-shadow: 0 0 10px 0 yellow;
+		}		
+		@keyframes whiteAnimate{				
+			40%{
+				top: 60px;
+				left: 0;	
+				transform: translateZ(30px);	
+			}
+			45%{
+				left: -30px;
+			}
+			50%{
+				top: 0;
+			}
+			55%{
+				left: 30px;
+			}
+			60%{
+				top: 30px;
+				left: 30px;		
+				transform: translateZ(30px);			
+			}	
+			61%{	
+				transform: translateZ(0px);			
+			}	
+		}
+</style>
+</head>
+<body>
+	<div id = 'square-3d'>
+		<div id = 'row1'>
+			<div class="square tlayer4">
+				<span class='front'></span>
+				<span class='back'></span> 
+				<span class='top'></span>
+				<span class='bottom'></span>
+				<span class='left'></span>
+				<span class='right'></span>
+			</div>
+			<div class="square layer3">
+				<span class='front'></span>
+				<span class='back'></span> 
+				<span class='top'></span>
+				<span class='bottom'></span>
+				<span class='left'></span>
+				<span class='right'></span>
+			</div>
+			<div class="square layer2">
+				<span class='front'></span>
+				<span class='back'></span> 
+				<span class='top'></span>
+				<span class='bottom'></span>
+				<span class='left'></span>
+				<span class='right'></span>
+			</div>
+			<div class="square center">
+				<span class='front'></span>
+				<span class='back'></span> 
+				<span class='top'></span>
+				<span class='bottom'></span>
+				<span class='left'></span>
+				<span class='right'></span>
+			</div>
+			<div class="square layer3">
+				<span class='front'></span>
+				<span class='back'></span> 
+				<span class='top'></span>
+				<span class='bottom'></span>
+				<span class='left'></span>
+				<span class='right'></span>
+			</div>
+			<div class="square blayer4">
+				<span class='front'></span>
+				<span class='back'></span> 
+				<span class='top'></span>
+				<span class='bottom'></span>
+				<span class='left'></span>
+				<span class='right'></span>
+			</div>
+		</div>
+		<div id = 'row2'>
+			<div class="square tlayer4">
+				<span class='front'></span>
+				<span class='back'></span> 
+				<span class='top'></span>
+				<span class='bottom'></span>
+				<span class='left'></span>
+				<span class='right'></span>
+			</div>
+			<div class="square layer2">
+				<span class='front'></span>
+				<span class='back'></span> 
+				<span class='top'></span>
+				<span class='bottom'></span>
+				<span class='left'></span>
+				<span class='right'></span>
+			</div>
+			<div class="square layer1">
+				<span class='front'></span>
+				<span class='back'></span> 
+				<span class='top'></span>
+				<span class='bottom'></span>
+				<span class='left'></span>
+				<span class='right'></span>
+			</div>
+			<div class="square layer2">
+				<span class='front'></span>
+				<span class='back'></span> 
+				<span class='top'></span>
+				<span class='bottom'></span>
+				<span class='left'></span>
+				<span class='right'></span>
+			</div>
+			<div class="square blayer4">
+				<span class='front'></span>
+				<span class='back'></span> 
+				<span class='top'></span>
+				<span class='bottom'></span>
+				<span class='left'></span>
+				<span class='right'></span>
+			</div>
+		</div>
+		<div id = 'row3'>
+			<div class="square tlayer4">
+				<span class='front'></span>
+				<span class='back'></span> 
+				<span class='top'></span>
+				<span class='bottom'></span>
+				<span class='left'></span>
+				<span class='right'></span>
+			</div>
+			<div class="square layer3">
+				<span class='front'></span>
+				<span class='back'></span> 
+				<span class='top'></span>
+				<span class='bottom'></span>
+				<span class='left'></span>
+				<span class='right'></span>
+			</div>
+			<div class="square layer2">
+				<span class='front'></span>
+				<span class='back'></span> 
+				<span class='top'></span>
+				<span class='bottom'></span>
+				<span class='left'></span>
+				<span class='right'></span>
+			</div>
+			<div class="square center">
+				<span class='front'></span>
+				<span class='back'></span> 
+				<span class='top'></span>
+				<span class='bottom'></span>
+				<span class='left'></span>
+				<span class='right'></span>
+			</div>
+			<div class="square layer3">
+				<span class='front'></span>
+				<span class='back'></span> 
+				<span class='top'></span>
+				<span class='bottom'></span>
+				<span class='left'></span>
+				<span class='right'></span>
+			</div>
+			<div class="square blayer4">
+				<span class='front'></span>
+				<span class='back'></span> 
+				<span class='top'></span>
+				<span class='bottom'></span>
+				<span class='left'></span>
+				<span class='right'></span>
+			</div>
+		</div>
+		<div id = 'white'>
+			<span class='front'></span>
+			<span class='back'></span> 
+			<span class='top'></span>
+			<span class='bottom'></span>
+			<span class='left'></span>
+			<span class='right'></span>
+		</div>
+	</div>
+</body>
+</html>
+<!-- 
+问题
+1. animation时就会变成不是3d
+因为使用了opacity: 1;
+2. 让它原来不出现，后来出现
+- 用display:none变成block，不可以，动画里面不能修改这个，还是none
+ -->
