@@ -1,0 +1,154 @@
+<!-- 1. 数据交互
+后台数据接口地址 https://route.showapi.com/181-1
+请求的参数：
+请求账号 showapi_appid:30603
+请求密码 showapi_sign:98960666afeb4992ae91971d13494090
+请求多少条数据 num:8
+是否随机摘取数据： rand:1
+从多少页开始请求： page:1
+完整地址  https://route.showapi.com/181-1?showapi_appid=30603&showapi_sign=98960666afeb4992ae91971d13494090&num=8&rand=1&page=1 
+2. 数据提交方式：
+ajax和表单
+3. js功能
+改变dom元素及样式、用户交互事件、数据交互ajax、插件、框架vue angular mvc 设计模式 事件代理
+4. 交互过程
+- 前端发起数据请求
+- 后台验证请求
+- 数据通过回调函数回馈到前端
+5. 数据传输，为什么要用字符串
+因为它的传输效率更高，且不容易丢包。
+JSON.parse比eval好，eval会大量地吃内存
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		#content{
+			width: 500px;
+			height: 900px;
+			margin: 0 auto;
+		}
+		a{
+			display: block;
+		}
+		.bd{
+			display: inline-block;
+			text-overflow: ellipsis;
+		}
+		.ft{
+			display: inline-block;
+		}
+		.img{
+			display: inline-block;
+		}
+		.img img{
+			width: 50px;
+			height: 50px;
+		}
+		#page ul li{
+			width: 30px;
+			height: 30px;
+			border: 1px solid black;
+			list-style: none;
+			display: inline-block;
+			cursor: pointer;
+		}
+	</style>
+</script>
+</head>
+<body>
+	<div id = 'content'>		
+	</div>
+	<div id = 'page'>
+		<ul>
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+		</ul>
+	</div>
+	<!-- 引入自己封装的ajax插件 -->
+	<script type="text/javascript" src = "./js/myAjax.js"></script>
+	<script type="text/javascript">
+		var oContent = document.querySelector('#content');
+		var oPages = document.querySelectorAll('li');
+		var cache = {};//创建缓存池子
+		var pageLength = oPages.length;
+		var page;
+		//es6 let块级作用域
+		//另两种方法：自定义属性、闭包
+		for(let i = 0; i < pageLength; i++){
+			oPages[i].onclick = function(){
+				page = i + 1;
+				//goTo(i+1);				
+				//2. 需要对每一页的内容进行缓存，缓存代理，不要对同一页进行重复请求！
+				if(page in cache){
+					addDom(cache[page]);
+					console.log("in cache");
+				}
+				else{//1：点击哪一页就做一下ajax请求获取数据
+			    //且把每次请求到的数据存放在cache中
+					goTo(page);
+					console.timeEnd("loading");
+				}
+			}
+		}
+		goTo(1);
+		function goTo(page){
+			myAjax({
+				url:'https://route.showapi.com/181-1',
+				method: 'GET', 
+				//请求参数
+				data:{
+					showapi_appid:'30603',//请求的账号
+					showapi_sign:'98960666afeb4992ae91971d13494090',//请求密码
+					num: 8,//请求数量
+					rand:1,//是否随机
+					page: page
+				},
+				//成功时的回调函数
+				success: function(res){
+					//解析接收到的数据
+					var result = JSON.parse(res);	
+					addDom(result);
+					cache[page] = result;
+					// 网上有些数据会有防盗链处理，这样就看不到原始的图片，可以二次在浏览器中打开链接，即可看到			
+				}
+				/*返回的数据
+				res:{
+					showapi_res_body:{
+					code:200
+					msg:'success'
+					newslist:[
+						{url:xxx},
+						{}
+					]
+					}
+				}
+				*/		
+			});
+		}
+		function addDom(result){
+			var str = '';//把结果拼接成字符串
+			var dataList = result.showapi_res_body.newslist;
+			var dataLength = dataList.length;
+			for(var i = 0; i < dataLength; i++){
+				//es6数据模板`` 两个反向单引号  href="${dataList[i].url}"
+				str += `
+				<a href="${dataList[i].url}" class="items flex_row">
+					<div class='img'><img
+						src="${dataList[i].picUrl}" alt=""></div>
+						<div class="bd">
+							<p class="label">${dataList[i].title}</p>
+						</div>
+						<div class="ft">&GT;</div>
+					</a>`;
+				}
+				oContent.innerHTML = str;
+			}
+		</script>
+	</body>
+	</html>
