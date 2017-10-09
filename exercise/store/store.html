@@ -25,13 +25,26 @@ JSON.parse比eval好，eval会大量地吃内存
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
 		#content{
 			width: 500px;
-			height: 900px;
+			height: 740px;
 			margin: 0 auto;
+			border: 1px solid black;
 		}
 		a{
+			height: 90px;
 			display: block;
+			border-bottom: 1px solid gray;
+		}
+		.label{
+			width: 395px;
+			height: 22px;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 		.bd{
 			display: inline-block;
@@ -44,12 +57,18 @@ JSON.parse比eval好，eval会大量地吃内存
 			display: inline-block;
 		}
 		.img img{
-			width: 50px;
-			height: 50px;
+			width: 70px;
+			height: 70px;
+		}
+		#page{
+			width: 400px;
+			margin: 10px auto;
 		}
 		#page ul li{
 			width: 30px;
-			height: 30px;
+			line-height: 30px;
+			margin-left: 25px;
+			text-align: center;
 			border: 1px solid black;
 			list-style: none;
 			display: inline-block;
@@ -78,24 +97,6 @@ JSON.parse比eval好，eval会大量地吃内存
 		var cache = {};//创建缓存池子
 		var pageLength = oPages.length;
 		var page;
-		//es6 let块级作用域
-		//另两种方法：自定义属性、闭包
-		for(let i = 0; i < pageLength; i++){
-			oPages[i].onclick = function(){
-				page = i + 1;
-				//goTo(i+1);				
-				//2. 需要对每一页的内容进行缓存，缓存代理，不要对同一页进行重复请求！
-				if(page in cache){
-					addDom(cache[page]);
-					console.log("in cache");
-				}
-				else{//1：点击哪一页就做一下ajax请求获取数据
-			    //且把每次请求到的数据存放在cache中
-					goTo(page);
-					console.timeEnd("loading");
-				}
-			}
-		}
 		goTo(1);
 		function goTo(page){
 			myAjax({
@@ -130,8 +131,30 @@ JSON.parse比eval好，eval会大量地吃内存
 				}
 				*/		
 			});
+		};
+
+		//es6 let块级作用域
+		//另两种方法：自定义属性、闭包
+		!function changePage(){//立即执行的函数变成匿名的函数了
+			for(let i = 0; i < pageLength; i++){
+				oPages[i].onclick = function(){
+					page = i + 1;
+				//goTo(i+1);				
+				//2. 需要对每一页的内容进行缓存，缓存代理，不要对同一页进行重复请求！
+				//对缓存的数据还需要进行定时清理！
+				if(page in cache){
+					addDom(cache[page]);
+					console.log("in cache");
+				}
+				else{//1：点击哪一页就做一下ajax请求获取数据
+			    //且把每次请求到的数据存放在cache中
+			    goTo(page);
+			    console.timeEnd("loading");
+			}
 		}
-		function addDom(result){
+	}}();
+	
+	function addDom(result){
 			var str = '';//把结果拼接成字符串
 			var dataList = result.showapi_res_body.newslist;
 			var dataLength = dataList.length;
