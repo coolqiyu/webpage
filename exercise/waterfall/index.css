@@ -1,0 +1,32 @@
+body,ul,li{/*不用*，性能差，只对有默认值的进行设置，或自己用到的*/
+	margin: 0;
+	padding: 0;
+}
+html, body{
+	width: 100%;
+	height: 100%;
+}
+#container{
+	width: 80%;
+	height: 100%;
+	margin: 0 auto;
+}
+#container ul{	
+	height: 100%;
+	margin: 0 auto;
+}
+#container ul li{
+	width: 23.5%;
+	height: 100%;
+	float: left;
+	/*display:inline-block;用这个不太好，因为内联的元素间会有默认的间距。这样设置为25%时，实际上会大于100%*/
+	padding: 4px;	
+	margin: 8px;
+	list-style: none;
+	box-sizing: border-box;
+	box-shadow: 0 0 5px 0 black;
+}
+#container img{
+	width: 100%;
+	/*height不设置，会进行自动缩放*/
+}
