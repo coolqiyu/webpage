@@ -17,7 +17,6 @@ html, body{
 }
 #container ul li{
 	width: 23.5%;
-	height: 100%;
 	float: left;
 	/*display:inline-block;用这个不太好，因为内联的元素间会有默认的间距。这样设置为25%时，实际上会大于100%*/
 	padding: 4px;	
@@ -28,5 +27,7 @@ html, body{
 }
 #container img{
 	width: 100%;
+	transform: scale(0);
+	transition: transform 1s;
 	/*height不设置，会进行自动缩放*/
 }
