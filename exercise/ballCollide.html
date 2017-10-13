@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>小球碰撞</title>
+	<style type="text/css">
+		div{
+			width: 50px;
+			height: 50px;
+			position: absolute;
+			border-radius: 25px;
+		}
+	</style>
+</head>
+<body>
+	<script type="text/javascript">
+		var balls = [];
+		var ballCnt = 0;
+	//在(x, y)位置生成一个小球
+	function createBall(obj, x, y){
+		obj.style.backgroundColor = "#000";
+		//碰撞时在碰撞的位置生成一个新的小球
+		obj.style.left = x + 'px';
+		obj.style.top = y + 'px';
+		//小球的移动速度
+		obj.speedX = Math.random() * 10;
+		obj.speedY = Math.random() * 10;
+	}
+	var interval = setInterval(function(){
+		//添加小球
+		if(ballCnt < 30){
+			//new的对象怎么和元素变成同一个？
+			var ball = document.createElement('div');
+			createBall(ball, Math.random() * 800, Math.random() * 500);
+			balls.push(ball);
+			document.body.appendChild(ball);
+		}
+		else
+			cancelInterval(interval);
+	}, 2000);
+	setInterval(function(){
+		ballCnt = balls.length;
+		for(var i = 0; i < ballCnt; i++){
+			move(balls[i]);
+		}
+		//移动每个小球
+	}, 1000/60);
+	function move(obj){
+		var top = parseFloat(getComputedStyle(obj).top) + obj.speedY;
+		var left = parseFloat(getComputedStyle(obj).left) + obj.speedX;
+		if(top > 800 || top < 0){
+			obj.speedY = (-obj.speedY);
+		}
+		if(left > 500 || left < 0){
+			obj.speedX = (-obj.speedX);
+		}
+		obj.style.top =  top + 'px';
+		obj.style.left = left + 'px';
+	}
+</script>
+</body>
+</html>
