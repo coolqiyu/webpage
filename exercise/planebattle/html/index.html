@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>打飞机</title>
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" type="text/css" href="../css/index.css">
+</head>
+<body data-status="index" class="bg1">
+	<audio id = "js-audio" src="../sound/music.mp3" autoplay  loop>
+	</audio>
+	<canvas id="game"></canvas>
+	<div class="ui-index">
+		<h1>飞机大作战</h1>
+		<div class="btn-group">
+			<button id="js-start" class="btn">开始游戏</button>
+			<button id="js-rule" class="btn">游戏介绍</button>
+			<button id="js-setting" class="btn">游戏设置</button>
+		</div>
+	</div>
+	<div class="ui-rule">
+		<h2>游戏说明</h2>
+		<p>通过手指移动飞机，躲避敌人，通过子弹射击敌人得分，游戏无限时，消灭小型飞机得100分，消灭大型飞机得1000分。</p>
+		<button id="js-confirm-rule">我明白了</button>
+	</div>
+	<div class="ui-setting">
+		<h2>游戏设置</h2>
+		<ul>
+			<li>
+				<span>音乐设置</span>
+				<select id = "js-music">
+					<option value="1">开启音乐</option>
+					<option value="0">关闭音乐</option>
+				</select>
+			</li>
+			<li>
+				<span>背景设置</span>
+				<select id="js-bg">
+					<option value="0">机械基地</option>
+					<option value="1">云海重重</option>
+					<option value="2">茂密丛林</option>
+					<option value="3">烈焰火山</option>
+				</select>
+			</li>
+			<li>
+				<span>战机设置</span>
+				<select id = "js-plane">
+					<option value="0">蓝色战机</option>
+					<option value="1">粉色战机</option>
+				</select>
+			</li>
+		</ul>
+		<button id="js-confirm-set">确认设置</button>
+	</div>
+	<div class="ui-end-game">
+	<h2 id = "js-end-head"></h2>
+	<p id="js-score"></p>
+	<button id = "js-end">结束游戏</button><button id="js-restart">再挑战一次</button>
+	</div>
+</div>
+<script type="text/javascript" src="../js/resource.js"></script>
+<script type="text/javascript" src="../js/config.js"></script>
+<script type="text/javascript" src="../js/element.js"></script>
+<script type="text/javascript" src="../js/enemy.js"></script>
+<script type="text/javascript" src="../js/bullet.js"></script>
+<script type="text/javascript" src="../js/plane.js"></script>
+<script type="text/javascript" src="../js/index.js"></script>
+</body>
+</html>
+
+<!-- 
+1. 游戏说明/设置和主页面如何切换，是隐藏显示，还是跳转一个页面？
+答：用隐藏/显示的方法来切换
+3. 出现滚动条，但是内容并没有超出呀
+答：用overflow:hidden 可是为什么会出现？？？好像是因为设置了background-image
+4. 如果每次都是跳转页面，后面的图片都会再加载一次
+5. select option有默认样式中，需要修改一下
+变成移动端时，如果比例不是100%，option的大小是不变的，不像其它会自动变化
+
+游戏动画思考
+1. 为什么用canvas，不用position:absolute？
+因为增删节点会导致页面重绘性能不好。在canvas中每个元素只是像素点
+2. 飞机对象
+- 属性：
+- 方法：
+*战机对象
+- 方法：控制战机的移动 通过keydown事件、碰撞检测爆炸
+- 属性：战机类型、炮弹对象、移动速度
+*. 敌机对象
+- 类封装
+- 属性：出现的位置、下落速度、大战机还是小战机、分数
+- 方法：碰撞检测爆炸
+4. 炮弹对象
+- 属性：炮弹类型、速度
+- 方法：碰撞检测爆炸 
+5. 碰撞检测爆炸
+- 碰撞检测公共方法
+
+笔记——基础概念
+1. canvas画布
+时时刷新、绘制各种图案、有较多交互时使用
+2. 游戏是一帧一帧的
+3. 游戏动画循环
+每一步：绘制draw——清除——更新update——绘制。。。
+4. 面向对象思想
+把物体的公共属性进行封闭
+5. 用户代码片段 VS code的功能技巧
+可以把写好的代码保存，这样下次就可以直接输入知名来打出
+
+笔记——面向对象分析
+1. 游戏对象GAME、配置对象config、资源对象
+GAME统领，管理具体类，包括子弹、飞机、敌人
+config配置飞机大小等
+资源对象：音频、图片等资源的管理
+2. 元素类
+所有飞机、子弹的父类
+3. 具体类，继承自元素类
+bullet子弹类<-管理-飞机类  敌人类
+
+笔记——对象分析
+1. Game对象：
+准备init-开始start-进行（更新和绘制）update,draw-结束-再玩一次-开始。。。
+2. 配置对象
+资源的key：value值
+3. 元素类
+坐标，尺寸，速度，移动方法，绘画方法
+4. 敌人类
+- 继承自element
+- 特有属性：status,icon,live,type
+- 特有方法
+向下移动down()
+- 重写方法
+绘制draw()
+* 管理敌人：生成敌人、更新、删除
+
+笔记——手指触屏操作
+- touchstart、touchmove、touchend
+
+笔记——其它
+1. Object.assign(target, source1, source2,...)
+把source1,source2等中可遍历属性都复制到target中(浅拷贝)，成为target中的key:value
+-->
