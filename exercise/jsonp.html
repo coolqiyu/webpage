@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jsonp</title>
+</head>
+<body>
+	<!-- 在标签里面可以访问其它域的链接 -->
+	<img src="https://www.baidu.com/img/bd_logo1.png"/>
+	<input id="js-key-input" type="text" name="">
+	<ul id="list">
+	</ul>
+	<script type="text/javascript">
+	/**
+	 * 跨域：后台、flash、服务器端设置、jsonp
+	 * - jsonp:
+	 * 技术：通过将文件以script标签形式加载 从而获取数据的技术
+	 */
+	/**
+	 * 实例：类似百度输入框的输入联想功能
+	 * - onchange
+	 * 表单元素内容发生改变时的事件，如text、select等都有
+	 * 但是，type=text时，需要失去焦点时才触发
+	 * - onkeyup
+	 * 键盘事件，key抬起时触发，这样就可以边修改边响应
+	 */
+	var keyInput = document.getElementById("js-key-input");
+
+	//添加script标签，src内容返回的是一个函数调用，如jQuery1102016082451938183717_1509892677953({"q":"中","p":false,"bs":"","csor":"1","status":0,"g":[ { "q": "中信银行信用卡中心", "t": "n", "st": { "q": "中信银行信用卡中心", "new": 0 } }, { "q": "中国联通", "t": "n", "st": { "q": "中国联通", "new": 0 } }, { "q": "中国地图", "t": "n", "st": { "q": "中国地图", "new": 0 } }, { "q": "中国银行", "t": "n", "st": { "q": "中国银行", "new": 0 } }, { "q": "中通", "t": "n", "st": { "q": "中通", "new": 0 } }, { "q": "中国知网", "t": "n", "st": { "q": "中国知网", "new": 0 } }, { "q": "中国有嘻哈", "t": "n", "st": { "q": "中国有嘻哈", "new": 0 } }, { "q": "中国移动", "t": "n", "st": { "q": "中国移动", "new": 0 } }, { "q": "中国移动网上营业厅", "t": "n", "st": { "q": "中国移动网上营业厅", "new": 0 } }, { "q": "中国新歌声", "t": "n", "st": { "q": "中国新歌声", "new": 0 } } ],"s":["中信银行信用卡中心","中国联通","中国地图","中国银行","中通","中国知网","中国有嘻哈","中国移动","中国移动网上营业厅","中国新歌声"]});
+	//var script = document.createElement("script");
+	//document.body.appendChild(script);
+	//百度返回的关键词联想信息，实际就是返回的回调函数的参数
+	function getKeys(){
+		var keys = arguments[0].s;
+		var df = new DocumentFragment();
+		var list = document.getElementById("list");
+		list.innerHTML = "";
+		for(var i = 0, len = keys.length; i < len; i++){
+			var li = document.createElement("li");
+			li.innerHTML = keys[i];
+			df.appendChild(li);
+		}
+		list.appendChild(df);
+	}
+	keyInput.onkeyup = function(){
+		var script = document.createElement("script");
+		//执行回调函数getKeys
+		script.src = "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd="+keyInput.value + "&json=1&p=3&sid=24754_1447_21109_17001_24880&req=2&csor=1&pwd=k&cb=getKeys";
+		document.body.appendChild(script);
+		//加载完成后，把当前的script删除，这样就可以把自己删除
+		script.onload = function(){
+			document.body.removeChild(this);
+		}
+	}
+	// var str = '中';
+	// encodeURIComponent(str);//可以将中文编码成uri编码，英文的不变
+	// decodeURIComponent(code);
+
+	</script>
+</body>
+</html>
