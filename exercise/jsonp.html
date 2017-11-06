@@ -3,13 +3,50 @@
 <head>
 	<meta charset="UTF-8">
 	<title>jsonp</title>
+	<style type="text/css">
+	ul,li,div,input{
+		margin: 0;
+		padding: 0;
+	}
+	.ui-search{
+		margin: 100px auto;
+		display: block;
+		width: 500px;
+	}
+	.ui-search input{
+		width: 498px;
+		height: 30px;
+		line-height: 30px;
+		vertical-align: middle;
+		text-indent: 15px;
+	}
+	.ui-search ul{
+		width: 100%;
+		border: 1px solid black;
+		border-top: none;
+	}
+	ul li{
+		list-style: none;
+		width: 100%;
+		height: 30px;
+		line-height: 30px;
+		vertical-align: middle;
+		text-indent: 15px;
+	}	
+	.ui-select{
+		background: pink;
+	}
+	</style>
 </head>
 <body>
 	<!-- 在标签里面可以访问其它域的链接 -->
-	<img src="https://www.baidu.com/img/bd_logo1.png"/>
+	<!-- <img src="https://www.baidu.com/img/bd_logo1.png"/> -->
+	<div class="ui-search">
 	<input id="js-key-input" type="text" name="">
 	<ul id="list">
+	<!-- <li>aa</li> -->
 	</ul>
+	</div>
 	<script type="text/javascript">
 	/**
 	 * 跨域：后台、flash、服务器端设置、jsonp
@@ -30,32 +67,93 @@
 	//var script = document.createElement("script");
 	//document.body.appendChild(script);
 	//百度返回的关键词联想信息，实际就是返回的回调函数的参数
+	var list = document.getElementById("list");
 	function getKeys(){
 		var keys = arguments[0].s;
 		var df = new DocumentFragment();
-		var list = document.getElementById("list");
+		
 		list.innerHTML = "";
 		for(var i = 0, len = keys.length; i < len; i++){
 			var li = document.createElement("li");
 			li.innerHTML = keys[i];
+			li.index = i;
 			df.appendChild(li);
 		}
 		list.appendChild(df);
 	}
-	keyInput.onkeyup = function(){
+	//var script = document.createElement("script");//这个方法不可以！！onload只执行了一次
+	function setScript(){
 		var script = document.createElement("script");
+		originalInput = keyInput.value;
 		//执行回调函数getKeys
-		script.src = "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd="+keyInput.value + "&json=1&p=3&sid=24754_1447_21109_17001_24880&req=2&csor=1&pwd=k&cb=getKeys";
+		script.src = "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd="+originalInput + "&json=1&p=3&sid=24754_1447_21109_17001_24880&req=2&csor=1&pwd=k&cb=getKeys";
 		document.body.appendChild(script);
 		//加载完成后，把当前的script删除，这样就可以把自己删除
 		script.onload = function(){
+			//document.body.removeChild(script);//这个方法不可以
 			document.body.removeChild(this);
 		}
 	}
+
+	document.addEventListener("click", function(e){
+		// alert(e.target);
+		if(/li/i.test(e.target.tagName)){
+			window.open("https://www.baidu.com/s?wd=" + e.target.innerText);
+		}
+		else if(/input/i.test(e.target.tagName)){
+			list.style.visibility = "visible";
+		}
+		else if(/body|html/i.test(e.target.tagName)){
+			list.style.visibility = "hidden";
+		}
+	})
+	var selectIndex = -1;
+	var originalInput;
+	document.addEventListener("keyup", function(e){
+		~selectIndex && list.children[selectIndex].classList.remove("ui-select");
+		switch(e.keyCode){
+			case 38://向上
+			selectIndex--;
+			selectIndex = (selectIndex < -1 ? -1 : selectIndex);
+			break;
+			case 40://向下
+			selectIndex++;
+			selectIndex = (selectIndex >= list.children.length ? -1 : selectIndex);
+			break;
+			case 13://回车
+			list.children[selectIndex].click();
+			break;
+			default:
+			if(e.target.id === "js-key-input")
+				setScript();
+			break;
+		}			
+		if(~selectIndex){
+			list.children[selectIndex].classList.add("ui-select");
+			keyInput.value = list.children[selectIndex].innerText;
+		} 
+		else{
+			keyInput.value = originalInput;
+		}
+	})
+
+	list.addEventListener("mouseenter", function(e){
+		~selectIndex && list.children[selectIndex].classList.remove("ui-select");
+		if(/li/i.test(e.target.tagName)){
+			selectIndex = e.target.index;
+			e.target.classList.add("ui-select");
+		}
+	}, true);
 	// var str = '中';
 	// encodeURIComponent(str);//可以将中文编码成uri编码，英文的不变
 	// decodeURIComponent(code);
 
+
+	/**
+	 * 增加功能：
+	 * 1. 鼠标在外面点击时，list要隐藏起来
+	 * 2. 上下键时，选择的li要改变
+	 */
 	</script>
 </body>
 </html>
