@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>雪花飘飘</title>
+	<style type="text/css">
+	body{
+		padding: 0;
+		margin: 0;
+	}
+	body{
+		overflow: hidden;
+	}
+	</style>
+</head>
+<body>
+	<canvas id="js-canvas"></canvas>
+	<script type="text/javascript">
+	var canvas = document.getElementById("js-canvas");
+	var width = window.innerWidth, height = window.innerHeight;
+	canvas.style.width = width + "px";
+	canvas.style.height = height + "px";
+	var context = canvas.getContext("2d");
+	//设置背景
+	context.fillStyle="#000";
+	context.fillRect(0, 0, width, height);
+	
+	function Snow(){
+		this.radius = rangeNumber(0, 10);
+		this.x = rangeNumber(0, width - 200);
+		this.y = 0;
+		this.speedX = rangeNumber(1, 10);
+		this.speedY = rangeNumber(1, 10);
+	}
+	Snow.prototype = {
+		init: function(){
+			this.draw();
+		},
+		//飘落
+		drift: function(){
+			var self = this;
+			setInterval(function(){
+				self.draw();
+				self.x += self.speedX;
+				self.y += self.speedY;
+			}, 1000);
+		},
+		//根据对象的大小进行绘制
+		draw: function(){
+			context.fillStyle = "red";
+			console.log(this.x, this.y);
+			context.fillRect(this.x, this.y, 100, 100);
+			// context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+			// context.fill();
+		}
+	}
+	var snow = new Snow();
+	// snow.init();
+	// snow.drift();
+	context.fillStyle = "red";
+	//console.log(this.x, this.y);
+	//737.9671192804424 5.864286947474426
+	context.fillRect(573.0673948636602, 5, 100, 100);
+	function rangeNumber(min, max){
+		return Math.random() * (max - min) + min;
+	}
+	</script>
+</body>
+</html>
