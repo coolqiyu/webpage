@@ -4,33 +4,36 @@
 	<meta charset="UTF-8">
 	<title>雪花飘飘</title>
 	<style type="text/css">
-	body{
-		padding: 0;
-		margin: 0;
-	}
-	body{
-		overflow: hidden;
-	}
+		body{
+			padding: 0;
+			margin: 0;
+			overflow: hidden;
+		}
+		canvas{
+			position: absolute;
+			overflow: hidden;
+			background: #000;
+		}		
 	</style>
 </head>
 <body>
 	<canvas id="js-canvas"></canvas>
 	<script type="text/javascript">
-	var canvas = document.getElementById("js-canvas");
-	var width = window.innerWidth, height = window.innerHeight;
-	canvas.style.width = width + "px";
-	canvas.style.height = height + "px";
+		var canvas = document.getElementById("js-canvas");
+		var width = window.innerWidth, height = window.innerHeight;
+	//这里应该直接设置width和height，而不是style.width/height
+	//如果设置style.width/height，那么实际上是把画布放大了
+	//context.fillRect(10, 10, 20, 20) 这里的像素位置是根据画布的
+	canvas.width = width;
+	canvas.height = height;
 	var context = canvas.getContext("2d");
-	//设置背景
-	context.fillStyle="#000";
-	context.fillRect(0, 0, width, height);
-	
+
 	function Snow(){
-		this.radius = rangeNumber(0, 10);
-		this.x = rangeNumber(0, width - 200);
-		this.y = 0;
-		this.speedX = rangeNumber(1, 10);
-		this.speedY = rangeNumber(1, 10);
+		this.radius = rangeNumber(0, 6);
+		this.x = rangeNumber(0, width);
+		this.y = rangeNumber(0, height);
+		this.speedX = rangeNumber(-2, 2);
+		this.speedY = rangeNumber(0, 2);
 	}
 	Snow.prototype = {
 		init: function(){
@@ -38,32 +41,82 @@
 		},
 		//飘落
 		drift: function(){
-			var self = this;
-			setInterval(function(){
-				self.draw();
-				self.x += self.speedX;
-				self.y += self.speedY;
-			}, 1000);
+			this.x += this.speedX;
+			this.y += this.speedY;
+			switch(true){
+				case this.x <= 0:
+				this.x = width;
+				break;
+				case this.x >= width:
+				this.x = 0;
+				break;
+				case this.y >= height:
+				this.y = 0;
+				break;
+			}
+			// if(this.x <= 0 || this.x >= width || this.y >= height){
+			// 	//设置成初始值，这样就可以死循环
+			// 	//snows.remove(this);
+			// }
+			this.draw();
+			//var self = this;
+			//不直接在这里写定时器修改位置，
+			//后面进行批量修改，可以一次清空画布，批量重绘
+			// setInterval(function(){
+			// 	self.draw();
+			// 	self.x += self.speedX;
+			// 	self.y += self.speedY;
+			// }, 1000);
 		},
 		//根据对象的大小进行绘制
-		draw: function(){
-			context.fillStyle = "red";
+		draw: function(){			
 			console.log(this.x, this.y);
-			context.fillRect(this.x, this.y, 100, 100);
-			// context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-			// context.fill();
+			context.beginPath();
+			//context.fillRect(this.x, this.y, 100, 100);
+			context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+			context.fill();
+			context.closePath();
 		}
 	}
-	var snow = new Snow();
-	// snow.init();
-	// snow.drift();
-	context.fillStyle = "red";
-	//console.log(this.x, this.y);
-	//737.9671192804424 5.864286947474426
-	context.fillRect(573.0673948636602, 5, 100, 100);
+	function randomColor(){
+		return `rgb(${Math.floor(rangeNumber(0, 256))}, ${Math.floor(rangeNumber(0, 256))}, ${Math.floor(rangeNumber(0, 256))})`;
+	}
 	function rangeNumber(min, max){
 		return Math.random() * (max - min) + min;
 	}
-	</script>
+
+	var snows = [];
+	var snowCnt = 40;
+	function generateSnow(snowCnt){
+		for(var i = 0; i < snowCnt; i++){			
+			var snow = new Snow();
+			snows.push(snow);	
+		}
+	}
+	// setInterval(function(){
+	// 	generateSnow(snowCnt/4);
+	// }, 1000);
+
+	//怎么设置圆的四周发光的样子？
+	context.shadowColor = "#fff";
+	context.shadowX = 5;
+	context.shadowY = 5;
+	context.shadowBlur = 20;
+	context.fillStyle = "#fff";
+	generateSnow(snowCnt);
+	//定时下落
+	!function down(){
+		context.shadowColor = randomColor();
+		context.clearRect(0, 0, width, height);
+		var len = snows.length;
+		for(var i = 0; i < len; i++){			
+			snows[i].drift();	
+		}
+		requestAnimationFrame(down);
+	}();
+	// var snow = new Snow();
+	// snow.init();
+	// snow.drift();
+</script>
 </body>
 </html>
