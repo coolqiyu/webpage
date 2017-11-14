@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>接口主页</title>
+	<script type="text/javascript" src="ejs_production.js"></script>
+</head>
+<body>
+<div>项目列表</div>
+<div>用例列表</div>
+<div>接口列表</div>
+<!-- 用<%变量名%>来包含变量名 -->
+<h1><%=title%></h1>
+<% if (names.length) { %>
+  <ul>
+    <% names.forEach(function(name){ %>
+      <li foo='<%= name + "'" %>'><%= name %></li>
+    <% }) %>
+  </ul>
+<% } %>
+
+
+</body>
+</html>

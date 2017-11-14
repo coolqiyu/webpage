@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+  .js-step{
+    border: 2px solid blue;
+  }
+</style>
+</head>
+<body>
+<div id="js-interface" class="ui-interface">
+<div id="js-basic">
+  <span>功能：</span><input id="js-func-name" type="text" name="" value="<%=interface.func_name%>"><br/>
+  <span>请求方式：</span><select id="js-method">
+    <option>GET</option>
+    <option>POST</option>
+  </select><br/>
+	<span>请求路径: </span>
+	<input id="js-path" type="text" name="path" value="<%=interface.path%>"><br/>
+  <span>状态</span><select id="js-select-status"><option value="0">不启用</option><option value="1">只mock参数一致的</option><option value="2">mock所有</option></select>
+  <span>失败时，是否保留步骤</span><select id="js-keep-step"><option value="0">不保留</option><option value="1">保留</option></select>
+  <span>项目</span><select id="js-select-project">
+  <%var len = projects ? projects.length : 0%>
+  <%for(var i = 0; i < len; i++){%>
+  <option value=<%=projects[i].id%>><%=projects[i].name%></option>
+  <%}%>
+  </select><br/>
+  <span>描述</span><input id="js-description" type="text" name="" value="<%=interface.description%>"><br/>
+</div>
+
+<!-- 对于一个地址相同的请求可能发生多次，下面是每一次（步）需要分别设置的 -->
+
+<div class="js-step" style="display: none;">
+  <button class="js-delete-step">删除步骤</button><br/>
+  <span>请求头: </span><button class="js-add-reqheader">添加</button><br/>
+  <div class="js-req-headers">
+ 
+    <div>key: <input type="text" name="req-header">value: <input type="text" name="req-header"><button class="js-remove-header">删除</button></div>
+  </div> 
+
+<span>请求体: </span><input class="js-req-body" type="text" name="req-body"><br/>
+  <span>返回码</span><input class="js-res-code" type="text" name="" value="200"><br/>
+  <span>返回头: </span><button class="js-add-resheader">添加</button><br/>
+  <div class="js-res-headers">
+    <div>key: <input type="text" name="res-header">value: <input type="text" name="res-header"><button class="js-remove-header">删除</button></div>
+  </div>
+  <span>返回体: </span><input class="js-res-body" type="text" name="res-body"><br/>
+</div>
+
+
+<%var sLen = steps ? steps.length : 0;%>
+<%for(var i = 0; i < sLen; i++){%>
+<div class="js-step">
+  <button class="js-delete-step">删除步骤</button><br/>
+  <span>请求头: </span><button class="js-add-reqheader">添加</button><br/>
+  <div class="js-req-headers">
+  <%var header = JSON.parse(steps[i].request_header); %>
+  <%for(var key in header){%>
+    <div>key: <input type="text" name="req-header" value="<%=key%>">value: <input type="text" name="req-header" value="<%=header[key]%>"><button class="js-remove-header">删除</button></div>
+  <%}%>
+  </div>
+  
+
+  <span>请求体: </span><input class="js-req-body" type="text" name="req-body" value="<%=steps[i].request_body%>"><br/>
+  <span>返回码</span><input class="js-res-code" type="text" name="" value="<%=steps[i].response_code%>"><br/>
+  <span>返回头: </span><button class="js-add-resheader">添加</button><br/>
+  <div class="js-res-headers">
+  <%var header = JSON.parse(steps[i].response_header); %>
+  <%for(var key in header){%>
+    <div>key: <input type="text" name="res-header" value="<%=key%>">value: <input type="text" name="res-header" value="<%=header[key]%>"><button class="js-remove-header">删除</button></div>
+  <%}%>
+  </div>
+  <span>返回体: </span><input class="js-res-body" type="text" name="res-body" value="<%=steps[i].response_body%>"><br/>
+</div>
+<%}%>
+
+
+
+<button id="js-add-step">添加步骤</button>
+	<button id="js-submit">保存</button>
+  <button id="js-cancel">取消</button>
+</div>
+<script type="text/javascript" src="/myAjax.js"></script>
+<script type="text/javascript" src="/modifyInterface.js"></script>
+</body>
+</html>

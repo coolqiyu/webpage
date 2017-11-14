@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>接口主页</title>
+  <style type="text/css">
+    ul li{
+      list-style: none;
+    }
+    .ui-project-list li span, .ui-project-list li input{
+      display: none;
+    }
+    li[view="show"] span{
+      display: inline-block;
+    }
+    li[view="edit"] input{
+      display: inline-block;
+    }
+    </style>
+</head>
+<body>
+<h1>项目列表</h1>
+<div>
+<ul id="js-project-list" class="ui-project-list">
+<li view="show">
+<span>序号</span>
+<span>项目名称</span>
+<span>真实请求路径</span>
+<span>说明</span>
+<span>操作</span>
+</li>
+<%var len = projects ? projects.length : 0;%>
+<%for(var i = 0; i < len; i++){%>
+<li view="show">
+<span><%=projects[i].id%></span>
+<input type="text" name="" value="<%=projects[i].id%>"></input>
+<span><%=projects[i].name%></span>
+<input type="text" name="" value="<%=projects[i].name%>"></input>
+<span><%=projects[i].real_host%></span>
+<input type="text" name="" value="<%=projects[i].real_host%>"></input>
+<span><%=projects[i].description%></span>
+<input type="text" name="" value="<%=projects[i].description%>"></input>
+<button class="js-op">编辑</button>
+<button class="js-delete">删除</button>
+</li>
+<%}%>
+</ul>
+</div>
+<div id="js-add-project">
+  <!-- <span>项目名称：</span> --><input id="js-name" type="text" name="">
+ <!--  <span>真实请求路径：</span> --><input id="js-real-host" type="text" name="path">
+	<!-- <span>描述: </span> --><input id="js-res-code" type="text" name="">
+	<button id="js-submit">添加</button>
+</div>
+<script type="text/javascript" src="/myAjax.js"></script>
+<script type="text/javascript" src="/project.js"></script>
+</body>
+</html>
