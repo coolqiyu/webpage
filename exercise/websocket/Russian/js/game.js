@@ -14,12 +14,10 @@ var Game = function(classSet, gameDiv, nextDiv){
 	this.nextData = [];
 	//当前和next的图形，需要这两个吗？
 	//直接修改gameData和nextData不就好了吗？
-	this.current = {
-		square: new Square(), 
-		startX: 0,
-		startY: 0
-	} 
-	this.next = new Square();
+	//这两个什么时候出来会比较好呢？
+	//一开始就出来，游戏开始时出来，两个好像差不多，那就一开始就出来吧
+	this.currentSq = new Square();
+	this.nextSq = new Square();
 }
 Game.prototype = {
 	/**
@@ -56,24 +54,99 @@ Game.prototype = {
 	 * @param  数组嵌套的格式 div 要清空的div
 	 */
 	refresh: function(){
-		this.empty(this.gameData, this.gameDiv);
-		this.empty(this.nextData, this.nextDiv);
+		this.clear(this.gameData, this.gameDiv);
+		this.clear(this.nextData, this.nextDiv);
 	},
-	empty: function(data, dataDiv){
-		var height = data.length;
-		if(!height) return;
-		var width = data[0].length;
+	/**
+	 * 根据square来清空游戏区域
+	 * @param [] data 要清空区域当前的数据
+	 * @param obj div 要清空的区域
+	 * @param  json square {data:[], origin: {x:0, y:0}} 
+	 */
+	clear: function(data, div, square){
+		var clearAll = square ? false : true;//是否清空所有
+		square = square || {data: this.gameData, origin: {x:0, y:0}};
+		// var data = square.data;
+		// var origin = square.origin;	
+		var height = square.data.length;
+		var width = square.data[0].length;
+		var originX = square.origin.x;
+		var originY = square.origin.y;
 		for(let i = 0; i < height; i++)
 			for(let j = 0; j < width; j++){
-				data[i][j] = 0;
-				dataDiv.children[i * width + j].className = this.none;
+				//1.清空所有
+				//2.不清空所有，清空当前方块时使用，只把方块中有数据的清除，不然会把区域中其它部分的也清了	
+				if(clearAll || square.data[i][j]){
+					data[originY + i][originX + j] = 0;
+					div.children[(originY + i) * data[0].length + originX + j].className = this.none;
+				}
 			}
 	},
-	setCurrent: function(data){
-		this.empty(this.gameData, this.gameDiv);
-
+	/**
+	 * 控制当前方块移动，要有边缘检测
+	 * @param  number direction 运动方向 下0、左1、右2
+	 * @return boolean 是否有移动
+	 */
+	move: function(direction){
+		var isMove = false;
+		//先清空当前的方块
+		this.clear(this.gameData, this.gameDiv, this.currentSq);
+		//根据方向移动方块
+		//如果清空后再移动，但是并没有移动，那在视觉上是不是会有问题？
+		//比如会有一瞬间空白？？
+		//结果，暂时没有发现问题
+		isMove = this.currentSq.move(direction, this.gameData);
+		//在画布中绘制
+		this.drawData(this.gameData, this.gameDiv, this.currentSq);
+		return isMove;		
 	},
-	setNext: function(data){
-
+	rotate: function(){
+		this.clear(this.gameData, this.gameDiv, this.currentSq);
+		this.currentSq.rotate();
+		this.drawData(this.gameData, this.gameDiv, this.currentSq);
+	},
+	/**
+	 * 将square的样式放到div中(从pos开始)，且设置data
+	 * @param 数组嵌套 data   [description]
+	 * @param dom-div div    [description]
+	 * @param 方块样式 square [description]
+	 */
+	drawData: function(data, div, square){
+		var sqHeight = square.data.length;
+		var sqWidth = square.data[0].length;
+		for(let i = 0; i < sqHeight; i++)
+			for(let j = 0; j < sqWidth; j++){
+				data[square.origin.y + i][square.origin.x + j] = square.data[i][j];
+				let index = (square.origin.y + i) * this.gameData[0].length + square.origin.x + j; 
+				switch(square.data[i][j]){
+					// case 0:
+					// 	div.children[index].className = this.none;
+					// 	break;
+					case 1:
+						div.children[index].className = this.current;
+						break;
+					// case 2:
+					// 	div.children[index].className = this.done;
+					// 	break;
+				}
+			}
+	},
+	/**
+	 * 游戏开始
+	 * @return {[type]} [description]
+	 */
+	start: function(){
+		var self = this;
+		self.drawData(self.gameData, self.gameDiv, self.currentSq);
+		setInterval(function(){
+			if(!self.move("down")){
+				//在一定状态时，需要让current = next，且重新生成一个next
+				self.currentSq = self.nextSq;
+				self.nextSq = new Square();
+				self.drawData(self.gameData, self.gameDiv, self.currentSq);
+				self.clear(self.nextData, self.nextDiv);
+				self.drawData(self.nextData, self.nextDiv, self.nextSq);
+			}
+		}, 1000);
 	}
 }
