@@ -16,8 +16,10 @@ var Game = function(classSet, gameDiv, nextDiv){
 	//直接修改gameData和nextData不就好了吗？
 	//这两个什么时候出来会比较好呢？
 	//一开始就出来，游戏开始时出来，两个好像差不多，那就一开始就出来吧
-	this.currentSq = new Square();
-	this.nextSq = new Square();
+	this.currentSq = SquareFactory.create();
+	this.nextSq = SquareFactory.create();
+	this.score = 0;//分数
+	this.startTime = 0;//用时
 }
 Game.prototype = {
 	/**
@@ -65,7 +67,12 @@ Game.prototype = {
 	 */
 	clear: function(data, div, square){
 		var clearAll = square ? false : true;//是否清空所有
-		square = square || {data: this.gameData, origin: {x:0, y:0}};
+		if(!square){
+			if(data === this.gameData)
+				square = {data: this.gameData, origin: {x:0, y:0}};
+			else
+				square = {data: this.nextData, origin: {x:0, y:0}}; 
+		}
 		// var data = square.data;
 		// var origin = square.origin;	
 		var height = square.data.length;
@@ -88,21 +95,21 @@ Game.prototype = {
 	 * @return boolean 是否有移动
 	 */
 	move: function(direction){
-		var isMove = false;
-		//先清空当前的方块
+		var isMove = false;		
 		this.clear(this.gameData, this.gameDiv, this.currentSq);
 		//根据方向移动方块
 		//如果清空后再移动，但是并没有移动，那在视觉上是不是会有问题？
 		//比如会有一瞬间空白？？
-		//结果，暂时没有发现问题
+		//结果，暂时没有发现问题		
 		isMove = this.currentSq.move(direction, this.gameData);
 		//在画布中绘制
 		this.drawData(this.gameData, this.gameDiv, this.currentSq);
+			
 		return isMove;		
 	},
 	rotate: function(){
 		this.clear(this.gameData, this.gameDiv, this.currentSq);
-		this.currentSq.rotate();
+		this.currentSq.rotate(this.gameData);
 		this.drawData(this.gameData, this.gameDiv, this.currentSq);
 	},
 	/**
@@ -115,14 +122,15 @@ Game.prototype = {
 		var sqHeight = square.data.length;
 		var sqWidth = square.data[0].length;
 		for(let i = 0; i < sqHeight; i++)
-			for(let j = 0; j < sqWidth; j++){
-				data[square.origin.y + i][square.origin.x + j] = square.data[i][j];
-				let index = (square.origin.y + i) * this.gameData[0].length + square.origin.x + j; 
+			for(let j = 0; j < sqWidth; j++){				
+				let index = (square.origin.y + i) * data[0].length + square.origin.x + j; 
 				switch(square.data[i][j]){
+					//当值为0时不用修改，只要保持原来的数据即可
 					// case 0:
 					// 	div.children[index].className = this.none;
 					// 	break;
 					case 1:
+						data[square.origin.y + i][square.origin.x + j] = square.data[i][j];
 						div.children[index].className = this.current;
 						break;
 					// case 2:
@@ -138,11 +146,61 @@ Game.prototype = {
 	start: function(){
 		var self = this;
 		self.drawData(self.gameData, self.gameDiv, self.currentSq);
-		setInterval(function(){
+		self.drawData(self.nextData, self.nextDiv, self.nextSq);
+		this.startTime = new Date().getTime();
+		//定时控制当前方块下落
+		var intervalTimer = setInterval(function(){
 			if(!self.move("down")){
+				//如果当前方块在y=0位置时就无法移动，则游戏结束
+				if(!self.currentSq.origin.y){
+					clearInterval(intervalTimer);
+					alert("game over");
+					return;
+				}
+				//把当前的数据判断一下，如果已经有成行的，那就下移删除
+				var height = self.gameData.length;
+				var width = self.gameData[0].length;
+				for(let i = height - 1; i >= 0; i--){
+					let delFlag = 1, endFlag = 0;
+					for(let j = 0; j < width; j++){
+						delFlag &= self.gameData[i][j];//1则删除
+						endFlag |= self.gameData[i][j];//0则结束
+						if(!delFlag)
+							break;
+						if(!endFlag)
+							break;
+					}
+					if(!endFlag)
+						break;
+					if(delFlag){//把第i行清空
+						// for(let k = i; k > 0; k--){
+						// 	self.gameData[k] = self.gameData[k - 1];
+						// 	//不能直接这样设置
+						// 	[].splice.call(self.gameDiv.children, width, k * width, [].slice.call(self.gameDiv.children, 0, k * width));
+						// 	for(let l = 0; l < width; l++)
+						// 		self.gameDiv.children[l] = self.none;
+						// }
+						
+						//用操作dom节点方法来实现
+						let row = [];
+						for(let k = 0; k < width; k++){
+							//删除一个节点并添加一个节点
+							self.gameDiv.removeChild(self.gameDiv.children[i * width + k]);
+							let div = document.createElement("div");
+							div.className = self.none;
+							self.gameDiv.insertBefore(div, self.gameDiv.children[0]);
+							row.push(0);
+						}
+						self.gameData.splice(i, 1);
+						self.gameData.unshift(row);
+						i++;
+						//更新得分
+						this.score += 10;
+					}
+				}
 				//在一定状态时，需要让current = next，且重新生成一个next
 				self.currentSq = self.nextSq;
-				self.nextSq = new Square();
+				self.nextSq = SquareFactory.create();
 				self.drawData(self.gameData, self.gameDiv, self.currentSq);
 				self.clear(self.nextData, self.nextDiv);
 				self.drawData(self.nextData, self.nextDiv, self.nextSq);

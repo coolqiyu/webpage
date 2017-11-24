@@ -1,0 +1,48 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+.left{
+	width: 400px;
+	height: 600px;
+	display: inline-block;
+	background-color: lightgreen;
+	border: 1px solid red;
+	border-left: none;
+	border-top: none;
+	float: left;
+}
+.right1{
+	display: inline-block;
+	float: left;
+	margin: 10px;
+}
+.right{
+	width: 200px;
+	height: 200px;
+	background-color: lightgreen;
+	border: 1px solid red;
+	border-left: none;
+	border-top: none;
+	vertical-align: top;
+}
+.left div, .right div{
+	width: 40px;
+	height: 40px;
+	border: 1px solid red;
+	border-right: none;
+	border-bottom: none;
+	display: inline-block;
+	box-sizing: border-box;
+	vertical-align: top;
+}
+.none, .none{
+	
+}
+.current, .current{
+	background-color: red;
+	border: 3px solid blue;
+}
+.done, .done{
+	background-color: blue;
+}

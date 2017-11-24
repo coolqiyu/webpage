@@ -1,11 +1,21 @@
-/*
-1. 数据表示
-分为游戏区和下一个图形区
-每个区域由众多小方块构成
-每个区域用Data和Div表示，Data中的值来表示区域中的状态，Div表示具体的div对象
-每个数据对象用二维数组表示
- */
-var gameData = [];
-var gameDiv = [];
-var nextData = [];
-var nextDiv = [];
+var SquareFactory = {
+	create: function(){
+		var type = Math.floor(Math.random() * 7) + 1;
+		switch(type){
+			case 1:
+				return new Square1();
+			case 2:
+				return new Square2();
+			case 3:
+				return new Square3();
+			case 4:
+				return new Square4();
+			case 5:
+				return new Square5();
+			case 6:
+				return new Square6();
+			case 7:
+				return new Square7();
+		}
+	}
+}
