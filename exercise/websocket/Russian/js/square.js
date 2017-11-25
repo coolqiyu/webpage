@@ -91,8 +91,11 @@ Square.prototype = {
 				tmpData[j][height - i - 1] = this.data[i][j];
 			}
 		//旋转后也要判断一下
-		console.log("rotate: ", JSON.stringify(this.origin), JSON.stringify(tmpData));
-		if(this.check(this.origin, tmpData, boundary))	
+		// console.log("rotate: ", JSON.stringify(this.origin), JSON.stringify(tmpData));
+		if(this.check(this.origin, tmpData, boundary)){
 			this.data = tmpData;
+			return true;
+		}
+		return false;
 	}
 }
