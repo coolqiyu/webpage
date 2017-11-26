@@ -1,21 +1,38 @@
 var SquareFactory = {
 	create: function(){
 		var type = Math.floor(Math.random() * 7) + 1;
+		var square;
 		switch(type){
 			case 1:
-				return new Square1();
+				square = new Square1();
+				break;
 			case 2:
-				return new Square2();
+				square = new Square2();
+				break;
 			case 3:
-				return new Square3();
+				square = new Square3();
+				break;
 			case 4:
-				return new Square4();
+				square = new Square4();
+				break;
 			case 5:
-				return new Square5();
+				square = new Square5();
+				break;
 			case 6:
-				return new Square6();
+				square = new Square6();
+				break;
 			case 7:
-				return new Square7();
+				square = new Square7();
+				break;
 		}
+		var toRotate = Math.floor(Math.random() * 4);
+		for(var i = 0; i < toRotate; i++)
+			square.rotate();
+		return square;
 	}
 }
+
+/**
+ * var squareFactory = function(){};
+ * squareFactory.prototype.create = function(){}
+ */

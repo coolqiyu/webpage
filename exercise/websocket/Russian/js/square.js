@@ -81,6 +81,7 @@ Square.prototype = {
 	 * 方块顺时针旋转90度，行转列
 	 */
 	rotate: function(boundary){
+		console.log("llll");
 		var height = this.data.length;
 		var width = this.data[0].length;
 		var tmpData = [];
@@ -92,7 +93,7 @@ Square.prototype = {
 			}
 		//旋转后也要判断一下
 		// console.log("rotate: ", JSON.stringify(this.origin), JSON.stringify(tmpData));
-		if(this.check(this.origin, tmpData, boundary)){
+		if(!boundary || this.check(this.origin, tmpData, boundary)){
 			this.data = tmpData;
 			return true;
 		}

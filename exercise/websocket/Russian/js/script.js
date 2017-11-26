@@ -1,39 +1,24 @@
-var gameDiv = document.getElementById("game");
-var nextDiv = document.getElementById("next");
-var score = document.getElementById("js-score");
-var time = document.getElementById("js-time");
-var startBtn = document.getElementById("js-start-btn");
-var game = new Game({
-	none:"none", 
-	done:"done", 
-	current:"current"},
-	gameDiv, nextDiv);
-game.init({width: 10, height: 15}, {width: 5, height: 5});
-startBtn.addEventListener("click", function(){
-	game.start();
-	document.addEventListener("keydown", function(e){
-		switch(e.keyCode){
-			case 37://左
-				game.move("left");
-				break;
-			case 38://上
-				game.move("top");
-				break;
-			case 39://右
-				game.move("right");
-				break;
-			case 40://下
-				game.move("down");
-				break;
-			case 32://空格
-				game.rotate();
-				break;
-		}
-	})
+// 打开websocket
+var ws = new WebSocket("ws://localhost:3000");
 
-	//每一秒更新
-	setInterval(function(){
-		score.innerHTML = game.score;
-		time.innerHTML = Math.floor((new Date().getTime() - game.startTime) / 1000);
-	}, 1000);
-})
+//当前用户
+var localGameDiv = document.getElementById("js-local-game");
+var localNextDiv = document.getElementById("js-local-next");
+var localScore = document.getElementById("js-local-score");
+var localTime = document.getElementById("js-local-time");
+var localStartBtn = document.getElementById("js-local-start-btn");
+var local = new Local(localGameDiv, localNextDiv, localScore, localTime, localStartBtn);
+// localStartBtn.addEventListener("click", function(){
+// 	local.start();
+// })
+
+//对手
+var remoteGameDiv = document.getElementById("js-remote-game");
+var remoteNextDiv = document.getElementById("js-remote-next");
+var remoteScore = document.getElementById("js-remote-score");
+var remoteTime = document.getElementById("js-remote-time");
+var remoteStartBtn = document.getElementById("js-remote-start-btn");
+var remote = new Remote(remoteGameDiv, remoteNextDiv, remoteScore, remoteTime, remoteStartBtn);
+ws.onmessage = function(msg){
+	remote.recieveMsg(msg);
+}

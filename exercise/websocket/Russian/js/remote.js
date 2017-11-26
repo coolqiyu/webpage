@@ -1,11 +1,30 @@
-/*
-1. 数据表示
-分为游戏区和下一个图形区
-每个区域由众多小方块构成
-每个区域用Data和Div表示，Data中的值来表示区域中的状态，Div表示具体的div对象
-每个数据对象用二维数组表示
- */
-var gameData = [];
-var gameDiv = [];
-var nextData = [];
-var nextDiv = [];
+var Remote = function(gameDiv, nextDiv, score, time, startBtn){	
+	//初始化游戏区域
+	this.game = new Game({
+		none:"none", 
+		done:"done", 
+		current:"current"},
+		gameDiv, nextDiv);
+	this.game.init({width: 10, height: 15}, {width: 5, height: 5});
+}
+
+//对ws收到的msg进行响应
+Remote.recieveMsg = function(msg){
+	msg = JSON.parse(msg);
+	if(msg["move"])
+		this.game.move(msg["move"]);
+	else if(msg["rotate"])
+		this.game.rotate();
+	else if(msg["score"])
+		score.innerHTML = msg["score"];
+	else{
+		switch(msg["game"]){
+			case 0:
+				this.game.start();
+				break;
+			case 1:
+				this.game.end();
+				break;
+		}
+	}	
+}

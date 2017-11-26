@@ -12,14 +12,10 @@ var Game = function(classSet, gameDiv, nextDiv){
 	//整个game区域和next区域的数据
 	this.gameData = [];
 	this.nextData = [];
-	//当前和next的图形，需要这两个吗？
-	//直接修改gameData和nextData不就好了吗？
-	//这两个什么时候出来会比较好呢？
-	//一开始就出来，游戏开始时出来，两个好像差不多，那就一开始就出来吧
-	this.currentSq = SquareFactory.create();
-	this.nextSq = SquareFactory.create();
+	
 	this.score = 0;//分数
 	this.startTime = 0;//用时
+	this.status = 0;//游戏状态，1表示结束
 }
 Game.prototype = {
 	/**
@@ -29,7 +25,17 @@ Game.prototype = {
 	 */
 	init: function(gameSize, nextSize){
 		this.generate(this.gameData, this.gameDiv, gameSize);
-		this.generate(this.nextData, this.nextDiv, nextSize);		
+		this.generate(this.nextData, this.nextDiv, nextSize);
+
+		//当前和next的图形，需要这两个吗？
+		//直接修改gameData和nextData不就好了吗？
+		//这两个什么时候出来会比较好呢？
+		//一开始就出来，游戏开始时出来，两个好像差不多，那就一开始就出来吧
+		this.currentSq = SquareFactory.create();
+		this.nextSq = SquareFactory.create();
+		this.currentSq.origin.x = Math.floor((this.gameData[0].length - this.currentSq.data[0].length) / 2);
+		this.nextSq.origin.x = Math.floor((this.nextData[0].length - this.nextSq.data[0].length) / 2);
+		this.nextSq.origin.y = Math.floor((this.nextData.length - this.nextSq.data.length) / 2);		
 	},
 	/**
 	 * 为dataDiv生成size大小元素，并把data的各位置为0
@@ -52,7 +58,7 @@ Game.prototype = {
 		}
 	},
 	/**
-	 * 刷新游戏区域，全部清空
+	 * 刷新游戏区域，全部清空，暂时好像没有用到
 	 * @param  数组嵌套的格式 div 要清空的div
 	 */
 	refresh: function(){
@@ -96,27 +102,29 @@ Game.prototype = {
 	 */
 	move: function(direction){
 		var isMove = false;		
+		this.clearData(this.gameData, this.currentSq.origin, this.currentSq.data);
+		//this.drawData(this.gameData, this.gameDiv);
 		// this.clear(this.gameData, this.gameDiv, this.currentSq);
 		//根据方向移动方块
 		//如果清空后再移动，但是并没有移动，那在视觉上是不是会有问题？
 		//比如会有一瞬间空白？？
 		//结果，暂时没有发现问题		
 		isMove = this.currentSq.move(direction, this.gameData);
-		if(isMove){
-			this.clearData();
-			this.setData(this.gameData, this.currentSq.origin, this.currentSq.data);
-			//在画布中绘制
-			this.drawData(this.gameData, this.gameDiv);
-		}			
+	
+		this.setData(this.gameData, this.currentSq.origin, this.currentSq.data);
+		//在画布中绘制
+		this.drawData(this.gameData, this.gameDiv);
+					
+		console.log("move: ", isMove);
 		return isMove;		
 	},
 	rotate: function(){
 		//this.clear(this.gameData, this.gameDiv, this.currentSq);
-		if(this.currentSq.rotate(this.gameData)){
-			this.clearData();
-			this.setData(this.gameData, this.currentSq.origin, this.currentSq.data);
-			this.drawData(this.gameData, this.gameDiv, this.currentSq);
-		}
+		this.clearData(this.gameData, this.currentSq.origin, this.currentSq.data);
+		//this.drawData(this.gameData, this.gameDiv);
+		this.currentSq.rotate(this.gameData);		
+		this.setData(this.gameData, this.currentSq.origin, this.currentSq.data);
+		this.drawData(this.gameData, this.gameDiv, this.currentSq);		
 	},
 	/**
 	 * 将square的样式放到div中(从pos开始)，且设置data
@@ -145,12 +153,12 @@ Game.prototype = {
 	// 			}
 	// 		}
 	// },
-	clearData: function(){
-		var sqHeight = this.currentSq.data.length;
-		var sqWidth = this.currentSq.data[0].length;
+	clearData: function(data, origin, square){
+		var sqHeight = square.length;
+		var sqWidth = square[0].length;
 		for(var i = 0; i < sqHeight; i++)
 			for(var j = 0; j < sqWidth; j++){
-				if(this.currentSq.data[i][j])
+				if(square[i][j])
 					data[origin.y + i][origin.x + j] = 0;
 			}
 	},
@@ -165,7 +173,8 @@ Game.prototype = {
 		var sqWidth = square[0].length;
 		for(var i = 0; i < sqHeight; i++)
 			for(var j = 0; j < sqWidth; j++){
-				data[origin.y + i][origin.x + j] = square[i][j];
+				if(square[i][j])
+					data[origin.y + i][origin.x + j] = square[i][j];
 			}
 	},
 	/**
@@ -197,17 +206,32 @@ Game.prototype = {
 	 * 把当前方块(已经不能移动)的位置改成done的样式
 	 */
 	fixed: function(){
-		var sqHeight = this.currentSq.data.height;
-		var sqWidth = this.currentSq.data.width;
+		var sqHeight = this.currentSq.data.length;
+		var sqWidth = this.currentSq.data[0].length;
 		for(var i = 0; i < sqHeight; i++)
 			for(var j = 0; j < sqWidth; j++)
-				this.currentSq.data[i][j] = 2;
+				if(this.currentSq.data[i][j])
+					this.currentSq.data[i][j] = 2;
 		this.setData(this.gameData, this.currentSq.origin, this.currentSq.data);
 		this.drawData(this.gameData, this.gameDiv);
 	},
 	/**
+	 * 为了增加干扰元素，可以给游戏区域底部添加几行随机数
+	 */
+	addLines: function(lineCnt){
+		var height = this.gameData.length;
+		var width = this.gameData[0].length;
+		for(var i = 0; i < lineCnt; i++){
+			this.gameData.shift();
+			var line = [];
+			for(var j = 0; j < width; j++)
+				line.push(Math.floor(Math.random() * 2) ? 2 : 0);
+			this.gameData.push(line);
+		}
+		// this.setData(this.gameData, {x: 0, y: height - 1}, lines);
+	},
+	/**
 	 * 游戏开始
-	 * @return {[type]} [description]
 	 */
 	start: function(){
 		var self = this;
@@ -219,14 +243,16 @@ Game.prototype = {
 		//定时控制当前方块下落
 		var intervalTimer = setInterval(function(){
 			if(!self.move("down")){
+				//当current不能动了，需要把它的样式改掉
+				self.fixed();
+				//先fixed，再判断结束，否则最后一个的样式不会变
 				//如果当前方块在y=0位置时就无法移动，则游戏结束
 				if(!self.currentSq.origin.y){
 					clearInterval(intervalTimer);
-					alert("game over");
+					// alert("game over");
+					self.status = 1;
 					return;
-				}
-				//当current不能动了，需要把它的样式改掉
-				self.fixed();
+				}				
 				// 从最下向上判断每一行，如果一行满了，那就下移删除
 				// 方式一
 				// var height = self.gameData.length;
@@ -272,7 +298,7 @@ Game.prototype = {
 				// 方式二
 				var height = self.gameData.length;
 				var width = self.gameData[0].length;
-				for(var i = height - 1; i >= 0; i++){
+				for(var i = height - 1; i >= 0; i--){
 					var sum = 0;
 					for(var j = 0; j < width; j++){
 						sum += self.gameData[i][j];
@@ -282,19 +308,29 @@ Game.prototype = {
 						break;
 					//这一行都是2，可以清除
 					else if(sum === 2 * width){
+						self.score += 10;
 						for(var k = i; k > 0; k--)
-							self.gameData[k] = self.gameData[k - 1];
+							for(var w = 0; w < width; w++)
+								self.gameData[k][w] = self.gameData[k - 1][w];
+							
 						for(var k = 0; k < width; k++)
 							self.gameData[0][k] = 0;
 						self.drawData(self.gameData, self.gameDiv);
+						i++;
 					}
 				}				
 				//当current不能动了，需要让current = next，且重新生成一个next
-				self.currentSq = self.nextSq;
+				self.clearData(self.nextData, self.nextSq.origin, self.nextSq.data);
+				self.currentSq = self.nextSq;		
+				self.currentSq.origin.x = Math.floor((self.gameData[0].length - self.currentSq.data[0].length) / 2);
+				self.currentSq.origin.y = 0;
 				self.nextSq = SquareFactory.create();
-				self.drawData(self.gameData, self.gameDiv, self.currentSq);
-				self.clear(self.nextData, self.nextDiv);
-				self.drawData(self.nextData, self.nextDiv, self.nextSq);
+				self.nextSq.origin.x = Math.floor((self.nextData[0].length - self.nextSq.data[0].length) / 2);
+				self.nextSq.origin.y = Math.floor((self.nextData.length - self.nextSq.data.length) / 2);				
+				self.setData(self.gameData, self.currentSq.origin, self.currentSq.data);
+				self.drawData(self.gameData, self.gameDiv);
+				self.setData(self.nextData, self.nextSq.origin, self.nextSq.data);
+				self.drawData(self.nextData, self.nextDiv);
 			}
 		}, 1000);
 	}
@@ -308,4 +344,7 @@ Game.prototype = {
  * 2. 现在：
  * - 把data设置与div设置分开
  * - move的时候就是要先清空再画一下的
+ *
+ * 3. 增加干扰功能
+ * - 当自己得分时，就给对手增加一行
  */
