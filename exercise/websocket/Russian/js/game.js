@@ -15,7 +15,7 @@ var Game = function(classSet, gameDiv, nextDiv){
 	
 	this.score = 0;//分数
 	this.startTime = 0;//用时
-	this.status = 0;//游戏状态，1表示结束
+	this.status = -1;//游戏状态，-1未准备，0准备，1进行中，2结束
 }
 Game.prototype = {
 	/**
@@ -26,7 +26,9 @@ Game.prototype = {
 	init: function(gameSize, nextSize){
 		this.generate(this.gameData, this.gameDiv, gameSize);
 		this.generate(this.nextData, this.nextDiv, nextSize);
-
+		this.createSq();		
+	},
+	createSq: function(){
 		//当前和next的图形，需要这两个吗？
 		//直接修改gameData和nextData不就好了吗？
 		//这两个什么时候出来会比较好呢？
@@ -250,7 +252,7 @@ Game.prototype = {
 				if(!self.currentSq.origin.y){
 					clearInterval(intervalTimer);
 					// alert("game over");
-					self.status = 1;
+					self.status = 2;
 					return;
 				}				
 				// 从最下向上判断每一行，如果一行满了，那就下移删除
@@ -333,6 +335,9 @@ Game.prototype = {
 				self.drawData(self.nextData, self.nextDiv);
 			}
 		}, 1000);
+	},
+	end: function(){
+		alert("游戏结束");
 	}
 }
 

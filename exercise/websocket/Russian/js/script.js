@@ -19,6 +19,11 @@ var remoteScore = document.getElementById("js-remote-score");
 var remoteTime = document.getElementById("js-remote-time");
 var remoteStartBtn = document.getElementById("js-remote-start-btn");
 var remote = new Remote(remoteGameDiv, remoteNextDiv, remoteScore, remoteTime, remoteStartBtn);
-ws.onmessage = function(msg){
+ws.onmessage = function(e){
+	var msg = e.data;
+	console.log("收到服务信息：", msg);
+	//if(local.game.status < 1)//当“我的”还没开始时由local来处理信息
+	local.recieveMsg(msg);
+	//else
 	remote.recieveMsg(msg);
 }
