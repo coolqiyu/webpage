@@ -11,12 +11,24 @@ var Remote = function(gameDiv, nextDiv, score, time, startBtn){
 //对ws收到的msg进行响应
 Remote.prototype.recieveMsg = function(msg){
 	msg = JSON.parse(msg);
+	if(msg["currentSq"]){
+		this.game.currentSq = msg["currentSq"];
+	}
+	if(msg["nextSq"]){
+		this.game.nextSq = msg["nextSq"];
+		this.game.clearData(this.game.nextData, this.game.nextSq.origin, this.game.nextSq.data);			
+		this.game.setData(this.game.gameData, this.game.currentSq.origin, this.game.currentSq.data);
+		this.game.drawData(this.game.gameData, this.game.gameDiv);
+		this.game.setData(this.game.nextData, this.game.nextSq.origin, this.game.nextSq.data);
+		this.game.drawData(this.game.nextData, this.game.nextDiv);
+	}
 	if(msg["move"])
 		this.game.move(msg["move"]);
 	if(msg["rotate"])
 		this.game.rotate();
 	if(msg["score"])
 		score.innerHTML = msg["score"];
+	
 	else{
 		// switch(msg["status"]){
 		// 	case 1:

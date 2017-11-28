@@ -156,6 +156,8 @@ Game.prototype = {
 	// 		}
 	// },
 	clearData: function(data, origin, square){
+		if(!square)
+			return;
 		var sqHeight = square.length;
 		var sqWidth = square[0].length;
 		for(var i = 0; i < sqHeight; i++)
@@ -244,7 +246,7 @@ Game.prototype = {
 		this.startTime = new Date().getTime();
 		//定时控制当前方块下落
 		var intervalTimer = setInterval(function(){
-			if(!self.move("down")){
+			if(self.status === 2){
 				//当current不能动了，需要把它的样式改掉
 				self.fixed();
 				//先fixed，再判断结束，否则最后一个的样式不会变

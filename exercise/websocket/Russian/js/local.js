@@ -63,13 +63,15 @@ Local.prototype.recieveMsg = function(msg){
 			//1. 每次都把整个sq数据发过去，这个数据传输大一点
 			//2. 只发送指令，可是next和current会变化的
 			//	- 怎么确定应该修改sq数据？把上一次的存下来，判断不同的话才发数据
-			msg = {};
+			msg = {"user": "A"};
 			if(currentSq != self.game.currentSq){
 				msg["currentSq"] = self.game.currentSq;
 				msg["nextSq"] = self.game.nextSq;
 			}
 			msg["score"] = self.game.score;
-			ws.sendText(JSON.stringify(msg));
+			//每次自然下落的信息应该怎么传递？
+			msg["move"] = "down";
+			ws.send(JSON.stringify(msg));
 
 			//如果游戏状态为结束
 			if(self.game.status === 1){

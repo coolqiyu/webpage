@@ -1,6 +1,6 @@
 // 打开websocket
 var ws = new WebSocket("ws://localhost:3000");
-
+var ID;//玩家的id号
 //当前用户
 var localGameDiv = document.getElementById("js-local-game");
 var localNextDiv = document.getElementById("js-local-next");
