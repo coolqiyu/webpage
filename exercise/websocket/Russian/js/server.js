@@ -22,10 +22,10 @@ var server = ws.createServer(function(conn){
 		if(connCnt > 0){
 			checkStart(msg);		
 			//给当前连接的玩家发一个id标识，不是广播
-			msg = JSON.stringify({"id":connCnt});	
+			msg = JSON.stringify({"id":connCnt, "op":"setid"});	
 			conn.sendText(msg);	
 			if(connCnt === 0)//所有玩家都准备好了，发送游戏开始的信息
-				msg = JSON.stringify({"status": 1})		
+				msg = JSON.stringify({"status":1});		
 		}
 		if(connCnt === 0)
 			broadcast(msg);
@@ -43,13 +43,6 @@ var broadcast = function(msg){
 	console.log("向所有连接发送信息: ", msg);
 	var conns = server.connections.forEach(function(conn){
 		conn.sendText(msg);
-	})
-}
-var broadcastExt = function(msg){
-	console.log("向所有连接发送信息: ", msg);
-	var conns = server.connections.forEach(function(conn){
-		if(conn !=== currentConn)
-			conn.sendText(msg);
 	})
 }
 /**

@@ -17,28 +17,31 @@ var Local = function(gameDiv, nextDiv, score, time, startBtn){
 	self.game.init({width: 10, height: 15}, {width: 5, height: 5});
 	
 	self.bindEvent = function(e){
+		var msg = {};
+		msg["id"] = ID;
 		switch(e.keyCode){
 			case 37://左
 				self.game.move("left");
-				ws.send(JSON.stringify({"move":"left"}));
+				msg["move"] = "left";
 				break;
 			case 38://上
 				self.game.move("top");
-				ws.send(JSON.stringify({"move":"top"}));
+				msg["move"] = "top";
 				break;
 			case 39://右
 				self.game.move("right");
-				ws.send(JSON.stringify({"move":"right"}));
+				msg["move"] = "right";
 				break;
 			case 40://下
 				self.game.move("down");
-				ws.send(JSON.stringify({"move":"down"}));
+				msg["move"] = "down";
 				break;
 			case 32://空格
 				self.game.rotate();
-				ws.send(JSON.stringify({"rotate":1}));
+				msg["rotate"] = 1;
 				break;
 		}
+		ws.send(JSON.stringify(msg));
 	};
 	//开始游戏，准备按钮
 	startBtn.addEventListener("click", function(){
@@ -50,8 +53,9 @@ var Local = function(gameDiv, nextDiv, score, time, startBtn){
 
 Local.prototype.recieveMsg = function(msg){
 	var self = this;
-	msg = JSON.parse(msg);
-	if("status" in msg && msg["status"] === 1){//可以开始游戏
+	
+	//已经设置过id
+	if("status" in msg && msg["status"] === 1){//服务端发来开始游戏的信息
 		self.game.start();
 		//每一秒更新
 		var timeInterval = setInterval(function(){
@@ -63,21 +67,21 @@ Local.prototype.recieveMsg = function(msg){
 			//1. 每次都把整个sq数据发过去，这个数据传输大一点
 			//2. 只发送指令，可是next和current会变化的
 			//	- 怎么确定应该修改sq数据？把上一次的存下来，判断不同的话才发数据
-			msg = {"user": "A"};
-			if(currentSq != self.game.currentSq){
+			msg = {"id": ID};
+			if(currentSq !== self.game.currentSq){
 				msg["currentSq"] = self.game.currentSq;
 				msg["nextSq"] = self.game.nextSq;
 			}
 			msg["score"] = self.game.score;
 			//每次自然下落的信息应该怎么传递？
-			msg["move"] = "down";
+			//msg["move"] = "down";
 			ws.send(JSON.stringify(msg));
 
 			//如果游戏状态为结束
 			if(self.game.status === 1){
 				clearInterval(timeInterval);
 				document.removeEventListener("keydown", this.bindEvent);
-				ws.send(JSON.stringify({"status":1}));
+				ws.send(JSON.stringify({"id": ID, "status": 2}));
 			}
 		}, 1000);
 	}

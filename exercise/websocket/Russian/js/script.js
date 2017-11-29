@@ -20,10 +20,16 @@ var remoteTime = document.getElementById("js-remote-time");
 var remoteStartBtn = document.getElementById("js-remote-start-btn");
 var remote = new Remote(remoteGameDiv, remoteNextDiv, remoteScore, remoteTime, remoteStartBtn);
 ws.onmessage = function(e){
-	var msg = e.data;
+	var msg = JSON.parse(e.data);
 	console.log("收到服务信息：", msg);
-	//if(local.game.status < 1)//当“我的”还没开始时由local来处理信息
-	local.recieveMsg(msg);
-	//else
-	remote.recieveMsg(msg);
+	if(ID === undefined){//未设置过id
+		if("op" in msg && msg["op"] === "setid")
+			ID = msg["id"];
+	}
+	else if("id" in msg && ID !== msg["id"]){//别人发过来的消息，需要由remote处理	
+		remote.recieveMsg(msg);
+	}
+	else{
+		local.recieveMsg(msg);
+	}
 }

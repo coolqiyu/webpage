@@ -118,6 +118,8 @@ Game.prototype = {
 		this.drawData(this.gameData, this.gameDiv);
 					
 		console.log("move: ", isMove);
+		if(!isMove)
+			this.status = 2;
 		return isMove;		
 	},
 	rotate: function(){
