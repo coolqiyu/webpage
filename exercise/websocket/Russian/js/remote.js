@@ -1,43 +1,65 @@
-var Remote = function(gameDiv, nextDiv, score, time, startBtn){	
+var Remote = function(gameDiv, nextDiv, score, time, startBtn, ws, msgDiv){	
 	//初始化游戏区域
-	this.game = new Game({
+	var game = new Game({
 		none:"none", 
 		done:"done", 
 		current:"current"},
 		gameDiv, nextDiv);
-	this.game.init({width: 10, height: 15}, {width: 5, height: 5});
-}
+	game.init({width: 10, height: 15}, {width: 5, height: 5});
 
-//对ws收到的msg进行响应
-Remote.prototype.recieveMsg = function(msg){
-	if(msg["currentSq"]){
-		this.game.currentSq.data = msg["currentSq"].data;
-		this.game.currentSq.origin = msg["currentSq"].origin;
-	}
-	if(msg["nextSq"]){		
-		this.game.nextSq.data = msg["nextSq"].data;
-		this.game.nextSq.origin = msg["nextSq"].origin;
-		this.game.clearData(this.game.nextData, this.game.nextSq.origin, this.game.nextSq.data);			
-		this.game.setData(this.game.gameData, this.game.currentSq.origin, this.game.currentSq.data);
-		this.game.drawData(this.game.gameData, this.game.gameDiv);
-		this.game.setData(this.game.nextData, this.game.nextSq.origin, this.game.nextSq.data);
-		this.game.drawData(this.game.nextData, this.game.nextDiv);
-	}
-	if(msg["move"])
-		this.game.move(msg["move"]);
-	if(msg["rotate"])
-		this.game.rotate();
-	if(msg["score"])
-		score.innerHTML = msg["score"];
-	
-	else{
-		// switch(msg["status"]){
-		// 	case 1:
-		// 		this.game.start();
-		// 		break;
-		// 	case 2:
-		// 		this.game.end();
-		// 		break;
-		// }
-	}	
+	var handleMsg = function(msg){
+		console.log("server: ", msg);		
+		if("op" in msg)//这类由local来处理
+			return;		
+		if("status" in msg && msg["status"] === 3){
+			if(ID && ID === msg["id"])//local发出的结束信息
+				msgDiv.innerHTML = "我赢了";
+			else if(ID && ID !== msg["id"])//其它local发出的结束信息
+				msgDiv.innerHTML = "我输了";
+			return;
+		}
+		if("target" in msg && ID === msg["id"]){//由当前local发出的操作信息
+			if(msg["addline"]){
+				game.addLines(msg["addline"]);
+			}
+		}
+		if(ID && ID === msg["id"])//除了status，其它由自己发出的消息就不处理
+			return;			
+		if(msg["current"]){
+			game.createSq(msg["current"].type, msg["current"].dir, 0);
+			game.resetOrigin(0);
+			game.refresh(0);
+		}
+		if(msg["next"]){	
+			if(!msg["current"]){//如果只发了一个next数据
+				game.performNext(msg["next"].type, msg["next"].dir);
+			}
+			else{
+				game.createSq(msg["next"].type, msg["next"].dir, 1);
+				game.resetOrigin(1);
+				game.refresh(1);
+			}			
+		}
+		if(msg["move"])
+			game.move(msg["move"]);
+		if(msg["rotate"])
+			game.rotate();
+		if(msg["score"])
+			score.innerHTML = msg["score"];	
+		if(msg["fixed"]){
+			game.fixed();
+		}
+		if(msg["clearline"])
+			game.clearLine();
+		if(msg["addline"]){
+			game.addLines(msg["addline"]);
+		}
+	};
+	ws.addEventListener("message", function(e){
+		var msg = JSON.parse(e.data);
+		handleMsg(msg);
+	});
 }
+// //对ws收到的msg进行响应
+// Remote.prototype.recieveMsg = function(msg){	
+// }

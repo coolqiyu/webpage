@@ -6,25 +6,28 @@
 	<link rel="stylesheet" type="text/css" href="./css/index.css">
 </head>
 <body>
+	<h1>火拼俄罗斯方块</h1>
 	<div class="local">
-		<h3>我的</h3>
-		<button id="js-local-start-btn">开始游戏</button>
+		<h2>我的</h2>		
 		<div id = 'js-local-game' class='left'>
+			<button id="js-local-start-btn">准备</button>
+			<div id="js-local-msg" class="msg"></div>
 		</div>	
-		<div class="right1">
-			<div id = 'js-local-next' class = 'right'>
-			</div>
+		<div class="right" id = 'js-local-next'>
+		</div>
+		<div class="info">
 			<span>得分: </span><sapn id="js-local-score">0</sapn>
 			<span>已用时: </span><sapn id="js-local-time">0</sapn>s
-		</div>	
+		</div>
 	</div>
 	<div class="remote">
-		<h3>对手</h3>
+		<h2>对手</h2>
 		<div id = 'js-remote-game' class='left'>
+			<div id="js-remote-msg" class="msg"></div>
 		</div>
-		<div class="right1">
-			<div id = 'js-remote-next' class = 'right'>
-			</div>
+		<div class="right" id = 'js-remote-next'>
+		</div>
+		<div class="info">
 			<span>得分: </span><sapn id="js-remote-score">0</sapn>
 			<span>已用时: </span><sapn id="js-remote-time">0</sapn>s
 		</div>

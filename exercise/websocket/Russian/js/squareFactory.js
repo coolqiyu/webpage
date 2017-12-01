@@ -1,6 +1,6 @@
 var SquareFactory = {
-	create: function(){
-		var type = Math.floor(Math.random() * 7) + 1;
+	create: function(type, dir){
+		//var type = Math.floor(Math.random() * 7) + 1;
 		var square;
 		switch(type){
 			case 1:
@@ -25,8 +25,8 @@ var SquareFactory = {
 				square = new Square7();
 				break;
 		}
-		var toRotate = Math.floor(Math.random() * 4);
-		for(var i = 0; i < toRotate; i++)
+		//var toRotate = Math.floor(Math.random() * 4);
+		for(var i = 0; i < dir; i++)
 			square.rotate();
 		return square;
 	}

@@ -1,48 +1,100 @@
-*{
+body, div{
 	margin: 0;
 	padding: 0;
+	border: 0;
+}
+body{
+	background: linear-gradient(to left, #3F51B5,#03A9F4,#8eb5e9);
+	color: #fff;
+}
+body h1, body h2{
+	letter-spacing: 5px;
+	text-align: center;
+	color: #FF4500;
+    text-shadow: 5px 5px 5px #faf2ac;
+}
+body>div{
+	width: 650px;
+	height: 700px;
+	background-image: url("../bg.jpg");
+	border-radius: 20px;
+    border: 3px solid #fff;
+    float: left;
+    margin-left: 30px;
 }
 .left{
 	width: 400px;
 	height: 600px;
 	display: inline-block;
-	background-color: lightgreen;
-	border: 1px solid red;
+	border: 1px solid #fff;
 	border-left: none;
 	border-top: none;
 	float: left;
+	position: relative;
+	margin-left: 10px;
 }
-.right1{
-	display: inline-block;
-	float: left;
-	margin: 10px;
+.left button{
+	width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    font-size: 23px;
+    color: #fff;
+    background: #34a112;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	cursor: pointer;
+	outline: 0;
+}
+.left button:hover{
+	box-shadow: 0 0 10px 0 #ffeb3b;
 }
 .right{
+	display: inline-block;
+	float: left;
+	margin-left: 10px;
 	width: 200px;
 	height: 200px;
-	background-color: lightgreen;
-	border: 1px solid red;
+	border: 1px solid #fff;
 	border-left: none;
 	border-top: none;
 	vertical-align: top;
 }
+.left .msg, .left .msg{
+	display: none;
+	width: 200px;
+    height: 100px;
+    position: absolute;
+    background: #cddc39;
+    z-index: 1;
+    border-radius: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid #fff;
+}
+.info{
+	width: 201px;
+    float: left;
+    margin: 10px 0 0 10px;
+}
 .left div, .right div{
 	width: 40px;
 	height: 40px;
-	border: 1px solid red;
+	border: 1px solid #fff;
 	border-right: none;
 	border-bottom: none;
 	display: inline-block;
 	box-sizing: border-box;
 	vertical-align: top;
 }
-.none, .none{
+.none{
 	
 }
-.current, .current{
-	background-color: red;
-	border: 3px solid blue;
+.current{
+	background-color: #ff72a2;
 }
-.done, .done{
-	background-color: blue;
+.done{
+	background-color: #568626;
 }

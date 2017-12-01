@@ -22,10 +22,10 @@ var server = ws.createServer(function(conn){
 		if(connCnt > 0){
 			checkStart(msg);		
 			//给当前连接的玩家发一个id标识，不是广播
-			msg = JSON.stringify({"id":connCnt, "op":"setid"});	
+			msg = JSON.stringify({"id":connCnt + 1, "op":"setid"});	
 			conn.sendText(msg);	
 			if(connCnt === 0)//所有玩家都准备好了，发送游戏开始的信息
-				msg = JSON.stringify({"status":1});		
+				msg = JSON.stringify({"op": "start"});		
 		}
 		if(connCnt === 0)
 			broadcast(msg);
@@ -49,4 +49,11 @@ var broadcast = function(msg){
  * 问题：A发过来的数据，A的remote也会处理（这个是不对的），它应该只处理其它对手的数据
  * 解决：给每个连接一个标识，当用户准备的时候给它发一个id
  *       或者说广播消息的时候不给当前的用户发，再写一个函数：可以排除一些用户
+ *       他：每次都是对一发送，不是广播消息
+ * 问题：传输矩阵数据的方法
+ * 解决：通过type和direction值，没有传全部数据
+ * 问题：自动下落的消息怎么处理？需要传输吗？
+ * 解决：不传，直接自己调用方法
+ * 问题：设计差别
+ * 解决：我的是把所有相关的都放在game中，他则把自由下落的放在local中
  */
