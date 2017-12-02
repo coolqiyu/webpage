@@ -180,7 +180,7 @@ Game.prototype = {
 		var sqWidth = square[0].length;
 		for(var i = 0; i < sqHeight; i++)
 			for(var j = 0; j < sqWidth; j++){
-				if(square[i][j])
+				if(square[i][j] && (origin.y + i) >= 0)
 					data[origin.y + i][origin.x + j] = 0;
 			}
 	},
@@ -195,7 +195,7 @@ Game.prototype = {
 		var sqWidth = square[0].length;
 		for(var i = 0; i < sqHeight; i++)
 			for(var j = 0; j < sqWidth; j++){
-				if(square[i][j])
+				if(square[i][j] && (origin.y + i >= 0))
 					data[origin.y + i][origin.x + j] = square[i][j];
 			}
 	},
@@ -253,6 +253,7 @@ Game.prototype = {
 				line.push(Math.floor(Math.random() * 2) ? 2 : 0);
 			lines.push(line);
 		}
+		//this.addLines(lines);
 		return lines;
 	},
 	/**
@@ -266,6 +267,8 @@ Game.prototype = {
 			this.gameData.shift();
 			this.gameData.push(lines[i]);
 		}
+		//对currentSq的位置也要做相应的移动
+		this.currentSq.origin.y -= lineCnt;
 		this.drawData(this.gameData, this.gameDiv);
 		// this.setData(this.gameData, {x: 0, y: height - 1}, lines);
 	},

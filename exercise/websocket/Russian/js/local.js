@@ -1,8 +1,7 @@
-var Local = function(gameDiv, nextDiv, score, time, startBtn, ws, msgDiv){
-	var oScore, oTime, currentSq, nextSq;
+var Local = function(gameDiv, nextDiv, score, startBtn, ws, msgDiv){
+	var oScore, currentSq, nextSq;
 	var timeSpan = 1000;
 	oScore = score;
-	oTime = time;
 	//初始化游戏区域
 	var game = new Game({
 		none:"none", 
@@ -45,7 +44,7 @@ var Local = function(gameDiv, nextDiv, score, time, startBtn, ws, msgDiv){
 		var dir = Math.floor(Math.random() * 4) + 1;
 		return {"type": type, "dir": dir};
 	}
-	var intervalTimer;
+	var intervalTimer;//定时器
 	var start = function(){
 		var msg = {"id": ID};
 		//current
@@ -100,14 +99,16 @@ var Local = function(gameDiv, nextDiv, score, time, startBtn, ws, msgDiv){
 
 	//准备按钮
 	startBtn.addEventListener("click", function(){
-		ws.send(JSON.stringify({"status":0}));					
+		if(game.status === -1)//未准备
+			ws.send(JSON.stringify({"id": ID, "try":0}));
+		else if(game.status === 0)//已准备
+			ws.send(JSON.stringify({"id": ID, "try":-1}));				
 	});	
 
 	var handleMsg = function(msg){
 		if("op" in msg){
 			//未设置过id
 			if(ID === undefined && msg["op"] === "setid"){
-				localStartBtn.innerHTML = "等待";
 				ID = msg["id"];
 			}
 			else if(msg["op"] === "start"){//服务端发来开始游戏的信息			
@@ -118,22 +119,32 @@ var Local = function(gameDiv, nextDiv, score, time, startBtn, ws, msgDiv){
 				//game.start();
 				document.addEventListener("keydown", bindEvent);
 			}
+			else if(msg["op"] === "prepare"){
+				game.status = 0;
+				startBtn.innerHTML = "已准备";
+				ws.send(JSON.stringify({"id": ID, "status": 0}));
+			}
+			else if(msg["op"] === "unprepare"){
+				game.status = -1;
+				startBtn.innerHTML = "准备";
+				ws.send(JSON.stringify({"id": ID, "status": -1}));
+			}
 		}	
 		if("status" in msg){
 			if(msg["status"] === 3){
+				msgDiv.style.display = "block";
 				if(msg["id"] !== ID){//别人发出结束的消息
-					msgDiv.innerHTML = "我赢了";
+					msgDiv.innerHTML = "赢了";
 				}				
-				//自己发出的就不用处理
-				else
-					msgDiv.innerHTML = "我输了";
+				else//自己发出的就不用处理
+					msgDiv.innerHTML = "输了";
 				clearInterval(intervalTimer);
+				document.removeEventListener("keydown", bindEvent);
 			}	
 		}
 		if("target" in msg){
 			//增加行：目标是当前id，或者目标是所有且不是当前local发出的消息
-			if(msg["addline"] 
-				&& (msg["target"] === ID || (msg["target"] === 0 && msg["id"] !== ID))){
+			if(msg["addline"]){
 				var lines = game.randLines(msg["addline"]);
 				game.addLines(lines);
 				ws.send(JSON.stringify({"id": ID, "addline": lines}));
@@ -144,4 +155,6 @@ var Local = function(gameDiv, nextDiv, score, time, startBtn, ws, msgDiv){
 		var msg = JSON.parse(e.data);
 		handleMsg(msg);
 	});
+	// this.game = game;
+	// this.start = start;
 }

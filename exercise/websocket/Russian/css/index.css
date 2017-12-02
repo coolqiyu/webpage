@@ -13,19 +13,23 @@ body h1, body h2{
 	color: #FF4500;
     text-shadow: 5px 5px 5px #faf2ac;
 }
+.ui-rule{
+	text-align: center;
+    font: 20px/20px Arial;
+}
 body>div{
-	width: 650px;
+	width: 670px;
 	height: 700px;
 	background-image: url("../bg.jpg");
 	border-radius: 20px;
     border: 3px solid #fff;
     float: left;
     margin-left: 30px;
+    position: relative;
 }
 .left{
 	width: 400px;
 	height: 600px;
-	display: inline-block;
 	border: 1px solid #fff;
 	border-left: none;
 	border-top: none;
@@ -33,7 +37,7 @@ body>div{
 	position: relative;
 	margin-left: 10px;
 }
-.left button{
+button{
 	width: 80px;
     height: 80px;
     border-radius: 50%;
@@ -47,11 +51,10 @@ body>div{
 	cursor: pointer;
 	outline: 0;
 }
-.left button:hover{
+button:hover{
 	box-shadow: 0 0 10px 0 #ffeb3b;
 }
 .right{
-	display: inline-block;
 	float: left;
 	margin-left: 10px;
 	width: 200px;
@@ -61,23 +64,27 @@ body>div{
 	border-top: none;
 	vertical-align: top;
 }
-.left .msg, .left .msg{
+.msg{
 	display: none;
 	width: 200px;
     height: 100px;
     position: absolute;
-    background: #cddc39;
+    background: rgba(255, 0, 0, 0.72);
     z-index: 1;
     border-radius: 10px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     border: 2px solid #fff;
+    text-align: center;
+    font: 33px/100px Arial;
+    color: #05ffe8;
 }
 .info{
 	width: 201px;
     float: left;
     margin: 10px 0 0 10px;
+    font-size: 20px;
 }
 .left div, .right div{
 	width: 40px;
@@ -93,8 +100,8 @@ body>div{
 	
 }
 .current{
-	background-color: #ff72a2;
+	background-color: #ff4282;
 }
 .done{
-	background-color: #568626;
+	background-color: #42681d;
 }
