@@ -28,6 +28,7 @@
 	height: 218px;
 	padding-top: 100px;
 	background: #3b3b3b;
+	margin-top: 200px;
 }
 .public-footer-list{
 	/*这个没有预期效果，container高度为0*/
@@ -43,9 +44,10 @@
 .public-footer .item a{
 	color: #fff;
 }
-.public-footer .item:last-child{
+.public-footer .nomargin{
 	margin-right: 0;
 }
+
 .public-footer-logo{
 	background: url(../image/public-footer-logo.png);
 	width: 182px;

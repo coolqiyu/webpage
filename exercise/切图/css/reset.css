@@ -18,7 +18,9 @@ img{/*四像素的hack*/
 	border: none;
 	display: block;
 }
-
+.clearfix{
+	clear: both;
+}
 .clearfix::after{
 	display: block;
 	content: "";
