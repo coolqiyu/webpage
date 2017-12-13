@@ -1,3 +1,11 @@
+@font-face{
+	font-family: 'myFont';
+	src: url('./ALGER.TTF');
+	font-weight: 600;
+	font-style: italic;
+}
+
 .hello{
 	color: red;
+	font-family: 'myFont';
 }

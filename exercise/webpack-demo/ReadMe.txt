@@ -13,3 +13,10 @@
 4. webpack命令默认是使用webpack.config.js配置
 5. webpack会动态打包所有依赖项。因为模块可以明确表述依赖，所以未被使用的就不会被打包
 6. 处理css文件时，style-loader需在css-loader前
+7. 如果我们更改了一个入口的起点，甚至添加了一个新的名称，生成的包将被重命名在一个构建中，但index.html仍会引用旧的名字，我们用HtmlWebpackPlugin来解决问题。使用这个插件后，当修改bundle的名称后，会自动在index.html中引用新的bundle
+8. source map: 为了更容易地追踪错误和警告，JavaScript 提供了 source map 功能，将编译后的代码映射回原始源代码
+9. 每次要编译代码时，手动运行 npm run build 就会变得很麻烦。
+webpack 中有几个不同的选项，可以帮助你在代码发生变化后自动编译代码：
+* webpack's Watch Mode观察者模式：在packge.json中使用watch，当保存文件时就会触发编译，需手动刷新页面
+* webpack-dev-server：简单的web服务器，可实时重新加载，保存文件会自动编译，且自动刷新（打开）页面（localhost:8080）
+* webpack-dev-middleware：中间件容器，需借助express。通过localhost访问，需手动刷新
