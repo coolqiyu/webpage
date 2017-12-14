@@ -20,3 +20,35 @@ webpack 中有几个不同的选项，可以帮助你在代码发生变化后自
 * webpack's Watch Mode观察者模式：在packge.json中使用watch，当保存文件时就会触发编译，需手动刷新页面
 * webpack-dev-server：简单的web服务器，可实时重新加载，保存文件会自动编译，且自动刷新（打开）页面（localhost:8080）
 * webpack-dev-middleware：中间件容器，需借助express。通过localhost访问，需手动刷新
+10. HMR: 运行时可以更新模块，无需完全刷新
+module.hot 当执行保存文件时，console中会自动输出更新的信息
+这个和上面的重新编译有什么区别呢？？？？
+怎么实现hmr呢？在css中会自动，但js就要每个都写一下module.hot吗？
+11. 问题：/* unused harmony export square */在一个模块中未使用的函数也会build到bundle中
+解决：使用uglifyjs-webpack-plugin来删除未引用代码，执行tree-shaking
+当一个工具不能保证某些特定的代码路径(path)不会导致副作用(side-effects)时，即使你确信它不应该存在生成的 bundle 中，但这个代码仍然会保留
+12. 开发环境与生产环境分离：common.js通用的配置，dev.js用于开发，prod.js用于生产
+webpack-merge可以方便地合并配置
+package.json中start用于开发，build用于生产
+13. 代码分离是 webpack 中最引人注目的特性之一。此特性能够把代码分离到不同的 bundle 中，然后可以按需加载或并行加载这些文件。代码分离可以用于获取更小的 bundle，以及控制资源加载优先级，如果使用合理，会极大影响加载时间。
+有三种常用的代码分离方法：
+入口起点：使用 entry 配置手动地分离代码。
+防止重复：使用 CommonsChunkPlugin 去重和分离 chunk。
+动态导入：通过模块的内联函数调用来分离代码。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
