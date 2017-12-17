@@ -20,7 +20,7 @@ module.exports = {
 			amd: 'lodash',
 			root: '_'
 		}
-	}
+	},
 	//如果这个libray中会调用多个第三方的依赖，因此externals中需要写多个
 	//无法直接写目录地址，需要一个个写或用正则来指定这些依赖
 	// externals: [
@@ -28,4 +28,19 @@ module.exports = {
 	// 	'library/two',
 	// 	/^library\/.+$/
 	// ]
+	module: {
+		rules: [
+			{
+				test: require.resolve('./src/index.js'),
+				use: 'imports-loader?this=>window'
+			},
+			{
+				//将一个全局变量作为一个普通模块导出
+				test: require.resolve('./src/globals.js'),
+				//file导出为file，helpers.parse导出为parse
+				use: 'exports-loader?file,parse=helpers.parse'
+				//在其它地方就能import { file, parse } from './globals.js'使用
+			}
+		]
+	}
 }

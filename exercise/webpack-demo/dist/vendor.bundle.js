@@ -1,0 +1,1 @@
+webpackJsonp([2],{"./node_modules/webpack/buildin/global.js":function(n,t){var o;o=function(){return this}();try{o=o||Function("return this")()||(0,eval)("this")}catch(n){"object"==typeof window&&(o=window)}n.exports=o}});
