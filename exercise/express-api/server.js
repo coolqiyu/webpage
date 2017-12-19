@@ -1,6 +1,22 @@
 var express = require('express');
-var app = express();
 var PORT = 8880;
+/**
+ * app实际是一个js函数，作为回调传递给node http server以处理请求
+ * 由此可以基于同一套代码提供http和https两个版本
+ * http和https分别监听一个端口，请求响应在app下执行
+ */
+var app = express();
+var http = require('http');
+var https = require('https');
+http.createServer(app).listen(PORT);
+https.createServer({}, app).listen(443);
+/**只用于http
+ * app.listen = function(){
+ * 	  var server = http.createServer(this);
+ * 	  return server.listen.applY(server, arguments);
+ * }
+ */
+
 //把静态文件，如img、js等放在public下
 //express.static中间件，它的第一个参数为资源的根目录
 //localhost:PORT/index.html访问
@@ -37,8 +53,9 @@ subApp.get('/', function(req, res){
 //访问/subApp或subApp1时，它下面的请求就由subApp来处理
 app.use(['/subApp', '/subApp1'], subApp);
 //all不对应任何http方法，它会处理路径上所有方法
-app.all('*', function(next){
+app.all('*', function(req, res){
 	console.log('get all *');
+	res.end();
 	//next();
 })
 /**
@@ -51,15 +68,27 @@ app.all('*', function(next){
 app.disable('trust proxy');
 console.log('trust proxy: ', app.disabled('trust proxy'));
 
+/**
+ * app.engine有什么用呢？
+ */
 //app.engine(extension, callback)
-app.engine('html', require('ejs').renderFile);
+//app.engine('html', require('ejs').renderFile);
 
-app.listen(PORT);
+/**
+ * 获取和设置属性值
+ * app.get(name)
+ * app.set(name, value)
+ */
 
-
-
-
-
+/**
+ * app.METHOD(path, callback [,callback ...])
+ * * 对一个http请求给多个callback
+ * * 通过next的方式来处理子请求
+ * METHOD对应http的请求方法，all可接受所有请求方法
+ * 可以用另一种方法来写：
+ * app['METHOD'](path, callback)
+ */
+//app.listen(PORT);
 
 
 
