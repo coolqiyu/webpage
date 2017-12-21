@@ -36,6 +36,8 @@ console.log(app.locals.title);
 /**
  * app.moutpath：子应用挂载的路径模式
  * 子应用：express实例，可以用来处理一个路径下的请求
+ * subApp处理的路径是挂载后的路径
+ * app的请求可以转给subApp
  */
 var subApp = express();
 subApp.get('/', function(req, res){
@@ -189,6 +191,7 @@ app.route('/next_route')
  * 使用注意：
  * * 如果当前中间件没有终结请求，则必须用next把摈转给下一个，否则请求会被挂起
  * * 可以使用多个函数，挂载一组中间件
+ * http://www.expressjs.com.cn/guide/using-middleware.html
  */
 //路由级，需要再使用app.use(router)
 //这个和app.route()是不是一样的？
@@ -199,9 +202,12 @@ router.use('/router', function(req, res, next){
 })
 app.use(router);
 
-//错误处理
+//错误处理: http://www.expressjs.com.cn/guide/error-handling.html
+//这个错误不能自动获取吗？还是只能用next
 app.use(function(err, req, res, next){
-	console.error(err.stack);
+	//在all(*)中使用next('ab')会认为是有错误
+	//则会执行这里，err信息就是ab
+	console.error('error:', err);
 	res.end();
 })
 
@@ -214,6 +220,71 @@ app.use(express.static('public'));
 //localhost:PORT/static/index.html访问
 app.use('/static', express.static('public'));
 
+/**
+ * Request: 是http请求，有query string、parameter、body、header等
+ * req.ip/req.ips根据trust proxy（设置受信ip）不同有不同取值
+ * * true，客户端ip为X-Forwarded-*头最左边的项
+ * * 默认为false，则ip为req.connection.remoteAddress中得到
+ * * 设置ip值，设置的是被信任的，未被信息的会被当作客户端ip地址
+ */
+var bodyParser = require('body-parser');
+var multer = require('multer');
+var cookieParser = require('cookie-parser');
+app.use(bodyParser.json());//解析application/json
+app.use(bodyParser.urlencoded({extended: true}));//解析application/x-www-form-urlencoded
+//app.use(multer);//解析multipart/form-data
+//app.use(cookieParser);//把cookie解析成{a:b, c:d}
 
+var reqApp = express();
+app.use('/req', reqApp);
+app.set('trust proxy', '127.0.0.1');
+reqApp.get('/abc/:id/:id2', function(req, res){
+	console.log('req.fresh和req.stale相反 ', req.fresh, req.stale);
+	console.log('处理当前请求的express实例req.app: ', req.app);	
+	console.log('req cookies ', req.cookies);
+	console.log('req signedCookies 签名的cookie更安全？', req.signedCookies);
+	console.log('req ip ', req.ip);
+	console.log('请求的协议req.protocol ', req.protocol);
+	console.log('req hostname ', req.hostname);
+	console.log('包含所有参数的路径req.originalUrl', req.originalUrl);
+	console.log('app处理的基本路径：req.baseUrl ', req.baseUrl);
+	console.log('请求的url，不包含baseUrl，不包含路径参数，req.path ', req.path);
+	console.log('路径参数params, 自动解析为json对象 ', req.params);
+	console.log('参数变量query ', req.query);
+	console.log('当前匹配的路径信息，好像没用处req.route ', req.route);
+	console.log('req.secure "https"===req.protocol', req.secure);
+	console.log('子域名 a.b.com req.subdomains', req.subdomains);
+	console.log('是否是xhr请求req.xhr：', req.xhr);
+    //根据请求头中accept*，返回最匹配的值
+	console.log('req.accepts("html"): ', req.accepts('html'));
+	console.log('req.acceptsCharsets("utf-8"): ', req.acceptsCharsets('utf-8'));
+	console.log('req.acceptsEncodings("utf-8"): ', req.acceptsCharsets('utf-8'));
+	console.log('req.acceptsLanguages("english"): ', req.acceptsLanguages('chinese'));
 
+	console.log('req.get(field)返回头部的信息', req.get('connection'));
+	//这个为什么总是返回null？
+	console.log('content-type与type比较的结果：req.is(type)', req.is('json'));
+	res.end();
+})
+console.log('reqApp.path ', reqApp.path());
 
+//response
+var resApp = express();
+app.use('/res', resApp);
+resApp.get('/', function(req, res){
+	console.log('req.app和res.app一样 ', res.app);
+	console.log('是否有发送header res.headersSent: ', res.headersSent);
+	console.log('与请求对应的响应的本地变量res.locals: ', res.locals);
+
+	//reponse方法
+	//追加头部信息
+	res.append('Warning', '199 Miscellaneous warning');
+	//设置Content-Disposition，附件，访问时会自动下载该文件
+	res.attachment('./index.txt');
+	//设置cookie
+	res.cookie('a', 'b');
+	res.clearCookie('a');//清空cookie
+	
+
+	res.end();
+})
