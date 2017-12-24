@@ -268,23 +268,144 @@ reqApp.get('/abc/:id/:id2', function(req, res){
 })
 console.log('reqApp.path ', reqApp.path());
 
-//response
+//Response
 var resApp = express();
 app.use('/res', resApp);
 resApp.get('/', function(req, res){
 	console.log('req.app和res.app一样 ', res.app);
 	console.log('是否有发送header res.headersSent: ', res.headersSent);
+	//res.local只在当前req/res生命周期中有效。有时与app.locals一致
 	console.log('与请求对应的响应的本地变量res.locals: ', res.locals);
 
 	//reponse方法
-	//追加头部信息
-	res.append('Warning', '199 Miscellaneous warning');
-	//设置Content-Disposition，附件，访问时会自动下载该文件
-	res.attachment('./index.txt');
-	//设置cookie
-	res.cookie('a', 'b');
-	res.clearCookie('a');//清空cookie
+	/**
+	 * get: 获取返回头的信息
+	 * append: 追加头部信息
+	 * set: 设置头部信息，最后set才会设置上，原来的没有
+	 * type: 设置返回头content-type
+	 */
+	//res.append('Warning', '199 Miscellaneous warning');
+	res.set({'first-set': 'first'});
+	res.set({'second-set': 'second'});
+    console.log('返回头的信息：set-cookie ', res.get('Set-Cookie'));
+    res.type('json');
+	//设置cookie，后面的{}可以用来设置cookie的属性
+	res.cookie('a', 'c', {domain: '.', path:'/'});
+	//再清空，可以看到Set-Cookie两个：一个是清了的
+	res.clearCookie('a', {path: '/'});//清空cookie
+	
+	//res.format根据req.acceptes来选择一个匹配的类型，并返回相应的值
+	//如果没有找到，则使用default
+    // res.format({
+    // 	'text/plain': function(){
+    // 		res.send('hey');
+    // 	},
+    // 	'text/html': function(){
+    // 		res.send('<p>hey</p>');
+    // 	},
+    // 	'application/json': function(){
+    // 		res.send({message: 'hey'});
+    // 	},
+    // 	'default': function(){
+    // 		res.status(406).send('Not Acceptable');
+    // 	}
+    // })
+	
+	/**
+	 * 设置返回数据
+	 * json, jsonp(前两个都能用end), send(不能用end)
+	 */
+	// res.json({json: 'json'});
+	// //支持jsonp，返回json值
+	// res.jsonp({jsonp: 'jsonp'});
+	// app.set('jsonp callback name', 'cb');//设置回调的名称，默认为callback
+	// res.send() 可以是对象,字符串,数组
+	// res.send(new Date());//对象返回的也是它的字符串形式
+	// res.send("string");
+	// res.send(['数组',2,3,4]);
+	
+	/**
+	 * 发送文件的几种方式，后面不要再用res.end()，会导致下载失败
+	 * * res.attachment(path) 
+	 *    - 设置Content-Disposition，附件，访问时会自动下载该文件
+	 *    - 需要res.end()来结束
+	 * * res.download(path, rename, callback)
+	 *    - 访问时也自动下载，可以用rename来重命名
+	 *    - 不能用res.end()结束
+	 * * res.sendFile(path,[,options][,fn])               
+	 *    - 如果没有设置option，则必须用绝对地址
+	 *    - 不能用res.end()结束
+	 *    - 会根据文档的后缀来设置content-type的值
+	 *    - 发送一个文档，不像上面两个是下载文件，这里发送的文件是直接呈现在页面上
+	 */
+	//res.attachment('./index1.bat');
+	// res.download('./index1.bat', 'rename.bat', function(err){
+	// 	if(err){
+	// 		console.log(err);
+	// 	}
+	// 	else{
+	// 		console.log('download');
+	// 	}
+	// });
+	// res.sendFile("E:\\webpage\\exercise\\express-api\\index.txt", function(err){
+	// 	if(err){
+	// 		console.log("sendFile error", err);
+	// 	}
+	// });
+	// var options = {
+	// 	root: __dirname + '/public/',
+	// 	dotfiles: 'deny',
+	// 	headers: {
+	// 		'x-timestamp': Date.now(),
+	// 		'x-sent': true
+	// 	}
+	// }
+	// res.sendFile('index.txt', options, function(err){
+	// 	if(err){
+	// 		console.log("sendFile error", err);
+	// 	}
+	// });
+
+	//设置link，在response header中的link下，用来表示和另一个资源的关系
+	// res.links({
+	// 	next: 'http://api.example.com/users?page=2',
+	// 	last: 'http://api.example.com/users?page=5'
+	// });
+
+	//设置location，且添加状态码设置为302，访问时会自动进行重定向，重定向后的页面为200
+	//res.status(302).location("http://www.baidu.com");
+	//表示referer的地址，如果没有定义，则为/
+	//res.status(302).location('back');
+	//redirect(status, path)支持相对地址，和上面的location功能类似，但redirect会默认设置状态为302
+	//res.redirect("https://www.baidu.com")
+	
+	//res.render(view[, locals][, callback])
+	//用local变量渲染view，并发送
+
+	/**
+	 * 发送状态码
+	 * res.status(200) 只是设置
+	 * res.sendStatus(200) 设置状态码，且发送信息
+	 *     - 等于res.status(200).send('OK')
+	 */
+	//res.sendStatus(200);
 	
 
 	res.end();
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
