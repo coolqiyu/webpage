@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Array</title>
+</head>
+<body>
+	<div id="js-result">
+	</div>
+	<script type="text/javascript">
+	var result = document.getElementById('js-result');
+	/*
+	创建数组
+	 */
+	var data;
+	var mycars = new Array();
+	mycars[0] = 1;
+	mycars[1] = 2;
+	console.log('original: ', mycars);
+	var cars = [1, 2, 3];
+	console.log('length: ', cars.length);
+
+	/*
+	特定位置增
+	 */
+	console.log('original: ', cars);
+	data = cars.push(4, 5);
+	console.log('after push: ', cars, data);
+	data = cars.unshift(0);
+	console.log('after unshift: ', cars, data);
+	var newCars = cars.concat(['a'], ['!']);
+	console.log('after concat old: ', cars);
+	console.log('after concat new: ', newCars);
+	/*
+	特定位置删
+	 */
+	data = cars.pop();
+	console.log('after pop: ', cars, data);
+	data = cars.shift();
+	console.log('after shift: ', cars, data);
+	/*
+	任意位置增/删/替换
+	 */
+	cars.splice(2, 2, 'a', 1, 1);
+	console.log('after splice(start, deletecnt, new1, new2): ', cars);
+	cars.copyWithin(2, 1, 9);
+	console.log('数组替换，不改变长度after copyWithin(2, 1, 9): ', cars);
+	/*
+	查找
+	 */
+	console.log('回调函数：funtciont(item, index, arr)');
+	console.log('没有固定返回值，就返回新长度');
+	cars.push(NaN, -0);
+	console.log('original: ', cars);
+	console.log('第一个出现indexOf(1): ', cars.indexOf(1));
+	console.log('第一个出现indexOf(NaN): ', cars.indexOf(NaN));
+	console.log('第一个出现indexOf(+0): ', cars.indexOf(+0));
+	console.log('最后一个出现lastIndexOf(1): ', cars.lastIndexOf(1));
+	console.log('find(fn)找到满足条件的第一个元素: ', cars.find(function(item){return item == 1}));
+	console.log('findIndex(fn)找到满足条件的第一个元素位置，从1开始: ', cars.find(function(item){return item === 1}));
+	console.log('过滤filter(fn): ', cars.filter(function(item){
+		return item == 1;
+	}))
+	/*
+	判断
+	 */
+	console.log('是否包含includes(1)', cars.includes(1));
+	console.log('是否包含includes(NaN)', cars.includes(NaN));
+	console.log('是否包含includes(0)', cars.includes(0));
+	console.log('是否存在some(fn): ', cars.some(function(item){
+		return item === 1;
+	}));
+	console.log('是否都满足every(fn): ', cars.every(function(item, index, arr){
+		return arr[index];
+	}));
+	/*
+	遍历
+	 */
+	data = '';
+	cars.forEach(function(item){
+		data += item;});
+	console.log('forEach执行回调: ', data);
+	console.log('map映射返回数组：', cars.map(function(item, index){
+		return index;
+	}))
+	/*
+	功能
+	* 排序
+	* 反转
+	* 填充
+	* 合并成一个值
+	* toString
+	* valueOf
+	* slice 切片选取，不包括end
+	 */
+	cars = [1, 5, 0, 6];
+	console.log('after sort: ', cars.sort(function(a, b){
+		return a-b;
+	}));
+	console.log('after reverse: ', cars.reverse());
+	console.log('after fill 1: ', cars.fill(1));
+	console.log('after join -: ', cars.join('-'));
+	cars = ['b', 1, 2];
+	console.log('original: ', cars);
+	console.log('total类型同第一个元素，after reduce(fn(total, item, index, arr)): ', cars.reduce(function(total, item, index, arr){
+		return total + arr[index];
+	}));
+	console.log('从右边开始，after reduceRight(fn(total, item, index, arr)): ', cars.reduceRight(function(total, item, index, arr){
+		return total + arr[index];
+	}));
+	console.log('toString: ', cars.toString());
+	console.log('原始值valueOf: ', cars.valueOf());
+	console.log('slice: ', cars.slice(-3, -1));
+	/* es6
+	 * copyWithin, find, findIndex, fill, includes(避免NaN误判)
+	 * ...arr/str: arr/str转换为序列
+	 * Array.from(类数组)
+	 * Array.of(序列): 基本上可以用来替代Array()或new Array()
+	 * 返回迭代器：entries, keys, values
+	 * 明确将空位转换为undefined
+	 */
+	console.log('...arr: ', ...cars);
+	console.log('...str: ', ...'hello');
+	console.log('Array.from(类数组): ', Array.from(document.querySelectorAll('div')));
+	console.log('Array.from空位: ', Array.from([,,,]));
+	console.log('Array.of(序列): ', Array.of(...cars));
+	console.log('entries: ', cars.entries());
+	console.log('keys: ', cars.keys());
+	console.log('entries: ', cars.entries());
+	</script>
+</body>
+</html>
