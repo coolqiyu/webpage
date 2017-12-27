@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Object</title>
+</head>
+<body>
+	<script type="text/javascript">
+	/*
+	一个Object对象有的var o = new Object()
+	constructor
+	hasOwnProperty
+	isPrototypeOf
+	propertyIsEnumerable
+	toLocaleString
+	toString
+	valueOf
+	get
+	set
+	 */
+	
+	/*
+	创建对象
+	assign: 复制，通过复制属性来创建对象，第一个参数和返回值是一样的
+	create: 继承，第一个参数作为原型对象
+	 */
+	var a = {a: 1};
+	var b = {b: 2};
+	var c;
+	c = Object.assign(a, b);
+	console.log('assign复制值：',c);
+	console.log('a === c: ', a === c);
+	c = Object.create(a, {b:{
+		value:12,
+		writable: true,
+		enumerable: true,
+		configurable:true
+	}});
+	console.log('以a为原型对象创建Object.create(a): ', c);
+	console.log('c.__proto__ === a: ', c.__proto__ === a);
+	c = Object.create([1,2]);
+	console.log(c);
+
+	/*
+	定义属性，可以一个defineProperty，也可以多个defineProperties
+	属性描述符
+	* 数据描述符：
+	* 存取描述符：由getter-setter函数对描述的属性
+	
+	属性方法：
+	Object.defineProperty
+	Object.defineProperties
+	Object.getOwnPropertyDescriptor
+	 */
+	Object.defineProperty(c, 'defineproperty', {
+		configurable: false
+	});
+	//修改上面的属性，但是因为是false，所以会报错
+	// Object.defineProperty(c, 'defineproperty',{configurable:true});
+	
+	var pattern = {
+		get: function(){
+			console.log('get');
+			return 'I always return this string, whatever you have assign';
+		},
+		set: function(val){
+			console.log('set');
+			this.myname = val;
+		}
+	}
+	c = {};
+	Object.defineProperty(c, 'myproperty', pattern);
+	console.log('c.myproperty: ', c.myproperty);
+	c.myproperty = 'set the property';
+	console.log('c.myname: ', c.myname);
+
+	pattern = {
+		value: 'value',
+		writable: true
+	}
+	c = {};
+	Object.defineProperty(c, 'myproperty', pattern);
+	console.log('c.myproperty: ', c.myproperty);
+	c.myproperty = 4;
+	console.log('after write value c.myproperty: ', c.myproperty);
+
+	c = {};
+	Object.defineProperties(c, {
+		'property1': {
+			value: 'property1',
+			configurable: true,
+			writable: true
+		},
+		'property2': {
+			value: 'property2'
+		}
+	});
+	console.log('defineProperties: ', c.property1, c.property2);
+	console.log('获取属性配置对象: ', Object.getOwnPropertyDescriptor(c, 'property1'));
+	console.log('获取所有属性配置对象: ', Object.getOwnPropertyDescriptors(c));
+	/*
+	获取属性名
+	getOwnPropertyNames：所有可枚举、不可枚举的字符串属性名，不包含Symbol
+	getOwnPropertySymbols: 只返回symbol属性
+	hasOwnProperty: 是否包含某属性
+	 */
+	c = {};
+	Object.defineProperties(c, {
+		'enumerable':{
+			enumerable: true,
+			value: 'enumerable-value'
+		},
+		'enumerable2':{
+			enumerable: true,
+			value: 'enumerable2-value'
+		},
+		'noenumerable':{
+			enumerable: false,
+			value: 'noenumerable-value'
+		}
+	});
+	console.log('所有可枚举不可枚举属性名数组：', Object.getOwnPropertyNames(c));
+
+	var symbol = Symbol('a');
+	Object.defineProperty(c, symbol, {
+		enumerable: true,
+		value: 'symbol-value'
+	});
+	console.log('所有symbol属性数组：', Object.getOwnPropertySymbols(c));
+	console.log('是否包含属性：', c.hasOwnProperty('abc'));
+	/*
+	返回自身可枚举属性的数组
+	Object.keys: 属性名；Object.values: 属性值；
+	Object.entry: [[key, value], [key, value]]
+	obj.propertyIsEnumerable自身属性是否可枚举
+	 */
+	console.log('属性entries数组: ', Object.entries(c));
+	console.log('属性values数组: ', Object.values(c));
+	console.log('属性keys数组: ', Object.keys(c));
+	/*
+	访问和设置__proto__
+	Object.setPrototypeOf
+	Object.getPrototypeOf
+	obj.isPrototypeOf
+	 */
+	var proto = {'name': 'i am proto'};
+	Object.defineProperty(proto, 'protoEnum', {
+		value: 'proto',
+		enumerable: true
+	})
+	Object.setPrototypeOf(c, proto);
+	console.log('c getPrototypeOf: ',Object.getPrototypeOf(c));
+	console.log('c __proto__: ',Object.getPrototypeOf(c) === c.__proto__);
+	console.log('proto.isPrototypeOf(c): ', proto.isPrototypeOf(c));
+	console.log('属性是否可枚举：', c.propertyIsEnumerable('protoEnum'));
+	
+	/*
+	其它功能
+	1. Object.freeze: 冻结使得不能修改/删除属性
+	Object.isFrozen是否冻结
+	2. 
+	Object.seal()不能删除属性
+	Object.isSealed()
+	3. Object.preventextensions防止对自身添加新属性
+	4. Object.is两个值是否相同NaN=NaN -0!=+0
+	5. toLocaleString直接调用toString: 供给对象一个通用的toLocaleString 方法，date.toLocaleString()
+	6.valueOf返回对象原始值
+	 */
+	console.log('is freeze: ', Object.isFrozen(Object.freeze(c)));
+	console.log('is seal: ', Object.isSealed(Object.seal(c)));
+	console.log('is extensible: ', Object.isExtensible(Object.preventExtensions(c)));
+	console.log('-0 +0是否相等: ', Object.is(-0, +0));
+	console.log('NaN是否相等: ', Object.is(NaN, NaN));
+	</script>
+</body>
+</html>
