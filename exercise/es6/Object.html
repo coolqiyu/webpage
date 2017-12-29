@@ -17,19 +17,43 @@
 	valueOf
 	get
 	set
-	 */
+	*/
 	
 	/*
 	创建对象
-	assign: 复制，通过复制属性来创建对象，第一个参数和返回值是一样的
+	assign: 复制，通过复制属性来创建对象，第一个参数和返回值是一样的，只能复制可枚举的
 	create: 继承，第一个参数作为原型对象
-	 */
+	*/
 	var a = {a: 1};
 	var b = {b: 2};
 	var c;
 	c = Object.assign(a, b);
 	console.log('assign复制值：',c);
 	console.log('a === c: ', a === c);
+	var proto = {};
+	Object.defineProperties(proto, {
+		enumerable:{
+			value: 'enumerable-value',
+			enumerable: true
+		},
+		noenumerable:{
+			value: 'noenumerable-value',
+			enumerable: false
+		}
+	});	
+	c = Object.assign({}, proto);
+	console.log('proto: ', proto, 'c: ', c);
+	//assign会让数组转换成以序号为key，原来值为值的对象	
+	var arr1 = [1, 2, 3];
+	c = Object.assign(arr1, [4, 5]);
+	console.log('assign两个数组：',c, c === arr1);
+	//Object.assign只能进行值的复制，如果要复制的值是一个取值函数，那么将求值后再复制。
+	const source = {
+	  get foo() { return 1 }
+	};
+	const target = {};
+	console.log(Object.assign(target, source));
+	
 	c = Object.create(a, {b:{
 		value:12,
 		writable: true,
@@ -51,7 +75,8 @@
 	Object.defineProperty
 	Object.defineProperties
 	Object.getOwnPropertyDescriptor
-	 */
+	Object.getOwnPropertyDescriptors
+	*/
 	Object.defineProperty(c, 'defineproperty', {
 		configurable: false
 	});
@@ -96,6 +121,21 @@
 		}
 	});
 	console.log('defineProperties: ', c.property1, c.property2);
+
+	Object.defineProperties(c.__proto__, {
+		'identity': {
+			value: ' i am proto'
+		},
+		'special': {
+			value: 'i am only for __proto__'
+		}
+	});
+	console.log('获取__proto__上定义的属性：', c.identity);
+	Object.defineProperty(c, 'identity', {
+		value: 'i am not proto'
+	});
+	console.log('再次获取与__proto__上相同的属性，添加而不是修改__proto__上的属性：', c.identity);
+	console.log('__proto__上相同的属性：', c.__proto__.identity);
 	console.log('获取属性配置对象: ', Object.getOwnPropertyDescriptor(c, 'property1'));
 	console.log('获取所有属性配置对象: ', Object.getOwnPropertyDescriptors(c));
 	/*
@@ -103,7 +143,7 @@
 	getOwnPropertyNames：所有可枚举、不可枚举的字符串属性名，不包含Symbol
 	getOwnPropertySymbols: 只返回symbol属性
 	hasOwnProperty: 是否包含某属性
-	 */
+	*/
 	c = {};
 	Object.defineProperties(c, {
 		'enumerable':{
@@ -127,22 +167,24 @@
 		value: 'symbol-value'
 	});
 	console.log('所有symbol属性数组：', Object.getOwnPropertySymbols(c));
-	console.log('是否包含属性：', c.hasOwnProperty('abc'));
+	console.log('是否包含属性字符串：', c.hasOwnProperty('abc'));
+	console.log('是否包含属性symbol：', c.hasOwnProperty(symbol));
 	/*
-	返回自身可枚举属性的数组
+	返回自身可枚举字符串属性的数组
 	Object.keys: 属性名；Object.values: 属性值；
 	Object.entry: [[key, value], [key, value]]
 	obj.propertyIsEnumerable自身属性是否可枚举
-	 */
+	*/
 	console.log('属性entries数组: ', Object.entries(c));
 	console.log('属性values数组: ', Object.values(c));
 	console.log('属性keys数组: ', Object.keys(c));
+	console.log('属性是否可枚举：', c.propertyIsEnumerable(symbol));
 	/*
 	访问和设置__proto__
 	Object.setPrototypeOf
 	Object.getPrototypeOf
 	obj.isPrototypeOf
-	 */
+	*/
 	var proto = {'name': 'i am proto'};
 	Object.defineProperty(proto, 'protoEnum', {
 		value: 'proto',
@@ -165,12 +207,47 @@
 	4. Object.is两个值是否相同NaN=NaN -0!=+0
 	5. toLocaleString直接调用toString: 供给对象一个通用的toLocaleString 方法，date.toLocaleString()
 	6.valueOf返回对象原始值
-	 */
+	*/
 	console.log('is freeze: ', Object.isFrozen(Object.freeze(c)));
 	console.log('is seal: ', Object.isSealed(Object.seal(c)));
 	console.log('is extensible: ', Object.isExtensible(Object.preventExtensions(c)));
+	console.log('两个对象是否相同：', Object.is({a:1}, {a:1}));
 	console.log('-0 +0是否相等: ', Object.is(-0, +0));
 	console.log('NaN是否相等: ', Object.is(NaN, NaN));
-	</script>
+	console.log('toString: ', c.toString());
+	data = true;
+	console.log('toString: ', data, data.toString());
+	data = function(){};
+	console.log('toString: ', data, data.toString());
+
+	/*
+	es6部分添加
+	 */
+	console.log('变量名作为属性名{data}: ', {data});
+	data = {function(){}};
+	console.log('作为属性的方法简写，不加function: ', data);
+	data = 'propertyName';
+	console.log('[变量名]作为属性名，会取变量对应的值：', {[data]: 'propertyValue'});
+	console.log('[方法]作为属性名，直接用整个方法而不是方法的返回结果：', {[function a(){return 'propertyName'}]: 'propertyValue'});
+	data = function(){return 'dataFunction'};
+	console.log('[方法名]作为属性名：', {[data]: 'propertyValue'});
+	//方法名.name
+	var obj = {
+		//get和set对应foo属性
+		get foo(){},
+		set foo(x){}
+	};
+	console.log('使用了get和set的方法foo：', obj.foo);
+	var descriptor = Object.getOwnPropertyDescriptor(obj, 'foo');
+	console.log('foo方法的名称：', descriptor.get.name,' , ', descriptor.set.name);
+     console.log('new Function的名称是匿名：', ((new Function()).name));
+     data = function(){};
+     console.log('data.bind()的名称会加上bound：', data.bind().name);
+     symbol = Symbol('function');
+     obj = {
+     	[symbol](){}
+     };
+     console.log('方法名是symbol类型，名称为其描述: ', obj[symbol].name);
+</script>
 </body>
 </html>
