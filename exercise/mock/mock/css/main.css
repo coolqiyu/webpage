@@ -9,7 +9,7 @@ header .current-line{
     .ui-function button{
       width: 70px;
       height: 25px;
-      background: green;
+      background: #269f42;
       color: #fff;
       border-radius: 5px;
       margin: 0 5px;
@@ -26,34 +26,39 @@ header .current-line{
     }
 
 /*接口列表*/
-  .ui-interfaces{
-    
+  .ui-interface-list{
+    height: 400px;
+    font-size: 0;
   }
-    .ui-interfaces ul, .ui-interfaces ul li{
+    .ui-interfaces, .ui-interfaces li{
       width: 100%;
+      overflow: hidden;
     }
-    .ui-interfaces ul li{
+    .ui-interfaces li{
       height: 30px;
       box-sizing: border-box;
       padding-left: 5px;
       vertical-align: middle;
+      border-radius: 2px;
+      border: 1px solid #2196F3;
+      border-top: 0;
     }
-    .ui-interfaces span{
+    .ui-interface-list span{
       display: inline-block;
-      width: 19%;
       height: 100%;
+      line-height: 2;
+      vertical-align: middle;
       text-overflow: ellipsis;
       overflow: hidden;
       vertical-align: middle;
-    }
-    .ui-interfaces .index{
-      width: 20%;
+      padding-left: 4px;
+      box-sizing: border-box;
     }
     .ui-interfaces ul li:nth-child(2n){
-      background: lightblue;
+      /*background: #c4e0e8;*/
     }
     .ui-interfaces ul li:nth-child(2n + 1){
-      /*background: #009fff;*/
+      /*background: #f7cfd6;*/
     }
 
 /*添加一个接口*/
@@ -97,7 +102,7 @@ header .current-line{
     .ui-interface button{
       width: 70px;
       height: 25px;
-      background: green;
+      background: #269f42;
       color: #fff;
       border-radius: 5px;
     }

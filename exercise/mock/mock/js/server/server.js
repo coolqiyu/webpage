@@ -110,6 +110,10 @@ app.get("\*/common.css", function(req, res){
 	help.log("get", req.url);
 	res.sendFile("D:\\document\\gitReposity\\js\\mock\\css\\common.css");
 })
+app.get("\*/login.css", function(req, res){
+	help.log("get", req.url);
+	res.sendFile("D:\\document\\gitReposity\\js\\mock\\css\\login.css");
+})
 app.get("\*/main.css", function(req, res){
 	help.log("get", req.url);
 	res.sendFile("D:\\document\\gitReposity\\js\\mock\\css\\main.css");
@@ -169,7 +173,8 @@ app.get("/main", function(req, res){
 			})
 			res.render(path, {
 				interfaces: interfaces, 
-				projects: PROJECTS
+				projects: PROJECTS,
+				pageCnt: 10
 			});
 		})		
 	})	
@@ -574,6 +579,15 @@ app.all("/\*", function(req, res){
 		}
 	})
 })
+
+/**
+* 调整：
+* - 需要把sql语句放到单独的文件中
+* 匹配方式：
+* - 先找接口，如果接口中有$，则去找用例，然后找对象（对象是否可以重用？）
+* - 如果没有$，则直接使用该接口 
+*/
+
 
 // app.post("/\*", upload.array(), function(req, res){
 // 	help.printRequest(req);

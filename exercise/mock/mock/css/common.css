@@ -11,7 +11,6 @@ header{
 }
 .container{
   width: 800px;
-  height: 100%;
   margin: 0 auto;
   box-sizing: border-box;
 } 
@@ -47,23 +46,23 @@ header a:hover{
 header a:visited{
 	color: #fff;
 }
-.list li:nth-child(1):hover ~ div{
+header .list li:nth-child(1):hover ~ div{
   left: 10px;
   
 }
-.list li:nth-child(2):hover ~ div{
+header .list li:nth-child(2):hover ~ div{
   left: 100px;
 }
-.list li:nth-child(3):hover ~ div{
+header .list li:nth-child(3):hover ~ div{
   left: 210px;
 }
-.list li:nth-child(4):hover ~ div{
+header .list li:nth-child(4):hover ~ div{
   left: 320px;
 }
-.user{
+header .user{
   float: right;
 }
-.user ul li{
+header .user ul li{
   margin: 0 10px;
   font-size: 15px;
 }
@@ -78,7 +77,7 @@ display: inline-block;
 button{
     width: 50px;
 	  height: 25px;
-	  background: green;
+	  background: #269f42;
 	  color: #fff;
 	  border-radius: 5px;
 	  margin: 0 5px;
@@ -87,12 +86,83 @@ button:hover{
   cursor: pointer;
   background: #009fff;
 }
+
 .clearfix::after{
 display: block;
 content: '';
 clear: both;
 }
 
+/*列表样式*/
+/*列表头*/
+.list-header{
+  border-radius: 3px;
+  font-weight: bold;
+  line-height: 3;
+  vertical-align: middle;
+  background: #c3c3c3;
+}
+.list-header span{
+  font-size: 14px;
+}
+.list-5col-index{
+  display: inline-block;
+  width: 5%;
+  height: 100%;
+  font-size: 12px;
+}
+.list-5col{
+  display: inline-block;
+  width: 24%;
+  font-size: 12px;
+  box-sizing: border-box;
+}
+.list-5col-l{
+  width: 30%;
+}
+.list-5col-m{
+  width: 23%;
+}
+.list-5col-s{
+  width: 10%;
+}
+.list-5col button{
+  display: inline-block;
+  width: 35px;
+  margin: 0 2px;
+}
+.list-button{
+
+}
+.list-content{
+
+}
+.page{
+  height: 20px;
+  margin: 10px auto;
+  font-size: 0;
+}
+.page .prev, .page .next{
+  width: 35px;
+}
+.page a{
+  display: inline-block;
+  padding: 0 2px;
+  width: 20px;
+  line-height: 2;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid #e1e4e8;
+  font-size: 12px;
+  color: #2196F3;
+}
+.page a:hover{
+  cursor: pointer;
+}
+.page a.active{
+  background: #2196F3;
+  color: #fff;
+}
 /*尾部样式*/
 footer{
  /* position: fixed;

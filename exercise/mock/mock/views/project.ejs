@@ -8,31 +8,33 @@
 </head>
 <body>
 <%- include("./header.ejs")%>
-<section class="container">
+<section class="project-list container">
 <h1>项目列表</h1>
 <div>
-<ul id="js-project-list" class="ui-project-list container">
-<li view="show">
-<span class="ui-index">序号</span>
-<span class="ui-name">项目名称</span>
-<span class="ui-path">真实请求路径</span>
-<span class="ui-description">说明</span>
-<span class="ui-op">操作</span>
-</li>
+<div class="list-header">
+<span class="list-5col-index">序号</span>
+<span class="list-5col">项目名称</span>
+<span class="list-5col">真实请求路径</span>
+<span class="list-5col">说明</span>
+<span class="list-5col list-5col-m">操作</span>
+</div>
+<ul id="js-project-list" class="ui-project-list">
 <%var len = projects ? projects.length : 0;%>
 <%for(var i = 0; i < len; i++){%>
 <li view="show">
-<span class="ui-index"><%=projects[i].id%></span>
-<input class="ui-index" type="text" name="" value="<%=projects[i].id%>"></input>
-<span class="ui-name"><%=projects[i].name%></span>
-<input class="ui-name" type="text" name="" value="<%=projects[i].name%>"></input>
-<span class="ui-path"><%=projects[i].real_host%></span>
-<input class="ui-path" type="text" name="" value="<%=projects[i].real_host%>"></input>
-<span class="ui-description"><%=projects[i].description%></span>
-<input class="ui-description" type="text" name="" value="<%=projects[i].description%>"></input>
+<span class="list-5col-index"><%=projects[i].id%></span>
+<input class="list-5col-index" type="text" name="" value="<%=projects[i].id%>"></input>
+<span class="list-5col"><%=projects[i].name%></span>
+<input class="list-5col" type="text" name="" value="<%=projects[i].name%>"></input>
+<span class="list-5col"><%=projects[i].real_host%></span>
+<input class="list-5col" type="text" name="" value="<%=projects[i].real_host%>"></input>
+<span class="list-5col"><%=projects[i].description%></span>
+<input class="list-5col" type="text" name="" value="<%=projects[i].description%>"></input>
+<div class="list-5col list-5col-m">
 <button class="js-op">编辑</button>
 <button class="js-delete">删除</button>
-<button class="js-interface">查看接口</button>
+<button class="js-interface">接口</button>
+</div>
 </li>
 <%}%>
 </ul>

@@ -14,34 +14,46 @@
 <div class="ui-function">
 <input id="js-search-txt" class="ui-search" type="text" name="" placeholder="请输入要搜索的接口地址或名称"><button id="js-search-btn">搜索</button><button id="js-add-interface">添加</button>
 </div>
-<div class="ui-interfaces">
-<ul id="js-interfaces">
-<li>
-<span class="index">序号</span>
-<span>接口名称</span>
-<span>请求地址</span>
-<span>所属项目</span>
-<span>操作</span>
-</li>
+<div class="ui-interface-list">
+<div class="list-header">
+<span class="list-5col-index">序号</span>
+<span class="list-5col">接口名称</span>
+<span class="list-5col list-5col-l">请求地址</span>
+<span class="list-5col">所属项目</span>
+<span class="list-5col list-5col-s">操作</span>
+</div>
+<ul id="js-interfaces" class="ui-interfaces">
 <%var len = interfaces ? interfaces.length : 0;%>
 <%for(var i = 0; i < len; i++){%>
 <li>
-<span class="index"><%=i+1%></span>
-<span class="ui-name"><%=interfaces[i].func_name%></span>
-<span><%=interfaces[i].path%></span>
-<span><%=projects[interfaces[i].project]%></span>
-<span id="js-delete-interface">删除</span>
+<span class="list-5col-index"><%=i+1%></span>
+<span class="ui-name list-5col"><%=interfaces[i].func_name%></span>
+<span class="list-5col list-5col-l"><%=interfaces[i].path%></span>
+<span class="list-5col"><%=projects[interfaces[i].project]%></span>
+<span class="list-5col list-5col-s" id="js-delete-interface">删除</span>
 <span style="display: none;"><%=interfaces[i].id%></span>
 </li>
 <%}%>
 </ul>
+<div style="text-align: center;">
+<%if(pageCnt > 0){%>
+  <div class="page">
+  <a class="prev">prev</a>
+  <a class="active">1</a>
+  <%for(var i = 2; i <= pageCnt; i++){%>
+  <%if(i <= 5 || (i > 5 && pageCnt <= 8) || (i > 6 && pageCnt > 8)){%>
+  <a><%=i%></a>
+  <%}else if(i === 6 && pageCnt > 8){%>
+  <a>...</a>
+  <%i=pageCnt - 1;%>
+  <%}%>
+  <%}%>
+  <a class="next">next</a>
+  </div>
+  <%}%>
+
 </div>
-
-
-
-
-
-
+</div>
 
 <div id="js-interface" class="ui-interface container">
 <header>

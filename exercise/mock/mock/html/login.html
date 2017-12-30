@@ -2,57 +2,24 @@
 <html>
 <head>
 	<title>登录</title>
-	<style type="text/css">
-		.ui-form{
-			width: 300px;
-			height: 300px;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translateX(-50%) translateY(-50%);
-		}
-		.ui-nav{
-			width: 100%;
-			height: 40px;
-		}
-		.ui-nav span{
-			display: inline-block;
-			width: 48%;
-			height: 100%;
-		}
-		.ui-nav span:hover{
-			cursor: pointer;
-		}
-		.ui-login-form,
-		.ui-register-form{
-			display: none;
-		}
-		[view=login]
-		.ui-login-form{
-			display: block;
-		}
-		[view=register]
-		.ui-register-form{
-			display: block;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	<link rel="stylesheet" type="text/css" href="login.css">
 </head>
 <body>
-
 <div class="ui-form" view="login">
 <div class="ui-nav">
 <span id="js-login">登录</span>
 <span id="js-register">注册</span>
 </div>
 <form class="ui-login-form" action="/login" method="post">
-用户名：<input type="text" name="username"><br/>
-密码：<input type="password" name="password"><br/>
+用户名<br/><input type="text" name="username" placeholder="请输入用户名"><br/>
+密码<br/><input type="password" name="password" placeholder="请输入密码"><br/>
 <button id="js-loginBtn">登录</button>
 </form>
 <form class="ui-register-form" action="/register" method="post" id="js-register">
-用户名：<input type="text" name="username"><br/>
-密码：<input type="password" name="password"><br/>
-重复密码：<input type="password" name="password2"><br/>
+用户名<br/><input type="text" name="username" placeholder="请输入用户名"><br/>
+密码<br/><input type="password" name="password" placeholder="请设置密码"><br/>
+重复密码<br/><input type="password" name="password2" placeholder="请再次输入密码"><br/>
 <button id="js-registerBtn">注册</button>
 </form>
 </div>
