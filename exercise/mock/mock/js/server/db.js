@@ -118,6 +118,6 @@ function execute(sql, callback){
 // exports.insert('test', "1, 2", (result)=>{
 // 	help.log("insert: ", result);
 // });
-// exports.select('user', "", "", (result)=>{
+// exports.select('step', "", "id=41", (result)=>{
 // 	help.log("select: ", result);
 // });

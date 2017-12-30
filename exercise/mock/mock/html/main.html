@@ -1,23 +1,214 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>接口主页</title>
-	<script type="text/javascript" src="ejs_production.js"></script>
+	<title>一个接口</title>
+  <style type="text/css">
+  *{
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  .header{
+      background: #24292e;
+      height: 50px;
+      width: 100%;
+      color: rgba(255,255,255,0.75);
+      font-size: 16px;    
+      padding: 12px 0;
+      box-sizing: border-box; 
+      position: relative;
+    }
+    .header .container{
+      width: 1000px;
+      margin: 0 auto;
+      box-sizing: border-box;
+    } 
+    .header .logo img{
+      width: 20px;
+      height: 20px;
+    }
+    .header ul{
+      position: relative;
+      display: inline-block;
+    } 
+    .header ul li{
+      list-style: none;
+      float: left;
+      margin: 0 30px;
+      text-align: center;
+    }
+    .header ul li:hover{
+      cursor: pointer;
+      color: #fff;
+    }
+    .header .current-line{
+      position: absolute;
+      bottom: -16px;
+      left: 10px;
+      width: 75px;
+      height: 3px;
+      background: #fff;
+      transition: left 1s;
+    }
+    .list li:nth-child(1):hover ~ div{
+      left: 10px;
+      
+    }
+    .list li:nth-child(2):hover ~ div{
+      left: 100px;
+    }
+    .list li:nth-child(3):hover ~ div{
+      left: 210px;
+    }
+    .list li:nth-child(4):hover ~ div{
+      left: 320px;
+    }
+    .user{
+      float: right;
+    }
+    .user ul li{
+      margin: 0 10px;
+      font-size: 15px;
+    }
+    ul li{
+      list-style: none;
+    }
+    h3{
+      text-align: center;
+    }
+    .ui-interface{
+    	width: 1000px;
+    	margin: 20px auto;
+    }
+    .ui-interface>div{
+      width: 100%;
+      margin: 10px auto;
+    }
+    .ui-interface button{
+      width: 70px;
+      height: 25px;
+      background: green;
+      color: #fff;
+      border-radius: 5px;
+      margin: 0 5px;
+      font-size: 16px;
+    }
+    .ui-interface button:hover{
+      cursor: pointer;
+      background: #009fff;
+    }
+    .ui-interface .label{
+      display: inline-block;
+      width: 70px;
+      text-align: right;
+      margin: 5px;
+      font: 17px/25px Arial;
+    }
+    .ui-interface input, .ui-interface select{
+      display: inline-block;
+      width: 400px;
+      margin: 5px;
+      font: 17px/25px Arial;
+      border: 1px solid lightblue;
+    }
+    .ui-interface .ui-body{
+      height: 200px;
+    }
+    .ui-basic{
+    	width: 100%;
+    }
+    .ui-step{
+    	width: 100%;
+    	margin-top: 5px;
+    }
+    .ui-head{
+      width: 100%;
+      line-height: 25px;
+      text-align: center;
+      display: inline-block;
+      border-bottom: 1px solid grey;
+      box-sizing: border-box;
+      padding: 5px auto;
+      margin: 5px auto;
+    }
+    .span, .input{
+      display: none;
+    }
+    [view-style="browser"]
+    .span{
+      display: inline-block;
+    }
+    [view-style="edit"]
+    .input{
+      display: inline-block;
+    }
+  </style>
 </head>
 <body>
-<div>项目列表</div>
-<div>用例列表</div>
-<div>接口列表</div>
-<!-- 用<%变量名%>来包含变量名 -->
-<h1><%=title%></h1>
-<% if (names.length) { %>
-  <ul>
-    <% names.forEach(function(name){ %>
-      <li foo='<%= name + "'" %>'><%= name %></li>
-    <% }) %>
-  </ul>
-<% } %>
+<div class="header">
+<div class="container">
+<a class="logo">
+logo图
+<img src=""/>
+</a>
+
+<ul class="list">
+<li>
+  <a>接口</a>
+</li>
+<li>
+  <a id="js-project">项目</a>
+</li>
+<li>
+  <a>访问记录</a>
+</li>
+<li>
+  <a>关于</a>
+</li>
+<div class="current-line"></div>
+</ul>
+<div class="user">
+<ul>
+<li>名字</li>
+<li>
+<a>登出</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
 
 
+
+
+<div id="js-interface" class="ui-interface" view-style="edit">
+  <h3 class="span"><%=interface.func_name%></h3><input class="input" type="text" name="" value="<%=interface.func_name%>"><br/>
+  <span class="ui-head">接口基本信息</span>
+  <div class="ui-basic">
+    <span class="label">请求方式</span><span class="span"><%=interface.method%></span><input class="input" type="text" name="" value="<%=interface.method%>"><br/>
+  	<span class="label">请求路径</span><span class="span"><%=interface.path%></span><input class="input" type="text" name="" value="<%=interface.path%>"><br/>
+   <span class="label">描述</span><span class="span"><%=interface.description%></span><input class="input ui-body" type="text" name="" value="<%=interface.description%>"><br/>
+   <span class="label">所属项目</span><span class="span"><%=project.name%></span><input class="input" type="text" name="" value="<%=project.name%>"><br/>
+  <span class="label">总步数</span><span class="span"><%=interface.step_count%>
+  </span><br/>
+</div>
+<%var len = steps ? steps.length : 0;%>
+<%for(var i = 0; i < len; i++){%>
+<span class="ui-head">第<%=i+1%>步</span>
+<div class="ui-step">
+<span class="label">请求头</span><span class="span"><%=steps[i].request_header%></span><input class="input" type="text" name="" value="<%=steps[i].request_header%>"><br/>	
+	<span class="label">请求体</span><span class="span"><%=steps[i].request_body%></span><input class="input ui-body" type="text" name="" value="<%=steps[i].request_body%>"><br/>
+  <span class="label">返回码</span><span class="span"><%=steps[i].response_code%></span><input class="input" type="text" name="" value="<%=steps[i].response_code%>"><br/>
+	<span class="label">返回头</span><span class="span"><%=steps[i].response_header%></span><input class="input" type="text" name="" value="<%=steps[i].response_header%>"><br/>	
+	<span class="label">返回体</span><span class="span"><%=steps[i].response_body%></span><input class="input ui-body" type="text" name="" value="<%=steps[i].response_body%>"><br/>
+	 </div>
+<%}%>
+<div>
+	<button id="js-submit">确定</button>
+  <button id="js-edit">编辑</button>
+  </div>
+</div>
+<script type="text/javascript" src="/myAjax.js"></script>
+<script type="text/javascript" src="/interface.js"></script>
 </body>
 </html>

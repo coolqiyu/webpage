@@ -1,67 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>接口主页</title>
-  <style type="text/css">
-  *{
-    margin: 0;
-    padding: 0;
-  }
-  ul li{
-      list-style: none;
-      height: 25px;
-      width: 70%;
-    }
-  .ui-nav ul li{
-    display: inline-block;
-  }
-  .ui-function{
-      width: 80%;
-      height: 25px;
-      margin: 10px auto;
-    }
-    .ui-search{
-      width: 40%;
-      height: 100%;
-    }
-
-  .ui-interfaces{
-    width: 80%;
-    margin: 0 auto;
-  }
-    .ui-interfaces ul,  .ui-interfaces ul li{
-      width: 100%;
-    }
-    .ui-interfaces span{
-      display: inline-block;
-      width: 37%;
-      height: 100%;
-      vertical-align: middle;
-    }
-    .ui-interfaces .index{
-      width: 20%;
-    }
-    .ui-interface{
-      width: 80%;
-      height: 400px;
-      overflow: scroll;
-      display: none;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translateX(-50%) translateY(-50%);
-      background: lightblue;
-    }
-    .ui-name:hover{
-      cursor: pointer;
-    }
-  </style>
+  <title>接口主页</title>
+  <link rel="stylesheet" type="text/css" href="reset.css">
+  <link rel="stylesheet" type="text/css" href="common.css">  
+  <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
-<button id="js-project">项目配置</button>
+<!-- 引入头部文件 -->
+<%- include("./header.ejs")%>
+<section class="container">
 <h1>接口列表</h1>
 <div class="ui-function">
-<input class="ui-search" type="text" name="" placeholder="请输入要搜索的接口地址或名称"><button>搜索</button><button id="js-add-interface">添加接口</button>
+<input id="js-search-txt" class="ui-search" type="text" name="" placeholder="请输入要搜索的接口地址或名称"><button id="js-search-btn">搜索</button><button id="js-add-interface">添加</button>
 </div>
 <div class="ui-interfaces">
 <ul id="js-interfaces">
@@ -69,6 +20,8 @@
 <span class="index">序号</span>
 <span>接口名称</span>
 <span>请求地址</span>
+<span>所属项目</span>
+<span>操作</span>
 </li>
 <%var len = interfaces ? interfaces.length : 0;%>
 <%for(var i = 0; i < len; i++){%>
@@ -76,55 +29,204 @@
 <span class="index"><%=i+1%></span>
 <span class="ui-name"><%=interfaces[i].func_name%></span>
 <span><%=interfaces[i].path%></span>
+<span><%=projects[interfaces[i].project]%></span>
+<span id="js-delete-interface">删除</span>
 <span style="display: none;"><%=interfaces[i].id%></span>
 </li>
 <%}%>
 </ul>
 </div>
-<div id="js-interface" class="ui-interface">
-<div id="js-basic">
-  <span>功能：</span><input id="js-func-name" type="text" name=""><br/>
-  <span>请求方式：</span><select id="js-method">
+
+
+
+
+
+
+
+<div id="js-interface" class="ui-interface container">
+<header>
+<h3>新接口</h3>
+</header>
+<div id="js-basic" class="ui-content">
+  <span>功能</span><input id="js-func-name" type="text" name=""><br/>
+  <span>请求方式</span><select id="js-method">
     <option>GET</option>
     <option>POST</option>
   </select><br/>
-	<span>请求路径: </span>
-	<input id="js-path" type="text" name="path"><br/>
-  <span>状态</span><select id="js-select-status"><option value="0">不启用</option><option value="1">只mock参数一致的</option><option value="2">mock所有</option></select>
-  <span>失败时，是否保留步骤</span><select id="js-keep-step"><option value="0">不保留</option><option value="1">保留</option></select>
+  <span>请求路径</span><input id="js-path" type="text" name="path"><br/>
+  <span>mock方式</span><select id="js-select-status"><option value="0">不启用</option><option value="1">只mock参数一致的</option><option value="2">mock所有</option></select>
+  <span alt="失败时，是否保留步骤">保留步骤</span><select id="js-keep-step"><option value="0">不保留</option><option value="1">保留</option></select><br/>
   <span>项目</span><select id="js-select-project">
   <%var len = projects ? projects.length : 0%>
   <%for(var i = 0; i < len; i++){%>
   <option value=<%=projects[i].id%>><%=projects[i].name%></option>
   <%}%>
-  </select>
-  <span>描述</span><input id="js-description" type="text" name=""><br/>
+  </select><br/>
+  <span>描述</span><input class="ui-body" id="js-description" type="text" name=""><br/>
 </div>
 
 <!-- 对于一个地址相同的请求可能发生多次，下面是每一次（步）需要分别设置的 -->
-<div class="js-step" style="display: none">
+<div class="js-step ui-content" >
   <button class="js-delete-step">删除步骤</button><br/>
-	<span>请求头: </span><button class="js-add-reqheader">添加</button><br/>
-	<div class="js-req-headers">
-	<!-- <div>key: <input type="text" name="req-header">value: <input type="text" name="req-header"><button>删除</button></div> -->
-	</div>
-	<span>请求体: </span><input class="js-req-body" type="text" name="req-body"><br/>
+  <span>请求头</span><button class="js-add-reqheader">添加</button><br/>
+  <div class="js-req-headers">
+  <!-- <div>key: <input type="text" name="req-header">value: <input type="text" name="req-header"><button>删除</button></div> -->
+  </div>
+  <span>请求体</span><input class="js-req-body ui-body" type="text" name="req-body"><br/>
   <span>返回码</span><input class="js-res-code" type="text" name="" value="200"><br/>
-	<span>返回头: </span><button class="js-add-resheader">添加</button><br/>
-	<div class="js-res-headers">
-	<!-- <div>key: <input type="text" name="res-header">value: <input type="text" name="res-header"><button>删除</button></div> -->
-	</div>
-	<span>返回体: </span><input class="js-res-body" type="text" name="res-body"><br/>
+  <span>返回头</span><button class="js-add-resheader">添加</button><br/>
+  <div class="js-res-headers">
+  <!-- <div>key: <input type="text" name="res-header">value: <input type="text" name="res-header"><button>删除</button></div> -->
+  </div>
+  <span>返回体</span><input class="js-res-body ui-body" type="text" name="res-body"><br/>
 </div>
 
 
 
-
+<div class="ui-content container">
 <button id="js-add-step">添加步骤</button>
-	<button id="js-submit">确定</button>
+  <button id="js-submit">确定</button>
   <button id="js-cancel">取消</button>
+  </div>
 </div>
+</section>
+<%- include("./footer.ejs")%>
 <script type="text/javascript" src="/myAjax.js"></script>
 <script type="text/javascript" src="/main.js"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <title>接口主页</title>
+  <style type="text/css">
+    body, div, ul, li{
+      border: 0;
+      margin: 0;
+      padding: 0;
+    }
+    .header{
+      background: #24292e;
+      height: 50px;
+      width: 100%;
+      color: rgba(255,255,255,0.75);
+      font-size: 16px;    
+      padding: 12px 0;
+      box-sizing: border-box; 
+      position: relative;
+    }
+    .header .container{
+      width: 1000px;
+      margin: 0 auto;
+      box-sizing: border-box;
+    } 
+    .header .logo img{
+      width: 20px;
+      height: 20px;
+    }
+    .header ul{
+      position: relative;
+      display: inline-block;
+    } 
+    .header ul li{
+      list-style: none;
+      float: left;
+      margin: 0 30px;
+      text-align: center;
+    }
+    .header ul li:hover{
+      cursor: pointer;
+      color: #fff;
+    }
+    .header .current-line{
+      position: absolute;
+      bottom: -16px;
+      left: 10px;
+      width: 75px;
+      height: 3px;
+      background: #fff;
+      transition: left 1s;
+    }
+    .list li:nth-child(1):hover ~ div{
+      left: 10px;
+      
+    }
+    .list li:nth-child(2):hover ~ div{
+      left: 100px;
+    }
+    .list li:nth-child(3):hover ~ div{
+      left: 210px;
+    }
+    .list li:nth-child(4):hover ~ div{
+      left: 320px;
+    }
+    .user{
+      float: right;
+    }
+    .user ul li{
+      margin: 0 10px;
+      font-size: 15px;
+    }
+    
+    
+  </style>
+</head>
+<body>
+<div class="header">
+<div class="container">
+<a class="logo">
+logo图
+<img src=""/>
+</a>
+
+<ul class="list">
+<li>
+  <a>接口</a>
+</li>
+<li>
+  <a>项目</a>
+</li>
+<li>
+  <a>访问记录</a>
+</li>
+<li>
+  <a>关于</a>
+</li>
+<div class="current-line"></div>
+</ul>
+<div class="user">
+<ul>
+<li>名字</li>
+<li>
+<a>登出</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</body>
+</html> -->

@@ -27,6 +27,7 @@ projectList.addEventListener("click", function(e){
 		var parent = target;//找到这一行li
 		while(!/li/i.test(parent.tagName))
 			parent = parent.parentNode;
+		var projectInputs = parent.getElementsByTagName("input");
 		if(target.classList.contains("js-delete")){//“删除”按钮
 			ajax({
 				method: "post", 
@@ -50,7 +51,6 @@ projectList.addEventListener("click", function(e){
 				parent.setAttribute("view", "show");
 
 				//异步传数据==========
-				var projectInputs = parent.getElementsByTagName("input");
 				ajax({
 					method: "post", 
 					url: "/project/modify",
@@ -68,6 +68,10 @@ projectList.addEventListener("click", function(e){
 					}
 				});
 			}
-		}		
+		}	
+		//查看当前项目下的所有接口
+		else{
+			window.location.href = "/main?project="+parent.children[0].innerHTML;
+		}	
 	}
 })

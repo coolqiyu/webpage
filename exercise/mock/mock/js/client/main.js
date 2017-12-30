@@ -141,7 +141,7 @@ submit.addEventListener("click", function(){
     var basicInputs = basic.getElementsByTagName("input");
     //每一步的信息
     var steps = [];
-    for(var i = 1, len = stepDivs.length; i < len; i++){
+    for(var i = 0, len = stepDivs.length; i < len; i++){
         var stepInfo = getStepInfo(stepDivs[i]);
         steps.push(stepInfo);
     }
@@ -164,6 +164,7 @@ submit.addEventListener("click", function(){
           li.id = insertid; 
           li.innerHTML = "<span>" + (interfaceList.children.length + 1) + "</span><span>" + basicInputs[0].value + "</span><span>" + basicInputs[1].value + "</span><span style='display:none'>" + insertid + "</span>";
           interfaceList.appendChild(li);
+          cancelAddBtn.click();
       }
     });
 })
@@ -204,3 +205,32 @@ var project = document.getElementById("js-project");
 project.onclick = function(){
   window.location.href = "/project";
 }
+
+//跳转到访问记录页面
+// var visitRecord = document.getElementById("js-visit-record");
+// visitRecord.addEventListener("click", function(){
+//   // ajax({
+//   //     method: "get",
+//   //     url: "/main/visitRecord",
+//   //     success: function(insertid){
+//   //         // var li = document.createElement("li");
+//   //         // li.id = insertid; 
+//   //         // li.innerHTML = "<span>" + (interfaceList.children.length + 1) + "</span><span>" + basicInputs[0].value + "</span><span>" + basicInputs[1].value + "</span><span style='display:none'>" + insertid + "</span>";
+//   //         // interfaceList.appendChild(li);
+//   //     }
+//   //   });
+//   // return false;
+//   window.location.href = "/main/visitRecord";
+// });
+
+//删除一个接口
+var deleteInterfaceBtn = document.getElementById("js-delete-interface");
+deleteInterfaceBtn.addEventListener("click", function(e){
+  var element = e.target;
+})
+
+var searchBtn = document.getElementById("js-search-btn");
+var searchTxt = document.getElementById("js-search-txt");
+searchBtn.addEventListener("click", function(){
+  window.location.href = "/main?search=" + searchTxt.value;
+})

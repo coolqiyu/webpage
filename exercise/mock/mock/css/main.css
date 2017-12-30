@@ -1,0 +1,114 @@
+header .current-line{
+  left: 10px;
+}
+/*搜索/添加*/
+  .ui-function{
+      height: 30px;
+      margin: 10px auto;
+    }
+    .ui-function button{
+      width: 70px;
+      height: 25px;
+      background: green;
+      color: #fff;
+      border-radius: 5px;
+      margin: 0 5px;
+    }
+    .ui-function button:hover{
+      cursor: pointer;
+      background: #009fff;
+    }
+    .ui-search{
+      width: 40%;
+      height: 100%;
+      border: 1px solid #000;
+      border-radius: 5px;
+    }
+
+/*接口列表*/
+  .ui-interfaces{
+    
+  }
+    .ui-interfaces ul, .ui-interfaces ul li{
+      width: 100%;
+    }
+    .ui-interfaces ul li{
+      height: 30px;
+      box-sizing: border-box;
+      padding-left: 5px;
+      vertical-align: middle;
+    }
+    .ui-interfaces span{
+      display: inline-block;
+      width: 19%;
+      height: 100%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      vertical-align: middle;
+    }
+    .ui-interfaces .index{
+      width: 20%;
+    }
+    .ui-interfaces ul li:nth-child(2n){
+      background: lightblue;
+    }
+    .ui-interfaces ul li:nth-child(2n + 1){
+      /*background: #009fff;*/
+    }
+
+/*添加一个接口*/
+    .ui-interface{
+      width: 800px;
+      height: 700px;
+      /*overflow: scroll;*/
+      display: none;
+      position: absolute;
+      top: 100px;
+      left: 200px;
+      background: lightblue;
+    }
+    .ui-interface header{
+      width: 100%;
+      height: 40px;
+      background: #009fff;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .ui-content{
+      width: 90%;
+      margin: 10px auto;
+    }
+    .ui-content input, .ui-content select{
+      text-indent: 2px;
+      margin: 2px;
+      width: 200px;
+      height: 25px;
+      box-sizing: border-box;
+      border-radius: 5px;
+    }
+    .ui-content span{
+      display: inline-block;
+      width: 90px;
+      text-align: right;
+      box-sizing: border-box;
+      padding-right: 5px;
+      border-radius: 5px;
+    }
+    .ui-interface button{
+      width: 70px;
+      height: 25px;
+      background: green;
+      color: #fff;
+      border-radius: 5px;
+    }
+    .ui-interface button:hover{
+      cursor: pointer;
+      background: #009fff;
+    }
+    .ui-name:hover{
+      cursor: pointer;
+    }
+    .ui-interface .ui-body{
+      height: 100px;
+      width: 300px;
+    }

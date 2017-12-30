@@ -1,64 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>一个接口</title>
-  <style type="text/css">
-    ul li{
-      list-style: none;
-    }
-    .ui-interface{
-    	width: 70%;
-    	margin: 5px;
-    }
-    .ui-basic{
-    	width: 100%;
-    	border: 2px solid orange;
-    }
-    .ui-step{
-    	width: 100%;
-    	margin-top: 5px;
-    	border: 2px solid blue;
-    }
-    .span, .input{
-      display: none;
-    }
-    [view-style="browser"]
-    .span{
-      display: inline-block;
-    }
-    [view-style="edit"]
-    .input{
-      display: inline-block;
-    }
-  </style>
+  <title>一个接口</title>
+  <link rel="stylesheet" type="text/css" href="./reset.css">
+  <link rel="stylesheet" type="text/css" href="./common.css">   
+  <link rel="stylesheet" type="text/css" href="./interface.css"> 
 </head>
 <body>
-<div id="js-interface" class="ui-interface" view-style="browser">
-<h3 class="span"><%=interface.func_name%></h3><input class="input" type="text" name="" value="<%=interface.func_name%>"><br/>
-<span>接口基本信息</span>
-<div class="ui-basic">
-  <span>请求方式：</span><span class="span"><%=interface.method%></span><input class="input" type="text" name="" value="<%=interface.method%>"><br/>
-	<span>请求路径: </span><span class="span"><%=interface.path%></span><input class="input" type="text" name="" value="<%=interface.path%>"><br/>
- <span>描述</span><span class="span"><%=interface.description%></span><input class="input" type="text" name="" value="<%=interface.description%>"><br/>
- <span>所属项目</span><span class="span"><%=project.name%></span><input class="input" type="text" name="" value="<%=project.name%>"><br/>
-<span>总步数</span><span class="span"><%=interface.step_count%>
-</span><br/>
+<%- include("./header.ejs")%>
+
+<div id="js-interface" class="ui-interface container" view-style="browser">
+  <h3 class="span"><%=interface.func_name%></h3><input class="input" type="text" name="" value="<%=interface.func_name%>"><br/>
+  <span class="ui-head">接口基本信息</span>
+  <div class="ui-basic">
+    <span class="label">请求方式</span><span class="span"><%=interface.method%></span><input class="input" type="text" name="" value="<%=interface.method%>"><br/>
+    <span class="label">请求路径</span><span class="span"><%=interface.path%></span><input class="input" type="text" name="" value="<%=interface.path%>"><br/>
+    <span class="label">状态</span><span class="span"><%=iStatusMap[interface.status]%></span><input class="input" type="text" name="" value="<%=interface.path%>"><br/>
+    <span class="label" style="width: 200px;">失败时，是否保留步骤</span><span class="span"><%=keepStepMap[interface.keep_step]%></span><input class="input" type="text" name="" value="<%=interface.path%>"><br/>
+   <span class="label">描述</span><span class="span"><%=interface.description%></span><input class="input ui-body" type="text" name="" value="<%=interface.description%>"><br/>
+   <span class="label">所属项目</span><span class="span"><%=project.name%></span><input class="input" type="text" name="" value="<%=project.name%>"><br/>
+  <span class="label">总步数</span><span class="span"><%=interface.step_count%>
+  </span><br/>
 </div>
+<div class="container">
 <%var len = steps ? steps.length : 0;%>
 <%for(var i = 0; i < len; i++){%>
-<span>第<%=i+1%>步</span>
+<span class="ui-head">第<%=i+1%>步</span>
 <div class="ui-step">
-<span>请求头: </span><span class="span"><%=steps[i].request_header%></span><input class="input" type="text" name="" value="<%=steps[i].request_header%>"><br/>	
-	<span>请求体: </span><span class="span"><%=steps[i].request_body%></span><input class="input" type="text" name="" value="<%=steps[i].request_body%>"><br/>
-  <span>返回码</span><span class="span"><%=steps[i].response_code%></span><input class="input" type="text" name="" value="<%=steps[i].response_code%>"><br/>
-	<span>返回头: </span><span class="span"><%=steps[i].response_header%></span><input class="input" type="text" name="" value="<%=steps[i].response_header%>"><br/>	
-	<span>返回体: </span><span class="span"><%=steps[i].response_body%></span><input class="input" type="text" name="" value="<%=steps[i].response_body%>"><br/>
-	 </div>
+<span class="label">请求头</span><span class="span"><%=steps[i].request_header%></span><input class="input" type="text" name="" value="<%=steps[i].request_header%>"><br/> 
+  <span class="label">请求体</span><span class="span"><%=steps[i].request_body%></span><input class="input ui-body" type="text" name="" value="<%=steps[i].request_body%>"><br/>
+  <span class="label">返回码</span><span class="span"><%=steps[i].response_code%></span><input class="input" type="text" name="" value="<%=steps[i].response_code%>"><br/>
+  <span class="label">返回头</span><span class="span"><%=steps[i].response_header%></span><input class="input" type="text" name="" value="<%=steps[i].response_header%>"><br/> 
+  <span class="label">返回体</span><span class="span"><%=steps[i].response_body%></span><input class="input ui-body" type="text" name="" value="<%=steps[i].response_body%>"><br/>
+   </div>
 <%}%>
-
-	<button id="js-submit">确定</button>
+<div>
+  <button id="js-submit">确定</button>
   <button id="js-edit">编辑</button>
+  </div>
 </div>
+</div>
+<%- include("./footer.ejs")%>
 <script type="text/javascript" src="/myAjax.js"></script>
 <script type="text/javascript" src="/interface.js"></script>
 </body>

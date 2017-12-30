@@ -1,0 +1,31 @@
+header .current-line{
+  left: 100px;
+}
+ul li{
+  list-style: none;
+}
+.ui-project-list li span, .ui-project-list li input{
+  display: none;
+}
+li[view="show"] span{
+  display: inline-block;
+}
+li[view="edit"] input{
+  display: inline-block;
+}
+li .ui-index{
+  width: 30px;
+}
+li .ui-name{
+  width: 50px;
+}
+li .ui-path{
+  width: 100px;
+}
+li .ui-description{
+  width: 200px;
+  height: 50px;
+}
+li .ui-op{
+  width: 60px;
+}

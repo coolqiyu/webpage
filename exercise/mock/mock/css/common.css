@@ -1,0 +1,103 @@
+/*头部样式*/
+header{
+  background: #24292e;
+  height: 50px;
+  width: 100%;
+  color: rgba(255,255,255,0.75);
+  font-size: 16px;    
+  padding: 12px 0;
+  box-sizing: border-box; 
+  position: relative;
+}
+.container{
+  width: 800px;
+  height: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+} 
+header .logo img{
+  width: 20px;
+  height: 20px;
+}
+header ul{
+  position: relative;
+  display: inline-block;
+} 
+header ul li{
+  list-style: none;
+  float: left;
+  margin: 0 30px;
+  text-align: center;
+}
+header ul li:hover{
+  cursor: pointer;
+  color: #fff;
+}
+header .current-line{
+  position: absolute;
+  bottom: -12px;
+  width: 75px;
+  height: 3px;
+  background: #fff;
+  transition: left 1s;
+}
+header a:hover{
+	text-decoration: none;
+}
+header a:visited{
+	color: #fff;
+}
+.list li:nth-child(1):hover ~ div{
+  left: 10px;
+  
+}
+.list li:nth-child(2):hover ~ div{
+  left: 100px;
+}
+.list li:nth-child(3):hover ~ div{
+  left: 210px;
+}
+.list li:nth-child(4):hover ~ div{
+  left: 320px;
+}
+.user{
+  float: right;
+}
+.user ul li{
+  margin: 0 10px;
+  font-size: 15px;
+}
+ul li{
+  list-style: none;
+/*  height: 25px;
+  width: 70%;*/
+}
+.ui-nav ul li{
+display: inline-block;
+}
+button{
+    width: 50px;
+	  height: 25px;
+	  background: green;
+	  color: #fff;
+	  border-radius: 5px;
+	  margin: 0 5px;
+}
+button:hover{
+  cursor: pointer;
+  background: #009fff;
+}
+.clearfix::after{
+display: block;
+content: '';
+clear: both;
+}
+
+/*尾部样式*/
+footer{
+ /* position: fixed;
+  bottom: 0;*/
+  width: 100%;
+  height: 30px;
+  background: #24292e;
+}

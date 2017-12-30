@@ -72,9 +72,9 @@ function getStepInfo(stepDiv){
     for(var i = 0, len = headers.length; i < len; i++){
       resHeader[headers[i].children[0].value] = headers[i].children[1].value;
     }
-    var reqBody = stepDiv.getElementsByClassName("js-req-body")[0].value;
+    var reqBody = stepDiv.getElementsByClassName("js-body")[0].value;
     var resCode = stepDiv.getElementsByClassName("js-res-code")[0].value;
-    var resBody = stepDiv.getElementsByClassName("js-res-body")[0].value;
+    var resBody = stepDiv.getElementsByClassName("js-body")[1].value;
     return{
        request_header: reqHeader, 
        request_body: reqBody,
@@ -131,7 +131,10 @@ submit.addEventListener("click", function(){
     });
 })
 
-
+window.onload = function(){
+  console.log('load');
+  console.log(projects);
+}
 // var project = document.getElementById("js-project");
 // project.onclick = function(){
 //   window.location.href = "/project";

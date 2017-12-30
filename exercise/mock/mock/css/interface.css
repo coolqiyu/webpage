@@ -1,0 +1,72 @@
+header .current-line{
+  left: 100px;
+}
+h3{
+      text-align: center;
+    }
+    .ui-interface{
+      width: 800px;
+      margin: 20px auto;
+    }
+    .ui-interface>div{
+      width: 100%;
+      margin: 10px auto;
+    }
+    .ui-interface button{
+      width: 70px;
+      height: 25px;
+      background: green;
+      color: #fff;
+      border-radius: 5px;
+      margin: 0 5px;
+      font-size: 16px;
+    }
+    .ui-interface button:hover{
+      cursor: pointer;
+      background: #009fff;
+    }
+    .ui-interface .label{
+      display: inline-block;
+      width: 70px;
+      text-align: right;
+      margin: 5px;
+      font: 17px/25px Arial;
+    }
+    .ui-interface input, .ui-interface select{
+      /*display: inline-block;*/
+      width: 400px;
+      margin: 5px;
+      font: 17px/25px Arial;
+      border: 1px solid lightblue;
+    }
+    .ui-interface .ui-body{
+      height: 200px;
+    }
+    .ui-basic{
+      width: 100%;
+    }
+    .ui-step{
+      width: 100%;
+      margin-top: 5px;
+    }
+    .ui-head{
+      width: 100%;
+      line-height: 25px;
+      text-align: center;
+      display: inline-block;
+      border-bottom: 1px solid grey;
+      box-sizing: border-box;
+      padding: 5px auto;
+      margin: 5px auto;
+    }
+    .span, .input{
+      display: none;
+    }
+    [view-style="browser"]
+    .span{
+      display: inline-block;
+    }
+    [view-style="edit"]
+    .input{
+      display: inline-block;
+    }

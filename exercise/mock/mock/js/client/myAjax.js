@@ -16,7 +16,7 @@ function ajax(opt){
 
 	if(/get/i.test(method)){
 		url = url + "?" + dataStr;
-		alert("get url: " + url);
+		//alert("get url: " + url);
 		xhr.open("get", url, async);
 		xhr.send(null);
 	}
