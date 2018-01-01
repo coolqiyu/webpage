@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>类型转换</title>
+</head>
+<body>
+	 <script type="text/javascript">
+	 /*
+	 判断一个变量的类型：
+	 * typeof：除了基础类型（不包括null）的变量（未封装）、function外，其它都返回object
+	 [[class]] = * Object.prototype.toString.call(变量): 感觉是最符合直观理解的，除了null和undefined，它与内建原生构造函数对应，自定义的类型也是返回Object
+	  */
+	 //6个基本类型
+	 console.log('对象值，[[class]], typeof, constructor');
+	 a = 1;
+	 console.log(a, Object.prototype.toString.call(a), typeof a, a.constructor);
+	 a = true;
+	 console.log(a, Object.prototype.toString.call(a), typeof a, a.constructor);
+	 a = "abc";
+	 console.log(a, Object.prototype.toString.call(a), typeof a, a.constructor);
+	 a = Symbol('symbol');
+	 console.log(a, Object.prototype.toString.call(a), typeof a, a.constructor);	
+	 a = undefined;
+	 console.log(a, Object.prototype.toString.call(a), typeof a);//, a.constructor);
+	  a = null;
+	 console.log(a, Object.prototype.toString.call(a), typeof a);//, a.constructor);
+
+	 a = function(){};
+	 console.log(a, Object.prototype.toString.call(a), typeof a, a.constructor);
+	 a = [1,2,3];
+	 console.log(a, Object.prototype.toString.call(a), typeof a, a.constructor);
+	 a = {a:1};
+	 console.log(a, Object.prototype.toString.call(a), typeof a, a.constructor); 
+	 
+	 a = /1/g;
+	 console.log(a, Object.prototype.toString.call(a), typeof a, a.constructor);
+	 a = Date();
+	 console.log(a, Object.prototype.toString.call(a), typeof a, a.constructor);
+	 a = Error();
+	 console.log(a, Object.prototype.toString.call(a), typeof a, a.constructor);	 
+	 function NewObj(){};
+	 a = new NewObj();
+	 console.log(a, Object.prototype.toString.call(a), typeof a, a.constructor);
+          
+     /*
+     对基本类型值进行包装：
+     1. new 构造函数()
+     2. Object()
+     两个的结果一样
+      */         
+	 a = new String('abc');
+	 console.log("new String('abc'): ", Object.prototype.toString.call(a), typeof a, a.constructor);
+	 a = Object('abc');
+	 console.log("Object('abc'): ", Object.prototype.toString.call(a), typeof a, a.constructor);
+
+	 /*
+	 隐式类型转换
+	  */
+	 a = {
+	 	valueOf: function(){
+	 		return 1;
+	 	},
+	 	toString: function(){
+	 		return 0;
+	 	}
+	 }
+	 console.log("valueOf, toString: ", a.valueOf(), a.toString());
+	 console.log("Number(a)取valueOf: ", Number(a));	
+	 console.log("String(a)取toString: ", String(a));	 	  
+	 console.log("Boolean(a): ", Boolean(a));
+	 a = new Boolean(false);
+	 console.log("new Boolean(false).toString: ", a.toString());
+	 console.log("上面的变量: ", a, typeof a);
+	 a = Boolean(false);
+	 console.log("Boolean(false).toString: ", a.toString());
+	 console.log("上面的变量： ", a, typeof a);
+	 console.log(Number('1.0'));
+	 /*
+	 类型转换，最后返回的还是基础类型
+	 Number: valueOf\toString
+	 String: toString\[[class]]
+	 Boolean: toString
+	 */
+	 
+	 </script>
+</body>
+</html>
