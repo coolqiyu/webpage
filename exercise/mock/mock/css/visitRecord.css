@@ -1,3 +1,7 @@
 header .current-line{
 	left: 210px;
 }
+.code{
+	height: 415px;
+	overflow: scroll;
+}

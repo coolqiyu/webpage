@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<%- include("./header.ejs")%>
+<section class="container">
+<nav>
+<h4>项目列表</h4>
+<ul>
+<%for(var i=0,len=projects.length; i < len; i++){%>
+<li><a><%=projects[0].name%></a></li>
+<%}%>
+</ul>
+</nav>
+<article>
+	<div>
+	<span>名称</span>
+	<input type="text" name=""><br/>
+	<span>描述</span>
+	<input type="text" name=""><br/>
+	<span>项目</span>
+	<select>
+		<option>1</option>
+	</select>
+	</div>
+	<div>
+	<h4>对象</h4>
+	<div>
+	<span>名称</span><span>值</span><span>说明</span>
+	</div>
+	<ul>
+	<li><input type="text" name=""><input type="text" name=""><input type="text" name=""></li>
+	</ul>
+	</div>
+	<div>
+	<h4>步骤</h4>
+     <div>
+     	<span>选择路径</span>
+     	<select>
+     	<option>1</option>
+     	</select>
+     </div>
+     <div>
+     <div>
+     <span>序号</span><span>路径</span><span>描述</span><span>操作</span>
+     </div>
+     <ul>
+     <input type="text" name=""><input type="text" name=""><input type="text" name=""><button>删除</button>
+     </ul>
+     </div>
+	</div>
+	<div>
+	<button>确定</button>
+	</div>
+</article>
+</section>
+<%- include("./footer.ejs")%>
+</body>
+</html>

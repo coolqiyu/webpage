@@ -123,14 +123,12 @@ function getStepInfo(stepDiv){
 addStep.addEventListener("click", function(e){
 
     var len = stepDivs.length;
-    console.log("before add: ", len);
     var newStep;
     if(len > 0){
       newStep = stepDivs[0].cloneNode(true);
       newStep.style.display = "block";
       stepDivs[0].parentNode.insertBefore(newStep, stepDivs[len - 1].nextElementSibling);
     } 
-    console.log("after add: ", stepDivs.length);
 })
 
 /*
@@ -181,9 +179,9 @@ interfaceList.addEventListener("click", function(e){
             parent = parent.parentNode;
         }
         //不是第一个子节点，它是表格的头部信息
-        if(parent !== parent.parentNode.children[0]){
+        // if(parent !== parent.parentNode.children[0]){
           window.location.href = "/interface/get?interfaceid=" + parent.lastElementChild.innerText;
-        }
+       // }
        //window.open("http://localhost:8880/interface/get?interfaceid=" + parent.lastElementChild.innerText); 
         // ajax({
         //    method: "get",

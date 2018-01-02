@@ -21,7 +21,7 @@ header .current-line{
     .ui-search{
       width: 40%;
       height: 100%;
-      border: 1px solid #000;
+      border: 1px solid #c7c7c7;
       border-radius: 5px;
     }
 
@@ -65,19 +65,20 @@ header .current-line{
     .ui-interface{
       width: 800px;
       height: 700px;
-      /*overflow: scroll;*/
+      overflow: scroll;
       display: none;
       position: absolute;
       top: 100px;
       left: 200px;
-      background: lightblue;
+      background: #c3c3c3;
     }
     .ui-interface header{
       width: 100%;
       height: 40px;
-      background: #009fff;
+      background: #24292e;
       text-align: center;
       vertical-align: middle;
+      color: #fff;
     }
     .ui-content{
       width: 90%;
@@ -117,3 +118,6 @@ header .current-line{
       height: 100px;
       width: 300px;
     }
+textarea{
+  border-radius: 5px;
+}

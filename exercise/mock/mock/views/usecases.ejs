@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<%- include("./header.ejs")%>
+<section class="container">
+<nav>
+<h4>项目列表</h4>
+<ul>
+<%for(var i=0,len=projects.length; i < len; i++){%>
+<li><a><%=projects[0].name%></a></li>
+<%}%>
+</ul>
+</nav>
+<article>
+	<div>
+		<span>序号</span>
+		<span>名称</span>
+		<span>描述</span>
+		<span>操作</span>
+	</div>
+	<ul>
+	<%for(var i = 0, len=usecase.length; i < len; i++){%>
+	<li>
+	<span><%=i+1%></span>
+	<span><%=usecase[i].name%></span>
+	<span><%=usecase[i].description%></span>
+	<button>删除</button>
+	</li>
+	<%}%>
+	</ul>
+</article>
+</section>
+<%- include("./footer.ejs")%>
+</body>
+</html>

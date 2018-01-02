@@ -1,6 +1,17 @@
 header .current-line{
   left: 10px;
 }
+.ui-interface{
+    font: 14px/2 Arial;
+}
+.ui-interface select{
+  font: 14px/2 Arial;
+}
+.ui-interface input{
+  border: 1px solid #bbb;
+  border-radius: 3px;
+  font: 14px/2 Arial;
+}
 button{
       width: 70px;
       height: 25px;
@@ -8,7 +19,7 @@ button{
       color: #fff;
       border-radius: 5px;
       margin: 0 5px;
-      font-size: 16px;
+      font-size: 14px;
     }
     button:hover{
       cursor: pointer;
@@ -16,11 +27,17 @@ button{
     }
 
   .js-step{
-    border: 2px solid blue;
+    box-sizing: border-box;
+    padding: 5px;
+    border: 1px solid #009688;
+    margin: 5px 0;
   }
   textarea
   {
     display: inline-block;
+    border: 1px solid #bbb;
+    border-radius: 3px;
+    margin-top: 3px;
     rows:100;
     cols: 100;
   }

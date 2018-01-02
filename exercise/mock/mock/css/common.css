@@ -98,7 +98,7 @@ clear: both;
 .list-header{
   border-radius: 3px;
   font-weight: bold;
-  line-height: 3;
+  line-height: 2;
   vertical-align: middle;
   background: #c3c3c3;
 }
@@ -116,6 +116,8 @@ clear: both;
   width: 24%;
   font-size: 12px;
   box-sizing: border-box;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .list-5col-l{
   width: 30%;
@@ -128,6 +130,7 @@ clear: both;
 }
 .list-5col button{
   display: inline-block;
+  vertical-align: middle;
   width: 35px;
   margin: 0 2px;
 }

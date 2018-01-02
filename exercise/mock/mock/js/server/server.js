@@ -174,7 +174,7 @@ app.get("/main", function(req, res){
 			res.render(path, {
 				interfaces: interfaces, 
 				projects: PROJECTS,
-				pageCnt: 10
+				pageCnt: 1
 			});
 		})		
 	})	
@@ -277,7 +277,25 @@ app.get("/interface/get", function(req, res){
 		
 		})
 	})
-
+app.get("/main/usecase", function(req, res){
+	db.select("project", "", "", 
+		(projects)=>{
+			if(projects.length > 0){
+				var project = projects[0];
+				db.select("usecase", "", `project=${project.id}`),
+				(usecase)=>{
+					var path = "D:\\document\\gitReposity\\js\\mock\\views\\usecase.ejs";
+		
+					res.location("/interface/get");
+					//渲染页面且发送
+					res.render(path, { 
+						projects: projects,
+						usecase: usecase
+					});
+				}
+			}					
+		})
+	})
 /**修改接口**/
 app.post("/main/interface/modify", upload.array(), function(req, res){
 	help.log("post", req.url);

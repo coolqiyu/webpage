@@ -6,8 +6,11 @@ body, button, input, select, textarea{
 	font: 12px/1.5 tahoma, arial, \5b8b\4f53;
 	border: 0;
 }
-h1, h2, h3, h4, h5, h6{
-	font-size: 100%;
+h1{
+	font-size: 22px;
+}
+h2, h3, h4, h5, h6{
+	font-size: 18px;
 }
 ul, ol{
 	list-style: none;

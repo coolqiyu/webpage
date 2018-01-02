@@ -2,19 +2,24 @@ header .current-line{
   left: 100px;
 }
 .project-list{
-   height: 400px;
+   height: 450px;
    font-size: 0;
 }
 .project-list .header{
   font-weight: bold;
   font-size: 14px;
 }
+.project-index{
+  vertical-align: top;
+}
 .project-list ul li{
   list-style: none;
-  height: 50px;
+  height: 30px;
   line-height: 2;
   vertical-align: middle;
-  font-size: 14px;
+  font-size: 0;
+  border: 1px solid #2196F3;
+  border-top: 0;
 }
 .ui-project-list li span, .ui-project-list li input{
   display: none;
@@ -40,4 +45,23 @@ li .ui-description{
 }
 li .ui-op{
   width: 60px;
+}
+.ui-add-project{
+  height: 30px;
+  border: 1px solid #2196F3;
+  border-top: 0;
+  padding-top: 2px;
+}
+.ui-add-project span{
+  /*vertical-align: middle;
+  height: 90%;*/
+}
+.ui-add-project input{
+  height: 90%;
+  border: 1px solid #c7c7c7;
+  text-indent: 3px;
+  vertical-align: top;
+}
+.ui-add-project .add-btn{
+  vertical-align: top;
 }

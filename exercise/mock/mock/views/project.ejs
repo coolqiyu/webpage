@@ -12,7 +12,7 @@
 <h1>项目列表</h1>
 <div>
 <div class="list-header">
-<span class="list-5col-index">序号</span>
+<span class="list-5col-index project-index">序号</span>
 <span class="list-5col">项目名称</span>
 <span class="list-5col">真实请求路径</span>
 <span class="list-5col">说明</span>
@@ -39,11 +39,14 @@
 <%}%>
 </ul>
 </div>
-<div id="js-add-project">
-  <!-- <span>项目名称：</span> --><input id="js-name" type="text" name="">
- <!--  <span>真实请求路径：</span> --><input id="js-real-host" type="text" name="path">
-	<!-- <span>描述: </span> --><input id="js-res-code" type="text" name="">
+<div id="js-add-project" class="ui-add-project">
+<span class="list-5col-index"></span>
+  <!-- <span>项目名称：</span> --><input id="js-name" type="text" name="" class="list-5col">
+ <!--  <span>真实请求路径：</span> --><input id="js-real-host" type="text" name="path" class="list-5col">
+	<!-- <span>描述: </span> --><input id="js-res-code" type="text" name="" class="list-5col">
+	<div class="list-5col list-5col-m add-btn">
 	<button id="js-submit">添加</button>
+	</div>
 </div>
 </section>
 <%- include("./footer.ejs")%>

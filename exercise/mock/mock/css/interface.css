@@ -7,6 +7,7 @@ h3{
     .ui-interface{
       width: 800px;
       margin: 20px auto;
+      font: 14px/2 Arial;
     }
     .ui-interface>div{
       width: 100%;
@@ -30,13 +31,12 @@ h3{
       width: 70px;
       text-align: right;
       margin: 5px;
-      font: 17px/25px Arial;
     }
     .ui-interface input, .ui-interface select{
       /*display: inline-block;*/
       width: 400px;
       margin: 5px;
-      font: 17px/25px Arial;
+      font: 14px/2 Arial;
       border: 1px solid lightblue;
     }
     .ui-interface .ui-body{

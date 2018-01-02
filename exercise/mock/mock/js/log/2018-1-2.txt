@@ -1,0 +1,99 @@
+2017-12-23 14:18:57 | 请求来自 GET /css/reset.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AbdgD23xmvVB3H4CYdxurWUbllPE24qL8.vjJkThKVw6KRbsM7XziS6Hv9cj%2F%2FVRuScPDgLkzGuNE"}
+请求体：{}
+2017-12-23 14:18:57 | 请求来自 GET /css/common.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AbdgD23xmvVB3H4CYdxurWUbllPE24qL8.vjJkThKVw6KRbsM7XziS6Hv9cj%2F%2FVRuScPDgLkzGuNE"}
+请求体：{}
+2017-12-23 14:19:10 | 请求来自 GET /css/reset.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AbdgD23xmvVB3H4CYdxurWUbllPE24qL8.vjJkThKVw6KRbsM7XziS6Hv9cj%2F%2FVRuScPDgLkzGuNE"}
+请求体：{}
+2017-12-23 14:19:10 | 请求来自 GET /css/common.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AbdgD23xmvVB3H4CYdxurWUbllPE24qL8.vjJkThKVw6KRbsM7XziS6Hv9cj%2F%2FVRuScPDgLkzGuNE"}
+请求体：{}
+2017-12-23 14:24:51 | 请求来自 GET /main.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AuoJch_S_5LRtNivtccBv_MYRqPR7JCxe.xtW5O66aJgviVe2mq1nQz%2FS3plErL%2BSQ0J9fEShGhfs"}
+请求体：{}
+2017-12-23 15:01:24 | 请求来自 GET /main/reset.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/visitRecord","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AIQLBSgbeVjK2CREV2MmrXAWqRTJk4ahf.%2BoIyUKr22yhVC5kc%2FL9cc%2FVMhgf3wl8%2BAWbJeCaw0lc"}
+请求体：{}
+2017-12-23 15:01:24 | 请求来自 GET /main/common.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/visitRecord","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AIQLBSgbeVjK2CREV2MmrXAWqRTJk4ahf.%2BoIyUKr22yhVC5kc%2FL9cc%2FVMhgf3wl8%2BAWbJeCaw0lc"}
+请求体：{}
+2017-12-23 15:01:24 | 请求来自 GET /main/visitRecord.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/visitRecord","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AIQLBSgbeVjK2CREV2MmrXAWqRTJk4ahf.%2BoIyUKr22yhVC5kc%2FL9cc%2FVMhgf3wl8%2BAWbJeCaw0lc"}
+请求体：{}
+2017-12-23 15:03:51 | 请求来自 GET /main/reset.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/visitRecord","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AUSCMT8lPPsLjFfFzhhwXfXYAvNztgUSw.KwJS9bjxoCXn9uqM9EQK7ySLl%2FC8Ohh3h1nBkAsmMqY"}
+请求体：{}
+2017-12-23 15:03:51 | 请求来自 GET /main/common.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/visitRecord","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AUSCMT8lPPsLjFfFzhhwXfXYAvNztgUSw.KwJS9bjxoCXn9uqM9EQK7ySLl%2FC8Ohh3h1nBkAsmMqY"}
+请求体：{}
+2017-12-23 15:03:51 | 请求来自 GET /main/visitRecord.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/visitRecord","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AUSCMT8lPPsLjFfFzhhwXfXYAvNztgUSw.KwJS9bjxoCXn9uqM9EQK7ySLl%2FC8Ohh3h1nBkAsmMqY"}
+请求体：{}
+2017-12-23 15:59:54 | 请求来自 GET /main/reset.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/visitRecord","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AUSCMT8lPPsLjFfFzhhwXfXYAvNztgUSw.KwJS9bjxoCXn9uqM9EQK7ySLl%2FC8Ohh3h1nBkAsmMqY"}
+请求体：{}
+2017-12-23 15:59:54 | 请求来自 GET /main/common.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/visitRecord","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AUSCMT8lPPsLjFfFzhhwXfXYAvNztgUSw.KwJS9bjxoCXn9uqM9EQK7ySLl%2FC8Ohh3h1nBkAsmMqY"}
+请求体：{}
+2017-12-23 15:59:54 | 请求来自 GET /main/visitRecord.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/visitRecord","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AUSCMT8lPPsLjFfFzhhwXfXYAvNztgUSw.KwJS9bjxoCXn9uqM9EQK7ySLl%2FC8Ohh3h1nBkAsmMqY"}
+请求体：{}
+2017-12-23 16:02:22 | 请求来自 GET /main/reset.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/visitRecord","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3ADwZNkwn7Hy1KD86t_ZurSF9WD7DBUL8Q.our8cjlIs3Mdr%2FQ%2B7M6E%2FCfxql1rgnAAiZDCzblWSok"}
+请求体：{}
+2017-12-23 16:02:22 | 请求来自 GET /main/common.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/visitRecord","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3ADwZNkwn7Hy1KD86t_ZurSF9WD7DBUL8Q.our8cjlIs3Mdr%2FQ%2B7M6E%2FCfxql1rgnAAiZDCzblWSok"}
+请求体：{}
+2017-12-23 16:02:22 | 请求来自 GET /main/visitRecord.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/visitRecord","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3ADwZNkwn7Hy1KD86t_ZurSF9WD7DBUL8Q.our8cjlIs3Mdr%2FQ%2B7M6E%2FCfxql1rgnAAiZDCzblWSok"}
+请求体：{}
+2017-12-23 16:04:22 | 请求来自 GET /main/reset.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/visitRecord","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3ADwZNkwn7Hy1KD86t_ZurSF9WD7DBUL8Q.our8cjlIs3Mdr%2FQ%2B7M6E%2FCfxql1rgnAAiZDCzblWSok"}
+请求体：{}
+2017-12-23 16:04:23 | 请求来自 GET /main/common.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/visitRecord","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3ADwZNkwn7Hy1KD86t_ZurSF9WD7DBUL8Q.our8cjlIs3Mdr%2FQ%2B7M6E%2FCfxql1rgnAAiZDCzblWSok"}
+请求体：{}
+2017-12-23 16:04:23 | 请求来自 GET /main/visitRecord.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/visitRecord","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3ADwZNkwn7Hy1KD86t_ZurSF9WD7DBUL8Q.our8cjlIs3Mdr%2FQ%2B7M6E%2FCfxql1rgnAAiZDCzblWSok"}
+请求体：{}
+2017-12-23 16:05:26 | 请求来自 GET /main/reset.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/visitRecord","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3Adlf91bsBt6wg18Cw2Y8Yz7YoMzrPCNti.O0QTRK5vVlrktcgZthMP2LqEXmLQugp%2FWBgTZ9IqXUQ"}
+请求体：{}
+2017-12-23 16:05:26 | 请求来自 GET /main/common.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/visitRecord","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3Adlf91bsBt6wg18Cw2Y8Yz7YoMzrPCNti.O0QTRK5vVlrktcgZthMP2LqEXmLQugp%2FWBgTZ9IqXUQ"}
+请求体：{}
+2017-12-23 16:05:26 | 请求来自 GET /main/visitRecord.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/visitRecord","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3Adlf91bsBt6wg18Cw2Y8Yz7YoMzrPCNti.O0QTRK5vVlrktcgZthMP2LqEXmLQugp%2FWBgTZ9IqXUQ"}
+请求体：{}
+2017-12-23 16:31:01 | 请求来自 GET /main/reset.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/visitRecord","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AlCiKryTmKg7dGB0uyUd2HID10G76oGQW.9wSKyRg2zIVlFQ6lIodqnU9dVxQa6eW2rM9ZRN8Rk6o"}
+请求体：{}
+2017-12-23 16:31:01 | 请求来自 GET /main/common.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/visitRecord","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AlCiKryTmKg7dGB0uyUd2HID10G76oGQW.9wSKyRg2zIVlFQ6lIodqnU9dVxQa6eW2rM9ZRN8Rk6o"}
+请求体：{}
+2017-12-23 16:31:01 | 请求来自 GET /main/visitRecord.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/visitRecord","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AlCiKryTmKg7dGB0uyUd2HID10G76oGQW.9wSKyRg2zIVlFQ6lIodqnU9dVxQa6eW2rM9ZRN8Rk6o"}
+请求体：{}
+2017-12-23 16:33:02 | 请求来自 GET /main/reset.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/visitRecord","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AlCiKryTmKg7dGB0uyUd2HID10G76oGQW.9wSKyRg2zIVlFQ6lIodqnU9dVxQa6eW2rM9ZRN8Rk6o"}
+请求体：{}
+2017-12-23 16:33:02 | 请求来自 GET /main/common.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/visitRecord","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AlCiKryTmKg7dGB0uyUd2HID10G76oGQW.9wSKyRg2zIVlFQ6lIodqnU9dVxQa6eW2rM9ZRN8Rk6o"}
+请求体：{}
+2017-12-23 16:33:02 | 请求来自 GET /main/visitRecord.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/visitRecord","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AlCiKryTmKg7dGB0uyUd2HID10G76oGQW.9wSKyRg2zIVlFQ6lIodqnU9dVxQa6eW2rM9ZRN8Rk6o"}
+请求体：{}
+2017-12-23 17:24:03 | 请求来自 GET /interface/interface.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/interface/get?interfaceid=34","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AZe_qF4WPQistpVAoMtSr6GcR6ZZBk978.zkGjfLc1V1d49mri6XNim1Wm8oS%2Fb7EBgyKHqm6C5xA"}
+请求体：{}
+2017-12-23 17:24:10 | 请求来自 GET /interface/interface.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/interface/get?interfaceid=34","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AZe_qF4WPQistpVAoMtSr6GcR6ZZBk978.zkGjfLc1V1d49mri6XNim1Wm8oS%2Fb7EBgyKHqm6C5xA"}
+请求体：{}
+2018-1-2 14:45:22 | 请求来自 GET /main/usecase
+请求头：{"host":"localhost:8880","upgrade-insecure-requests":"1","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8","referer":"http://localhost:8880/main","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AcWyTg1PUIyihKjGtjIdLDs58e0pUiZaO.bWihXYqkSGrSAKjpX7NcGALsUY%2BPJyNocZeWm%2BXAyNI"}
+请求体：{}
+2018-1-2 16:50:24 | 请求来自 GET /main/usecase
+请求头：{"host":"localhost:8880","connection":"keep-alive","upgrade-insecure-requests":"1","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8","referer":"http://localhost:8880/main","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AcWyTg1PUIyihKjGtjIdLDs58e0pUiZaO.bWihXYqkSGrSAKjpX7NcGALsUY%2BPJyNocZeWm%2BXAyNI"}
+请求体：{}
