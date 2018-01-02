@@ -1,0 +1,46 @@
+body, div{
+	margin: 0;
+	padding: 0;
+}
+.mix-blend{
+	position: relative;
+	margin: 20px;
+	width: 200px;
+	height: 200px;
+	background: #000;
+}
+.mix-blend .circle{
+	position: absolute;
+	box-sizing: border-box;
+	width: 100%;
+	height: 100%;
+	border-radius: 100%;
+	background: #fff;
+	border: 10px solid #fff;
+}
+.mix-blend .red{
+	border-color: red;
+	animation: circle 2s 0.3s infinite;
+}
+.mix-blend .green{
+	border-color: green;
+	animation: circle 2s 0.6s infinite;
+}
+.mix-blend .blue{
+	border-color: blue; 
+	animation: circle 2s infinite;
+}
+@keyframes circle{
+  0%{
+  	top: -5px ;
+  }
+  25%{
+  	right: -5px;
+  }
+  50%{
+  	bottom:  -5px;
+  }
+  100%{
+  	left: -5px;
+  }
+}
