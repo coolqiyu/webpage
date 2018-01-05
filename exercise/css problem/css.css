@@ -2,14 +2,27 @@ body, div{
 	margin: 0;
 	padding: 0;
 }
-.mix-blend{
-	position: relative;
+h1, h2, h3{
+	text-align: center;
+}
+.chunk{
+	float: left;
 	margin: 20px;
+	padding: 20px;
 	width: 200px;
 	height: 200px;
 	background: #000;
 }
-.mix-blend .circle{
+/*用一个container来包含中间的circle*/
+.container{
+	position: relative;
+	width: 90%;
+	height: 90%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+.lighten .circle{
 	position: absolute;
 	box-sizing: border-box;
 	width: 100%;
@@ -17,30 +30,244 @@ body, div{
 	border-radius: 100%;
 	background: #fff;
 	border: 10px solid #fff;
+	/*mix-blend-mode是内容，而background-blend-mode只是背景部分*/
+	mix-blend-mode: lighten;
+	animation: circle 3s linear infinite;
 }
-.mix-blend .red{
+.lighten .red{
 	border-color: red;
-	animation: circle 2s 0.3s infinite;
+	animation-delay: 0s;
 }
-.mix-blend .green{
+.lighten .green{
 	border-color: green;
-	animation: circle 2s 0.6s infinite;
+	animation-delay: 1s;
 }
-.mix-blend .blue{
+.lighten .blue{
 	border-color: blue; 
-	animation: circle 2s infinite;
+	animation-delay: 2s;
 }
-@keyframes circle{
-  0%{
-  	top: -5px ;
+/*设置位置不要四个方向都设，只要用top和left就好*/
+@keyframes circle{	
+  0%{  	
+	top: 0;
+  	left: -10px;
   }
   25%{
-  	right: -5px;
+  	top: -10px;
+  	left: 0;
   }
   50%{
-  	bottom:  -5px;
+  	top: 0;
+  	left: 10px;
   }
-  100%{
-  	left: -5px;
+  75%{
+  	left: 0;
+	top: 10px;
+ }
+  100%{  	
+	top: 0;
+  	left: -10px;
   }
+}
+
+.difference{
+	width: 200px;
+	height: 200px;
+}
+.difference .container{
+	background-image: url("./img/bw1.jpg");	
+	border-radius: 100%;
+	/*animation: rotate 2s linear infinite;*/
+}
+.difference .circle{
+	position: absolute;
+	width: 60%;
+	height: 60%;
+	border-radius: 100%;
+	background: #fff;
+	mix-blend-mode: difference;
+	transform-origin: 80% 80%;
+	animation: rotate 6s linear infinite;
+}
+@keyframes rotate{
+	0%{
+		transform: rotateZ(0deg);
+	}
+	16%{
+		transform: rotateZ(60deg);
+	}
+	32%{
+		transform: rotateZ(120deg);
+	}
+	48%{
+		transform: rotateZ(180deg);
+	}
+	64%{
+		transform: rotateZ(240deg);
+	}
+	80%{
+		transform: rotateZ(300deg);
+	}
+	100%{
+		transform: rotateZ(360deg);
+	}
+}
+.difference .circle div{
+	position: absolute;
+	bottom: 5px;
+	left: 5px;
+	width: 70%;
+	height: 70%;
+	background: #000;
+	border-radius: 100%;
+}
+.difference .circle:nth-child(2){
+	/*transform: rotateZ(60deg);*/
+	animation-delay: 1s;
+}
+.difference .circle:nth-child(3){
+	/*transform: rotateZ(120deg);*/
+	animation-delay: 2s;
+}
+.difference .circle:nth-child(4){
+	/*transform: rotateZ(180deg);*/
+	animation-delay: 3s;
+}
+.difference .circle:nth-child(5){
+	/*transform: rotateZ(240deg);*/
+	animation-delay: 4s;
+}
+.difference .circle:nth-child(6){
+	/*transform: rotateZ(300deg);*/
+	animation-delay: 5s;
+}
+
+/*
+文字红色阴影
+一层文字改变高度
+白线div
+after,before伪元素
+- 继承所有可继承的属性
+- 不能继承的使用初始设置
+- 默认为inline
+- replaced元素不能添加，比如img, input等
+- 伪元素是包含在原元素中<p><span>before</span>增加before</p>
+ */
+.text-magic{
+	position: relative;
+	width: 500px;
+	background: #fff;
+    font-size: 64px;
+    font-family: Raleway, Verdana, Arial, sans-serif;
+    animation: skewX 5s ease-in infinite;
+}
+
+.text-magic:before {
+    content: attr(data-word);
+    position: absolute;
+    top: 0;
+    left: 1px;
+    height: 0px;
+    color: rgba(255, 0, 0, .9);
+    overflow: hidden;
+    z-index: 2;
+    animation: redShadow 1.5s ease-in infinite;
+    -webkit-filter: contrast(200%);
+    text-shadow: 0.1px 0 0 red;
+    mix-blend-mode: color-burn;
+}
+
+.text-magic:after {
+    content: attr(data-word);
+    position: absolute;
+    top: 0;
+    left: -3px;
+    height: 64px;
+    color: rgba(0, 0, 0, .8);
+    overflow: hidden;
+    z-index: 3;
+    background: rgba(255, 255, 255, .9);
+    animation: redHeight 2s ease-out infinite;
+    -webkit-filter: contrast(200%);
+    mix-blend-mode: hard-light;
+}
+
+@keyframes redShadow {
+    20% {
+        left: -1px;
+        height: 32px;
+    }
+    60% {
+        left: 2px;
+        height: 6px;
+    }
+    100% {
+        left: -2px;
+        height: 42px;
+    }
+}
+
+@keyframes redHeight {
+    20% {
+        height: 42px;
+    }
+    35% {
+        height: 12px;
+    }
+    50% {
+        height: 40px;
+    }
+    60% {
+        height: 20px;
+    }
+    70% {
+        height: 34px;
+    }
+    80% {
+        height: 22px;
+    }
+    100% {
+        height: 0px;
+    }
+}
+
+@keyframes skewX {
+    78% {
+        transform: skewX(0);
+    }
+    79% {
+        transform: skewX(10deg);
+    }
+    80% {
+        transform: skewX(-10deg);
+    }
+    81% {
+        transform: skewX(0);
+    }
+}
+.white {
+    position: absolute;
+    left: 0;
+    top: 15px;
+    width: 100%;
+    height: 3px;
+    background: #fff;
+    z-index: 4;
+    animation: whiteMove 3s ease-out infinite;
+    mix-blend-mode: luminosity;
+}
+
+@keyframes whiteMove {
+    8% {
+        top: 38px;
+    }
+    10% {
+        top: 8px;
+    }
+    12% {
+        top: 42px;
+    }
+    99% {
+        top: 36px;
+    }
 }
