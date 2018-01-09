@@ -1,9 +1,17 @@
-body, div{
+body, div, p{
 	margin: 0;
 	padding: 0;
 }
 h1, h2, h3{
 	text-align: center;
+}
+/*.clearfix{
+	clear: both;
+}*/
+.clearfix:after{
+	content:"";
+	display: block;
+	clear: both;
 }
 .chunk{
 	float: left;
@@ -271,3 +279,167 @@ after,before伪元素
         top: 36px;
     }
 }
+.clip{
+	position: relative;
+	font-size: 50px;
+	font-weight: bold;/*
+	background-size: cover;*/
+	color: #ef8d86;
+}
+.clip:after{
+	content: "明月几时有，把酒问青天";
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: url("./img/clip.jpg") no-repeat center center;
+	color: transparent; /*deeppink;要显示clip的效果，需要把color设置为透明*/
+	/*以区块内的文字作为裁剪区域向外裁剪，文字的背景即为区块的背景，文字之外的区域都将被裁剪掉*/
+	-webkit-background-clip: text;
+	background-position: 0% 0%;
+	animation: clip 8s linear infinite;
+}
+@keyframes clip{
+	0%{
+		background-size: 0% 100%;
+	}
+	100%{
+		background-size: 100% 100%;
+	}
+}
+.text {
+    width: 500px;
+    line-height: 100px;
+    font-family: 'Arial', sans-serif;
+    font-size: 80px;
+    font-weight: bold;
+    background: linear-gradient(90deg, red 0, orange 15%, yellow 30%, green 45%, teal 60%, blue 75%, purple 90% ,purple 100%);
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: changeColor .5s linear infinite alternate;
+}
+
+@keyframes changeColor {
+    20% {
+    	/*动画第一帧需要把clip放在background上，否则会没有效果
+		  中间帧可以不写clip，但第一个和最后一个需要写上
+    	*/
+    	-webkit-background-clip: text;
+        background: linear-gradient(90deg, red 0, orange 15%, yellow 30%, green 45%, teal 60%, blue 75%, purple 90% ,purple 100%);      
+    }
+    40% {
+        background: linear-gradient(90deg, deeppink 0, yellowgreen 15%, fuchsia 30%, lime 45%, olive 60%, aqua 75%, coral 90% ,brown 100%);   
+    	-webkit-background-clip: text;
+    }
+    60% {
+        background: linear-gradient(-90deg, red 0, orange 15%, yellow 30%, green 45%, teal 60%, blue 75%, purple 90% ,purple 100%);        
+    	-webkit-background-clip: text;
+    }
+    80% {    	
+        background: linear-gradient(-90deg, blue 0, yellow 15%, orange 30%, teal 45%, purple 60%, coral 75%, brown 90% ,fuchsia 100%);     
+		-webkit-background-clip: text;
+    }
+}
+/*
+1. 修改文字的font-size变成一个区域
+2. 修改line-height改变文字的位置
+3. filter: blur(10px) 使背景模糊
+4. 设置背景图片：size, no-repeat, position
+ */
+.mask{
+	position: relative;
+	width: 600px;
+	height: 400px;
+}
+.mask>div{
+	width: 100%;
+	height: 100%;
+	background: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493353832&di=c063b6b9c89082e96ffee0766112ffec&imgtype=jpg&er=1&src=http%3A%2F%2Fpic2016.5442.com%3A82%2F2016%2F0111%2F07%2F3.jpg%21960.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+    filter: blur(3px);
+}
+.mask>p{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	color: transparent;
+	background: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493353832&di=c063b6b9c89082e96ffee0766112ffec&imgtype=jpg&er=1&src=http%3A%2F%2Fpic2016.5442.com%3A82%2F2016%2F0111%2F07%2F3.jpg%21960.jpg");
+	background-position: center center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	-webkit-background-clip: text;
+	animation: p 4s infinite alternate;
+}
+@keyframes p{
+	0%{
+		line-height: 100px;
+		font-size: 400px;
+	}
+	100%{
+		line-height: 500px;
+		font-size: 1000px;
+	}
+}
+
+/*
+initial: 初始值;
+inherit：继承值
+unset：可继承则为inherite，不可继承则为initial
+ */
+
+.css-stop{
+	position: relative;
+}
+.pause{
+	width: 50px;
+	height: 30px;
+	appearance: button;	
+	-webkit-appearance: button;
+	background: #03A9F4;
+}
+.pause:hover{
+	cursor: pointer;
+}
+/*+紧跟，~所有*/
+.pause:hover ~ .pink-rect{
+	animation-play-state: paused;
+}
+.pink-rect{
+	position: absolute;
+	width: 150px;
+	height: 150px;
+	background: pink;
+	animation: rectmove 3s infinite alternate;
+}
+@keyframes rectmove{
+	0%{
+		left: 0;
+	}
+	100%{
+		left: 300px;
+	}
+}
+input{
+	/*-webkit-appearance: button;
+	appearance: button;*/
+}
+.radio{
+	visibility: hidden;
+	/*display: none;*/
+}
+#stop:checked ~ .pink-rect{
+	animation-play-state: paused;
+}
+#continue:checked ~ .pink-rect{
+	animation-play-state: running;
+}
+
+
+
+
+
+
