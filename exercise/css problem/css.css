@@ -393,6 +393,7 @@ unset：可继承则为inherite，不可继承则为initial
 
 .css-stop{
 	position: relative;
+	height: 240px;
 }
 .pause{
 	width: 50px;
@@ -437,7 +438,22 @@ input{
 #continue:checked ~ .pink-rect{
 	animation-play-state: running;
 }
-
+/*线性渐变（径向渐变）是不支持 animation 的，单色的 background 是支持的*/
+.gradient{
+	width: 100%;
+	height: 100px;
+	background: red;
+	/*background: linear-gradient(90deg, #ffc700 0%, #e91e1e 100%);
+*/	animation: gradient 2s infinite;
+}
+@keyframes gradient{
+	50%{
+		background: blue;
+	}
+	/*50%{
+		background: linear-gradient(90deg, #e91e1e 0%, #6f27b0 100%);
+	}*/
+}
 
 
 
