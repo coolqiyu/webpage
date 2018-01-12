@@ -90,13 +90,21 @@ app.get("/modifyInterface.js", function(req, res){
 	help.log("get", req.url);
 	res.sendFile("D:\\document\\gitReposity\\js\\mock\\js\\client\\modifyInterface.js");
 })
-app.get("/project.js", function(req, res){
+app.get("\*/project.js", function(req, res){
 	help.log("get", req.url);
 	res.sendFile("D:\\document\\gitReposity\\js\\mock\\js\\client\\project.js");
 })
-app.get("/record.js", function(req, res){
+app.get("\*/record.js", function(req, res){
 	help.log("get", req.url);
 	res.sendFile("D:\\document\\gitReposity\\js\\mock\\js\\client\\record.js");
+})
+app.get("\*/usecases.js", function(req, res){
+	help.log("get", req.url);
+	res.sendFile("D:\\document\\gitReposity\\js\\mock\\js\\client\\usecases.js");
+})
+app.get("\*/modifyUsecase.js", function(req, res){
+	help.log("get", req.url);
+	res.sendFile("D:\\document\\gitReposity\\js\\mock\\js\\client\\modifyUsecase.js");
 })
 app.get("\*/project.css", function(req, res){
 	help.log("get", req.url);
@@ -129,6 +137,14 @@ app.get("\*/modifyInterface.css", function(req, res){
 app.get("\*/visitRecord.css", function(req, res){
 	help.log("get", req.url);
 	res.sendFile("D:\\document\\gitReposity\\js\\mock\\css\\visitRecord.css");
+})
+app.get("\*/usecases.css", function(req, res){
+	help.log("get", req.url);
+	res.sendFile("D:\\document\\gitReposity\\js\\mock\\css\\usecases.css");
+})
+app.get("\*/modifyUsecase.css", function(req, res){
+	help.log("get", req.url);
+	res.sendFile("D:\\document\\gitReposity\\js\\mock\\css\\modifyUsecase.css");
 })
 app.get("/main/visitRecord", function(req, res){
 	var path = "D:\\document\\gitReposity\\js\\mock\\views\\visitRecord.ejs";
@@ -277,25 +293,164 @@ app.get("/interface/get", function(req, res){
 		
 		})
 	})
-app.get("/main/usecase", function(req, res){
+app.get("/main/usecases", function(req, res){
 	db.select("project", "", "", 
 		(projects)=>{
+			var path = "D:\\document\\gitReposity\\js\\mock\\views\\usecases.ejs";
 			if(projects.length > 0){
 				var project = projects[0];
-				db.select("usecase", "", `project=${project.id}`),
+				db.select("usecase", "", `project=${project.id}`,
 				(usecase)=>{
-					var path = "D:\\document\\gitReposity\\js\\mock\\views\\usecase.ejs";
-		
-					res.location("/interface/get");
+					
 					//渲染页面且发送
 					res.render(path, { 
 						projects: projects,
 						usecase: usecase
 					});
-				}
-			}					
+				})
+			}	
+			else{
+				//渲染页面且发送
+			    var usecase = [];
+				res.render(path, { 
+					projects: projects,
+					usecase: usecase
+				});
+			}				
 		})
 	})
+app.get("/modifyUsecase", function(req, res){
+	db.select("project", "", "", 
+		(projects)=>{
+			var path = "D:\\document\\gitReposity\\js\\mock\\views\\modifyUsecase.ejs";
+			if(projects.length > 0){				
+				db.select("interface", "", `project=${projects[0].id}`, (interfaces)=>{
+					//渲染页面且发送
+					res.render(path, { 
+						projects: projects,
+						usecase: undefined,
+						interfaces: interfaces
+					});
+				})
+			}
+			else{
+				//渲染页面且发送
+				res.render(path, { 
+					projects: [],
+					interfaces: []
+				});
+			}
+			
+		})				
+	})
+app.post("/main/usecase/interface", upload.array(), function(req, res){
+	var projectId = req.body.project;
+	db.select("interface", "", `project=${projectId}`, (interfaces)=>{
+		res.send(interfaces);
+		res.end();
+	})
+})
+app.post("/main/usecase/add", upload.array(), function(req, res){
+	help.record(req, 0);
+	//把用例的信息添加到数据库中
+	//=============================
+	var body = req.body;
+	db.insert("usecase", `'${body.name}', '${body.description}', '${body.object}', ${req.session.userid}, ${req.session.userid}, ${body.project}`, 1, (insertid)=>{
+		var interfaceIds = JSON.parse(body.interfaces);
+		console.log("================", interfaceIds);
+		var i = 0, len = interfaceIds.length;
+		//循环遍历为每个接口添加用例
+		!function(){
+			db.update("interface", `usecase=concat_ws(',', usecase, ${insertid})`, `id=${interfaceIds[i]}`, (result)=>{
+				i++;
+				if(i < len)
+					arguments.callee();
+				else
+					return;
+			})
+		}();
+	})
+})
+app.get("/main/usecase/get", function(req, res){
+	var projectId = req.query.pid;
+	var usecaseId = req.query.uid;
+	var type = req.query.type;//type表示请求的方式：0为ajax，1为同步
+	console.log("++++++++++++++++type: ", type, typeof(type), type === 0);
+	//根据project id来获取它的所有用例
+	if(projectId){
+		db.select("project", "", "", 
+		(projects)=>{
+			var path = "D:\\document\\gitReposity\\js\\mock\\views\\usecases.ejs";
+			if(projects.length > 0){
+				db.select("usecase", "", `project=${projectId}`,
+				(usecase)=>{					
+					//渲染页面且发送
+					if(type === '1'){
+						res.render(path, { 
+							projects: projects,
+							usecase: usecase
+						});
+					}
+					else{
+					res.send({ 
+						projects: projects,
+						usecase: usecase
+					});
+					res.end();
+				}
+				})
+			}	
+			else{
+				//渲染页面且发送
+			    var usecase = [];
+				//渲染页面且发送
+					if(type === '1'){
+						res.render(path, { 
+							projects: projects,
+							usecase: usecase
+						});
+					}
+					else{
+						res.send({ 
+							projects: projects,
+							usecase: usecase
+						});
+						res.end();
+					}
+				}							
+		})
+	}
+	else if(usecaseId !== undefined){//根据用例id来获取用例信息
+		db.select("project", "", "", 
+		(projects)=>{
+			var path = "D:\\document\\gitReposity\\js\\mock\\views\\modifyUsecase.ejs";
+			if(projects.length > 0){
+				var project = projects[0];
+				db.select("usecase", "", `id=${usecaseId}`,
+				(usecase)=>{
+					db.select("interface", "", `project=${usecase[0].project}`, (interfaces)=>{
+						//渲染页面且发送
+						if(type === '1'){
+							res.render(path, { 
+									projects: projects,
+									usecase: usecase[0],
+									interfaces: interfaces
+								});
+							}
+						else{
+							res.send({ 
+								projects: projects,
+									usecase: usecase[0],
+									interfaces: interfaces
+							});
+							res.end();
+						}
+					});
+				})
+			};								
+		})
+	}
+})
 /**修改接口**/
 app.post("/main/interface/modify", upload.array(), function(req, res){
 	help.log("post", req.url);

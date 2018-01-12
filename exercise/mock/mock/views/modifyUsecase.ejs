@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <link rel="stylesheet" type="text/css" href="/reset.css">
+  <link rel="stylesheet" type="text/css" href="/common.css"> 
+  <link rel="stylesheet" type="text/css" href="/modifyUsecase.css">
+</head>
+<body>
+<%- include("./header.ejs")%>
+<section class="container content">
+<nav>
+<h4>项目列表</h4>
+<ul id="js-project-nav">
+<%for(var i=0,len=projects.length; i < len; i++){%>
+<li pid=<%=projects[i].id%>><a><%=projects[i].name%></a></li>
+<%}%>
+</ul>
+</nav>
+<article>
+	<h4>用例详情</h4>
+	<div class="basic">
+	<span>名称</span><input id="js-name" type="text" name="" value="<%=usecase?usecase.name:''%>"><br/>
+	<span>项目</span>
+	<select id="js-select-project">
+		<%for(var i=0,len=projects.length; i < len; i++){%>
+			<%if(usecase && projects[i].id === usecase.project){%>
+				<option value="<%=projects[i].id%>" selected><%=projects[i].name%></option>
+			<%}else{%>
+				<option value="<%=projects[i].id%>"><%=projects[i].name%></option>
+		<%}}%>
+	</select><br/>
+	<span>描述</span><input id="js-description" type="text" name="" value="<%=usecase?usecase.description:''%>"><br/>
+	</div>
+	<div class="object">
+		<h4>对象</h4>
+		<div>
+			<span>名称</span>
+			<span>值</span>
+			<span>说明</span>
+		</div>
+		<ul id="js-object">		
+			<%var object = usecase ? JSON.parse(usecase.object):undefined;%>
+			<%var len = object?object.length:0%>
+			<%if(len === 0){%>
+			<li><input type="text" name=""><input type="text" name=""><input type="text" name=""></li>
+			<%}%>
+			<%for(var i = 0; i < len; i++){%>
+				<li><input type="text" name="" value="<%=object[i][0]%>"><input type="text" name="" value="<%=object[i][1]%>"><input type="text" name="" value="<%=object[i][2]%>"></li>
+			<%}%>
+		</ul>
+	</div>
+	<div class="steps">
+	<h4>步骤</h4>
+	<div>
+	<span>选择路径</span><select class="select-path" id="js-select-interface">
+		<%for(var i = 0, len = interfaces.length; i < len; i++){%>
+		<option value="<%=interfaces[i].id%>"><%=interfaces[i].path%></option>
+		<%}%>
+	</select>
+	<button id="js-add-interface-btn">添加</button>
+	</div>
+	<div>
+		<div class="list-header">
+		<span class="list-4col-index">序号</span>
+		<span class="list-4col">路径</span>
+		<span class="list-4col">描述</span>
+		<span class="list-4col">操作</span>
+		</div>
+	<ul id="js-step-list">
+	<%if(usecase){%>
+	<%var reg = new RegExp(usecase.id,'i')%>
+	<%for(var i = 0, len = interfaces.length; i < len; i++){%>
+	<%if(reg.test(interfaces[i].usecase)){%>
+	<li iid=<%=interfaces[i].id%>><span class="list-4col-index"><%=i+1%></span><span class="list-4col"><%=interfaces[i].path%></span><span class="list-4col"><%=interfaces[i].description%></span><button>删除</button>
+	</li>
+	<%}%>
+	<%}}%>
+	</ul>
+	</div>
+	</div>
+	<div>
+	<button id="js-submit-btn">确定</button>
+	</div>
+</article>
+</section>
+<%- include("./footer.ejs")%>
+<script type="text/javascript" src="/myAjax.js"></script>
+<script type="text/javascript" src="/modifyUsecase.js"></script>
+</body>
+</html>

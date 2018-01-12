@@ -97,3 +97,9 @@
 2018-1-2 16:50:24 | 请求来自 GET /main/usecase
 请求头：{"host":"localhost:8880","connection":"keep-alive","upgrade-insecure-requests":"1","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8","referer":"http://localhost:8880/main","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AcWyTg1PUIyihKjGtjIdLDs58e0pUiZaO.bWihXYqkSGrSAKjpX7NcGALsUY%2BPJyNocZeWm%2BXAyNI"}
 请求体：{}
+2018-1-2 17:56:06 | 请求来自 GET /main/usecase
+请求头：{"host":"localhost:8880","connection":"keep-alive","upgrade-insecure-requests":"1","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8","referer":"http://localhost:8880/project","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AcWyTg1PUIyihKjGtjIdLDs58e0pUiZaO.bWihXYqkSGrSAKjpX7NcGALsUY%2BPJyNocZeWm%2BXAyNI"}
+请求体：{}
+2018-1-2 17:56:25 | 请求来自 GET /main/usecase
+请求头：{"host":"localhost:8880","connection":"keep-alive","upgrade-insecure-requests":"1","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8","referer":"http://localhost:8880/main","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AcWyTg1PUIyihKjGtjIdLDs58e0pUiZaO.bWihXYqkSGrSAKjpX7NcGALsUY%2BPJyNocZeWm%2BXAyNI"}
+请求体：{}

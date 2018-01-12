@@ -1,0 +1,12 @@
+2018-1-3 10:51:17 | 请求来自 GET /usecases.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/main/usecase","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AC4sLrN0BSAMeP1UC9pSwJoe6WSnJ-kTf.nTM153qudGiw5sUu3uHQpjmG9GPNhWr%2Bxvgkrtdg%2FPU"}
+请求体：{}
+2018-1-3 11:45:23 | 请求来自 GET /main/usecase
+请求头：{"host":"localhost:8880","connection":"keep-alive","upgrade-insecure-requests":"1","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8","referer":"http://localhost:8880/main","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AypckEoyHMkGaubQKGwPByLZNP9-8JwXU.XPMfdC3KDcvf2tTN3tAnOzaG4UoiLu%2FFnCQ%2B5Fu9og4","if-none-match":"W/\"62c-jn7BsMfQHk6uy//gyeI8iSKi3d0\""}
+请求体：{}
+2018-1-3 11:50:41 | 请求来自 GET /modifyUsecase
+请求头：{"host":"localhost:8880","connection":"keep-alive","upgrade-insecure-requests":"1","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8","referer":"http://localhost:8880/main/usecases","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AlDOttKYyRYDbMQBSQTEdYlxNVjy5NBga.1oYrqPSf2QcafGJ8%2BF6fWJ98GtGCPVQVu%2F9%2FeJH4ShQ"}
+请求体：{}
+2018-1-3 11:51:52 | 请求来自 GET /modifyUsecase.css
+请求头：{"host":"localhost:8880","connection":"keep-alive","user-agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36","accept":"text/css,*/*;q=0.1","referer":"http://localhost:8880/modifyUsecase","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9","cookie":"testapp=s%3AN43o9yzn4SZdp4igMUxsWMKKXYtyMRl5.pQgUEoF1Ftfuzj%2F1%2BwtSRlTxJ1MYL4mNZ%2F69XaX7GXw"}
+请求体：{}

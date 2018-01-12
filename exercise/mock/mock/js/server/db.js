@@ -24,7 +24,8 @@ var DB = {
 	interface: "func_name, method, path, project, status, keep_step, step_count, description, create_user, modify_user",
 	step: "interface, request_header, request_body, response_code, response_header, response_body, create_user, modify_user",
 	project: "name, real_host, description, create_user, modify_user",
-	flow: "host, interface, step"
+	flow: "host, interface, step",
+	usecase: "name, description, object, create_user, modify_user, project"
 }
 exports.insert = function(table, values, cnt, callback){
 	//var insertSql = `insert into ${table} (` + "test, test2" + ") values (" + "'a', 'b')"; 

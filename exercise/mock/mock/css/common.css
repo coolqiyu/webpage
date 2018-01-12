@@ -57,7 +57,7 @@ header .list li:nth-child(3):hover ~ div{
   left: 210px;
 }
 header .list li:nth-child(4):hover ~ div{
-  left: 320px;
+  left: 340px;
 }
 header .user{
   float: right;
@@ -101,6 +101,7 @@ clear: both;
   line-height: 2;
   vertical-align: middle;
   background: #c3c3c3;
+  font-size: 0;
 }
 .list-header span{
   font-size: 14px;
@@ -111,9 +112,24 @@ clear: both;
   height: 100%;
   font-size: 12px;
 }
+.list-4col-index{
+  display: inline-block;
+  vertical-align: top;
+  width: 7%;
+  height: 100%;
+  font-size: 12px;
+}
 .list-5col{
   display: inline-block;
   width: 24%;
+  font-size: 12px;
+  box-sizing: border-box;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.list-4col{
+  display: inline-block;
+  width: 31%;
   font-size: 12px;
   box-sizing: border-box;
   text-overflow: ellipsis;
@@ -138,7 +154,8 @@ clear: both;
 
 }
 .list-content{
-
+  font-size: 0;
+  color: #000;
 }
 .page{
   height: 20px;
@@ -173,4 +190,7 @@ footer{
   width: 100%;
   height: 30px;
   background: #24292e;
+}
+a:hover{
+  cursor: pointer;
 }

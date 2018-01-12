@@ -1,37 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
+ <link rel="stylesheet" type="text/css" href="/reset.css">
+  <link rel="stylesheet" type="text/css" href="/common.css"> 
+  <link rel="stylesheet" type="text/css" href="/usecases.css">
 </head>
 <body>
 <%- include("./header.ejs")%>
-<section class="container">
-<nav>
+<section class="container content">
+<nav class="project-nav">
 <h4>项目列表</h4>
-<ul>
+<ul id="js-project-nav">
 <%for(var i=0,len=projects.length; i < len; i++){%>
-<li><a><%=projects[0].name%></a></li>
+<li pid=<%=projects[i].id%>><a><%=projects[i].name%></a></li>
 <%}%>
 </ul>
 </nav>
-<article>
-	<div>
-		<span>序号</span>
-		<span>名称</span>
-		<span>描述</span>
-		<span>操作</span>
+<article class="usecases">
+<div class="function-div">
+	<button id="js-addcase-btn">添加用例</button>
 	</div>
-	<ul>
-	<%for(var i = 0, len=usecase.length; i < len; i++){%>
-	<li>
-	<span><%=i+1%></span>
-	<span><%=usecase[i].name%></span>
-	<span><%=usecase[i].description%></span>
+<div class="usecase-list">
+	<h4>用例列表</h4>
+	<div class="list-header">
+		<span class="list-4col-index">序号</span>
+		<span class="list-4col">名称</span>
+		<span class="list-4col">描述</span>
+		<span class="list-4col">操作</span>
+	</div>
+	<ul class="list-content" id="js-usecase-list">	
+	<%var len = usecase?usecase.length: 0%>
+	<%for(var i = 0; i < len; i++){%>
+	<li uid=<%=usecase[i].id%>>
+	<span class="list-4col-index"><%=i+1%></span>
+	<a class="list-4col"><%=usecase[i].name%></a>
+	<span class="list-4col"><%=usecase[i].description%></span>
 	<button>删除</button>
 	</li>
 	<%}%>
 	</ul>
+	</div>	
 </article>
 </section>
 <%- include("./footer.ejs")%>
+<script type="text/javascript" src="/myAjax.js"></script>
+<script type="text/javascript" src="/usecases.js"></script>
 </body>
 </html>
