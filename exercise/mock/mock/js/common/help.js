@@ -13,9 +13,9 @@ exports.log = function(){
 }
 
 /**
-* 将json的请求和返回转换为包含日期的字符串，并返回
+* 将http的请求和返回json对象转换为包含日期的字符串，并返回
 */
-function transformJSON(json, type){
+function httpToStr(json, type){
 	var date = new Date();
 	var data;
 	if(!type)
@@ -24,11 +24,18 @@ function transformJSON(json, type){
 		data = `${date.toLocaleString()} | 返回信息如下\r\n返回头：${JSON.stringify(json.headers)}\r\n返回体：${JSON.stringify(json.body)}`;
 	return data;
 }
+/*
+把json对象转换成条件转换对对象
+ */
+function sqlToStr(json){
+
+}
+
 //这两个是服务端的日志，是用户访问记录
 //type=0: 请求  type=1：返回
 exports.serverLog = function(json, type){
 	console.log(json);
-	var data = transformJSON(json, type);
+	var data = httpToStr(json, type);
 	console.log(data);
 }
 
@@ -43,7 +50,7 @@ exports.serverLog = function(json, type){
 //将mock访问日志写到文件中
 exports.record = function(json, type){
 	var date = new Date();
-	var data = transformJSON(json, type);
+	var data = httpToStr(json, type);
 	var filePath = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ".txt";
 	writeToFile(filePath, data);
 }

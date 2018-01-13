@@ -110,7 +110,7 @@ function execute(sql, callback){
 	help.log("sql:", sql);
 	connection.query(sql, function(err, result){
 		//sql执行完成后，把执行的结果通过回调函数返回
-		help.log("execute result: ", result);
+		help.log("execute result: ", result.length);
 		callback(result);
 	});
 }

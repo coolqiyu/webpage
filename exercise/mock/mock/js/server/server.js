@@ -25,7 +25,6 @@ app.use(session({
     logPos: 0//日志的位置，用来记录用户的请求日志的起始位置，这样就不用每次把这个数据发送给客户端，再由客户端进行返回
     //如果改成服务端自动发送？但是这样就会比较麻烦
 }));
-
 // app.all("/channel_sys_user/getToken", function(req, res){
 // 	console.log("/////");
 // 	res.status(200)
@@ -554,205 +553,427 @@ app.get("/favicon.ico", function(req, res){
 })
 
 //拦截所有想要mock的请求
-app.all("/\*", function(req, res){
-	res.clearCookie('testapp');
-	console.log("****");
-	help.record(req, 0);
-	//return;
-	//从流中找是否已经有记录
-	db.select("flow", "", `host='${req.hostname}' and step <> -1 and interface in (select id from interface where path like '${req.path}%')`, function(flow){
-		console.log("flow: ", flow);
-		if(flow.length > 0){//flow表中找到相应记录
-			//取出记录中当前步进行比较
-			flow = flow[0];//应该只有一条满足条件的流水记录
-			var stepIds = flow.step.split(",");//记录中保存的步骤
-			//取出第一步的信息
-			db.select("step", "", `id=${stepIds[0]}`, function(firstStep){
-				firstStep = firstStep[0];
-				console.log(firstStep);
-				var expectedHeader = JSON.parse(firstStep.request_header);
+// app.all("/\*", function(req, res){
+// 	res.clearCookie('testapp');
+// 	console.log("****");
+// 	help.record(req, 0);
+// 	//return;
+// 	//从流中找是否已经有记录
+// 	db.select("flow", "", `host='${req.hostname}' and step <> -1 and interface in (select id from interface where path like '${req.path}%')`, function(flow){
+// 		console.log("flow: ", flow);
+// 		if(flow.length > 0){//flow表中找到相应记录
+// 			//取出记录中当前步进行比较
+// 			flow = flow[0];//应该只有一条满足条件的流水记录
+// 			var stepIds = flow.step.split(",");//记录中保存的步骤
+// 			//取出第一步的信息
+// 			db.select("step", "", `id=${stepIds[0]}`, function(firstStep){
+// 				firstStep = firstStep[0];
+// 				console.log(firstStep);
+// 				var expectedHeader = JSON.parse(firstStep.request_header);
 				
-				var success = true;//是否匹配一致成功
-				for(var key in expectedHeader){
-					if(expectedHeader[key] !== req.get(key)){
-						console.log("expectedHeader: ", expectedHeader[key]);
-						success = false;
-						break;
-					}
-				}
-				if(success && firstStep.request_body){
-					var expectedBody = JSON.parse(firstStep.request_body);
-					for(var key in expectedBody){
-						if(expectedBody[key] !== req.body[key]){
-							success = false;
-							break;
-						}
-					}
-				}
+// 				var success = true;//是否匹配一致成功
+// 				for(var key in expectedHeader){
+// 					if(expectedHeader[key] !== req.get(key)){
+// 						console.log("expectedHeader: ", expectedHeader[key]);
+// 						success = false;
+// 						break;
+// 					}
+// 				}
+// 				if(success && firstStep.request_body){
+// 					var expectedBody = JSON.parse(firstStep.request_body);
+// 					for(var key in expectedBody){
+// 						if(expectedBody[key] !== req.body[key]){
+// 							success = false;
+// 							break;
+// 						}
+// 					}
+// 				}
 					
-				if(success){//和当前接口参数匹配一致，则把成功的step信息返回出去
-					// res.set(JSON.parse(firstStep.response_header));
-					// res.set({"Cache-Control":"no-store"});
-					// console.log("header的结果是什么东西？？", step.response_header);
-					// //res.status(firstStep.response_code);
-					// res.status(200);
-					// res.send(JSON.parse(firstStep.response_body));
-					// console.log("匹配成功啦啦")
-					// res.end();
-					res.status(firstStep.response_code);
-					res.set({"Cache-Control":"no-store",
-							"Content-Type":"application/json"
-					});	
-					res.set(JSON.parse(firstStep.response_header));				
-					res.json(JSON.parse(firstStep.response_body));
-					res.end();
+// 				if(success){//和当前接口参数匹配一致，则把成功的step信息返回出去
+// 					// res.set(JSON.parse(firstStep.response_header));
+// 					// res.set({"Cache-Control":"no-store"});
+// 					// console.log("header的结果是什么东西？？", step.response_header);
+// 					// //res.status(firstStep.response_code);
+// 					// res.status(200);
+// 					// res.send(JSON.parse(firstStep.response_body));
+// 					// console.log("匹配成功啦啦")
+// 					// res.end();
+// 					res.status(firstStep.response_code);
+// 					res.set({"Cache-Control":"no-store",
+// 							"Content-Type":"application/json"
+// 					});	
+// 					res.set(JSON.parse(firstStep.response_header));				
+// 					res.json(JSON.parse(firstStep.response_body));
+// 					res.end();
 				
 
-					//更新当前flow记录的数据
-					stepIds.shift();
-					if(stepIds.length === 0)//没有下一步了
-						stepIds.push(-1);
-					db.update("flow", `step='${stepIds.toString()}'`, `id=${flow.id}`, (result)=>{
-						console.log("update finish");
-					});///////////////////
-					return;
-				}
-			});
-			//如果匹配不成功，则什么也不做
-			console.log("没有匹配成功");
-		}
-		else{//没有在flow表中找到相应的步骤，则去interface表中查找
-			db.select("interface", "", `path like '${req.path}%' and method='${req.method}' and status <> 0`, function(interfaces){
-				var len = interfaces.length;
+// 					//更新当前flow记录的数据
+// 					stepIds.shift();
+// 					if(stepIds.length === 0)//没有下一步了
+// 						stepIds.push(-1);
+// 					db.update("flow", `step='${stepIds.toString()}'`, `id=${flow.id}`, (result)=>{
+// 						console.log("update finish");
+// 					});///////////////////
+// 					return;
+// 				}
+// 			});
+// 			//如果匹配不成功，则什么也不做
+// 			console.log("没有匹配成功");
+// 		}
+// 		else{//没有在flow表中找到相应的步骤，则去interface表中查找
+// 			db.select("interface", "", `path like '${req.path}%' and method='${req.method}' and status <> 0`, function(interfaces){
+// 				var len = interfaces.length;
 
-				if(len === 0){//没有这个接口mock信息
-					//可以直接报错
-					return;
-				}
+// 				if(len === 0){//没有这个接口mock信息
+// 					//可以直接报错
+// 					return;
+// 				}
 
-				//找到接口的mock信息，把找到的每一个与当前的请求进行比较
-				//是否要进行下一个循环，是取决于上一个数据库查询的结果
-				var interface = interfaces[0];
-				!function recursive(){
-					if(interface.status === 2){//这个接口是mock所有的
-						db.select("step", "", `interface=${interface.id}`, (steps)=>{
-							var firstStep = steps[0];
-							//为当前的host和path在flow表中插入一条新的数据
-							var stepIds = [];
-							for(var i = 1, len = steps.length; i < len; i++){
-								stepIds.push(steps[i].id);
-							}
-							stepIds = stepIds.toString();
-							//如果只有一步的话，stepIds就会为空，不插入
-							if(!!stepIds){
-								db.insert("flow", `'${req.hostname}', ${interface.id}, '${stepIds}'`, 1, function(){});
-							}							
+// 				//找到接口的mock信息，把找到的每一个与当前的请求进行比较
+// 				//是否要进行下一个循环，是取决于上一个数据库查询的结果
+// 				var interface = interfaces[0];
+// 				!function recursive(){
+// 					if(interface.status === 2){//这个接口是mock所有的
+// 						db.select("step", "", `interface=${interface.id}`, (steps)=>{
+// 							var firstStep = steps[0];
+// 							//为当前的host和path在flow表中插入一条新的数据
+// 							var stepIds = [];
+// 							for(var i = 1, len = steps.length; i < len; i++){
+// 								stepIds.push(steps[i].id);
+// 							}
+// 							stepIds = stepIds.toString();
+// 							//如果只有一步的话，stepIds就会为空，不插入
+// 							if(!!stepIds){
+// 								db.insert("flow", `'${req.hostname}', ${interface.id}, '${stepIds}'`, 1, function(){});
+// 							}							
 							
-							//取出接口执行的第一步，把相应数据返回
-							//res.status(firstStep.response_code);
-							// res.status(200);
-							// res.set(JSON.parse(firstStep.response_header));
-							// res.set({"Cache-Control":"no-store"});
-							// res.send(JSON.parse(firstStep.response_body));
-							// res.end();
-							res.status(firstStep.response_code);
-							res.set(JSON.parse(firstStep.response_header));
-							res.set({"Cache-Control":"no-store",
-							"Content-Type":"application/json"
-							});					
-							res.json(JSON.parse(firstStep.response_body));
-							res.end();
-						})						
+// 							//取出接口执行的第一步，把相应数据返回
+// 							//res.status(firstStep.response_code);
+// 							// res.status(200);
+// 							// res.set(JSON.parse(firstStep.response_header));
+// 							// res.set({"Cache-Control":"no-store"});
+// 							// res.send(JSON.parse(firstStep.response_body));
+// 							// res.end();
+// 							res.status(firstStep.response_code);
+// 							res.set(JSON.parse(firstStep.response_header));
+// 							res.set({"Cache-Control":"no-store",
+// 							"Content-Type":"application/json"
+// 							});					
+// 							res.json(JSON.parse(firstStep.response_body));
+// 							res.end();
+// 						})						
+// 						return;
+// 					}
+// 					else{//只mock所有参数一致的						
+// 						db.select("step", "", `interface=${interface.id}`, (steps)=>{
+// 							var firstStep = steps[0];
+// 							var expectedHeader = JSON.parse(firstStep.request_header);
+							
+// 							var success = true;//是否匹配一致成功
+// 							for(var key in expectedHeader){
+// 								if(expectedHeader[key] !== req.get(key)){
+// 									console.log("头部比较： ", key, expectedHeader[key], req.get(key));
+// 									success = false;
+// 									break;
+// 								}
+// 							}
+// 							if(success && firstStep.request_body){
+// 								var expectedBody = JSON.parse(firstStep.request_body);
+// 								for(var key in expectedBody){
+// 									if(expectedBody[key] !== req.body[key]){
+// 										success = false;
+// 										break;
+// 									}
+// 								}
+// 							}
+								
+// 							if(success){//和当前接口参数匹配一致，则发送数据
+// 								//为当前的host和path在flow表中插入一条新的数据
+// 								var stepIds = [];
+// 								for(var i = 1, len = steps.length; i < len; i++){
+// 									stepIds.push(steps[i].id);
+// 								}
+// 								stepIds = stepIds.toString();
+// 								if(stepIds)
+// 									db.insert("flow", `'${req.hostname}', ${interface.id}, '${stepIds}'`, 1, function(){});
+								
+// 								//取出接口执行的第一步，把相应数据返回
+// 								//res.status(firstStep.response_code);
+// 								// res.status(200);
+// 								// res.set(JSON.parse(firstStep.response_header));
+// 								// res.set({"Cache-Control":"no-store"});
+// 								// res.send(JSON.parse(firstStep.response_body));
+// 								// res.end();
+// 								res.status(firstStep.response_code);
+// 								res.set(JSON.parse(firstStep.response_header));
+// 								res.set({"Cache-Control":"no-store",
+// 									"Content-Type":"application/json"
+// 								});					
+// 								res.json(JSON.parse(firstStep.response_body));
+// 								res.end();
+// 							}
+// 							else{//没有和当前接口参数匹配，再次调用该函数，执行下一次循环
+// 								if(i < len){
+// 									i++;
+// 									interface = interfaces[i];
+// 									recursive();
+// 								}
+// 								else{//没有找到相应的mock数据，但是有对应的接口，需要转发给真实的请求
+// 									db.select("project", "", `id=${interface.project}`, function(project){
+// 										//向某个host转发请求	
+// 										var hosts = project[0].real_host.split(":");			
+// 										var options = {
+// 											hostname: hosts[0],
+// 											port: (hosts.length > 1 ? hosts[1] : 80),
+// 											method: "get",
+// 											path: req.path,
+// 											headers: req.headers,
+// 										}										
+// 										var newReq = http.request(options, function(real_res){
+// 											real_res.on("data", function(chunk){
+// 												res.send(chunk);
+// 												res.end();
+// 											})
+// 											real_res.on("end", function(){
+// 												console.log("end");
+// 											})
+// 										});
+// 										newReq.write(querystring.stringify(req.body));
+// 										newReq.end();										
+// 									})
+// 									return;
+// 								}
+// 							}
+// 						})							
+// 					}
+// 				}();	
+// 			})
+// 		}
+// 	})
+// })
+ 
+//添加用例的使用， ${}作为占位
+app.all("/\*", function(req, res){
+	var dbSelectPromise = function(table, condition){
+		return new Promise((resolve, reject)=>{
+			db.select(table, "", condition, (result)=>{
+				if(result.length > 0){
+					resolve(result[0], '找到相应的result');
+				}
+				else{
+					reject('没有找到相应的结果');
+				}
+			})				
+		})
+	}
+	// var flowPromise = function(){
+	// 	console.log('flowPromise');
+	// 	return new Promise((resolve, reject)=>{
+	// 		db.select('flow', "", `clientip='${req.ip}' and step <> -1 and interface in (select id from interface where path like '${req.path}%')`, (flows)=>{
+	// 			if(flows.length > 0){
+	// 				resolve(flows[0], '找到相应的flow');
+	// 			}
+	// 			else{
+	// 				reject('没有找到相应的flow');
+	// 			}
+	// 		})				
+	// 	})
+	// };
+	/*
+	condition：查询条件字符串
+	 */
+	// var stepPromise = function(condition){
+	// 	return new Promise((resolve, reject)=>{
+	// 		db.select('step', "", condition, (steps)=>{
+	// 			//这里就不判断了
+	// 			if(steps.length > 0)
+	// 				resolve(steps[0], '匹配成功，发送数据');
+	// 			else{
+	// 				reject('找到flow但没有step，报404了');
+	// 			}
+	// 		})
+	// 	})
+	// };
+	// var usecasePromise = function(condition){
+	// 	return new Promise((resolve, reject)=>{
+	// 		if(!condition){
+	// 			resolve(undefined);
+	// 			return;
+	// 		}
+	// 		db.select('usecase', "", condition, (usecases)=>{
+	// 			if(usecases.length > 0)
+	// 				resolve(usecases);
+	// 			else
+	// 				reject('查询用例表出错了');
+	// 		})
+	// 	});
+	// };
+	//根据usecase把http请求/返回中动态变化的数据进行转化
+	//header, body, usecase都是字符串
+	var parseHttp = function(header, body, usecase){
+		//遍历usecase中的每一个k-v，并替换step中的值
+		if(usecase){
+			usecase = JSON.parse(usecase);
+			for(let key in usecase){
+				let re = new RegExp(`\\$${key}`, 'i');
+				header = header.replace(re, usecase[key]);
+				body = body.replace(re, usecase[key]);
+			}
+		}
+		return [header, body];
+	};
+	var httpRes = function(res, code, header, body){
+		res.status(code);
+		res.set(JSON.parse(header));
+		res.set({"Cache-Control":"no-store",
+			"Content-Type":"application/json"
+		});					
+		res.json(JSON.parse(body));
+		res.end();
+	}
+	/*
+	 source: 来源: flow或interface，对应操作不同
+	 condition: 查询条件，json对象
+	 usecases: step中非静态的数据需要从usecases中找出来并替换
+	 needCheck: 是否需要检查输入的参数
+	*/
+	var checkStep = function(source, condition, usecases, needCheck){
+		return dbSelectPromise('step', condition.step)
+		.then(//已经查出了step，也找出了usecase
+			function(data){//data是一个数组，包含两个promise的resolve参数
+				var step = data[0];
+				var usecaseLen = usecases.length;
+				for(let i = 0; i < usecaseLen; i++){
+					let usecase = usecases[i];
+					if(step.status === 2){//不用比较直接返回即可
+						resolve(['step', step, usecase]);
 						return;
 					}
-					else{//只mock所有参数一致的						
-						db.select("step", "", `interface=${interface.id}`, (steps)=>{
-							var firstStep = steps[0];
-							var expectedHeader = JSON.parse(firstStep.request_header);
-							
-							var success = true;//是否匹配一致成功
-							for(var key in expectedHeader){
-								if(expectedHeader[key] !== req.get(key)){
-									console.log("头部比较： ", key, expectedHeader[key], req.get(key));
-									success = false;
-									break;
-								}
+					else{//需要比较请求参数
+						step = JSON.parse(step);
+						[req.request_header, req.request_body] = parseHttp(req.request_header, req.request_body, usecase);
+						
+						//比较头部请求的参数
+						for(let key in step.request_header){
+							if(step.request_header[key] !== req.get(key)){
+								reject('头部信息没有匹配成功')
+								return;
 							}
-							if(success && firstStep.request_body){
-								var expectedBody = JSON.parse(firstStep.request_body);
-								for(var key in expectedBody){
-									if(expectedBody[key] !== req.body[key]){
-										success = false;
-										break;
-									}
-								}
+						}
+						//比较body请求的参数
+						for(let key in step.request_body){
+							if(step.request_body[key] !== req.body[key]){
+								reject('头部信息没有匹配成功')
+								return;
 							}
-								
-							if(success){//和当前接口参数匹配一致，则发送数据
-								//为当前的host和path在flow表中插入一条新的数据
-								var stepIds = [];
-								for(var i = 1, len = steps.length; i < len; i++){
-									stepIds.push(steps[i].id);
-								}
-								stepIds = stepIds.toString();
-								if(stepIds)
-									db.insert("flow", `'${req.hostname}', ${interface.id}, '${stepIds}'`, 1, function(){});
-								
-								//取出接口执行的第一步，把相应数据返回
-								//res.status(firstStep.response_code);
-								// res.status(200);
-								// res.set(JSON.parse(firstStep.response_header));
-								// res.set({"Cache-Control":"no-store"});
-								// res.send(JSON.parse(firstStep.response_body));
-								// res.end();
-								res.status(firstStep.response_code);
-								res.set(JSON.parse(firstStep.response_header));
-								res.set({"Cache-Control":"no-store",
-									"Content-Type":"application/json"
-								});					
-								res.json(JSON.parse(firstStep.response_body));
-								res.end();
-							}
-							else{//没有和当前接口参数匹配，再次调用该函数，执行下一次循环
-								if(i < len){
-									i++;
-									interface = interfaces[i];
-									recursive();
-								}
-								else{//没有找到相应的mock数据，但是有对应的接口，需要转发给真实的请求
-									db.select("project", "", `id=${interface.project}`, function(project){
-										//向某个host转发请求	
-										var hosts = project[0].real_host.split(":");			
-										var options = {
-											hostname: hosts[0],
-											port: (hosts.length > 1 ? hosts[1] : 80),
-											method: "get",
-											path: req.path,
-											headers: req.headers,
-										}										
-										var newReq = http.request(options, function(real_res){
-											real_res.on("data", function(chunk){
-												res.send(chunk);
-												res.end();
-											})
-											real_res.on("end", function(){
-												console.log("end");
-											})
-										});
-										newReq.write(querystring.stringify(req.body));
-										newReq.end();										
-									})
-									return;
-								}
-							}
-						})							
+						}
+						resolve(['step', JSON.stringify(step), JSON.stringify(usecase)]);
+						return;
 					}
-				}();	
-			})
+				}
+			}
+		)
+	}
+	// var findInterfacePromise = function(){
+	// 	return new Promise((resolve, reject)=>{
+	// 		db.select("interface", "", `path like '${req.path}%' and method='${req.method}' and status <> 0`, (interfaces)=>{
+	// 			if(interfaces.length)
+	// 				resolve(['interface', interfaces, '找到了一系列接口']);
+	// 			else{
+	// 				reject('没有找到接口，直接404吧');
+	// 			}
+	// 		})
+	// 	})
+	// };
+	//转发请求
+	var redirectReq = function(){	
+		dbSelectPromise('project', `id=${interface.project}`)
+		.then(function(projects){
+			//向某个host转发请求	
+			var hosts = projects[0].real_host.split(":");			
+			var options = {
+				hostname: hosts[0],
+				port: (hosts.length > 1 ? hosts[1] : 80),
+				method: "get",
+				path: req.path,
+				headers: req.headers,
+			}										
+			var newReq = http.request(options, function(real_res){
+				real_res.on("data", function(chunk){
+					res.send(chunk);
+					res.end();
+				})
+				real_res.on("end", function(){
+					console.log("end");
+				})
+			});
+			newReq.write(querystring.stringify(req.body));
+			newReq.end();										
+		})
+	}
+	var checkInterface = function(index, interfaces){
+		if(index === interfaces.length){//已经匹配到最后一个了，也没有找到
+			//去找project，进行转发请求
+			redirectReq();
+			return;
 		}
-	})
+		//根据接口寻找step，并判断是否匹配
+		var usecases = interfaces[index].usecase.split(",");
+		dbSelectPromise('usecase', `id in ${usecases}`)//找到所有用例
+		.then(
+			function(usecases){//这个step去和所有用例对象进行比较
+				return checkStep('interface', {step: `interface=${interfaces[index].id}`}, usecases);					
+			},
+			function(){
+				console.log('没有找到用例呀，继续下一个吧');
+				return new Promise(function(resolve, reject){reject()});
+			}
+		)
+		.then(
+			function(data){//说明都匹配成功了，可以结束了
+				//发送step的数据，成功了
+				var step = data[1];
+				var usecase = data[2];
+				[step.reponse_header, step.response_body] = parseHttp(step.response_header, step.response_body, usecase);
+				httpRes(res, step.response_code, header, body);
+			},
+			function(){//没有匹配成功，要再次执行
+				return checkInterface(index + 1, interfaces);
+			}
+		)
+		
+	}
+	
+	dbSelectPromise('flow', "", `clientip='${req.ip}' and step <> -1 and interface in (select id from interface where path like '${req.path}%')`)
+	.then(//找flow
+		function(flow){//成功则判断step
+			var stepId = flow.step.split(',')[0];
+			return checkStep('flow', {step: `id=${stepId}`, usecase: `id=${flow.usecase}`}, true);
+		},
+		function(){//不成功，则判断有没有接口
+			return dbSelectPromise("interface", "", `path like '${req.path}%' and method='${req.method}' and status <> 0`);
+		}
+	)
+	.then(//resovle的第一个值用来区分，是哪里来的resolve
+		function(data){
+			if(data[0] === 'step'){
+				//发送step的数据，成功了
+				var step = data[1];
+				var usecase = data[2];
+				[step.reponse_header, step.response_body] = parseHttp(step.response_header, step.response_body, usecase);
+				httpRes(res, step.response_code, header, body);
+			}
+			else{//是找到了一系列的接口了
+				//对这些接口进行遍历了
+				//data[1]: 找到的接口interfaces
+				checkInterface(0, data[1]);
+			}
+		},
+		function(data){//flow中找step和直接找接口都失败的话，都可以直接结束
+			res.status(404).end();
+		}
+	)	
 })
-
 /**
 * 调整：
 * - 需要把sql语句放到单独的文件中
