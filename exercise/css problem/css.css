@@ -438,22 +438,183 @@ input{
 #continue:checked ~ .pink-rect{
 	animation-play-state: running;
 }
-/*线性渐变（径向渐变）是不支持 animation 的，单色的 background 是支持的*/
+/*线性渐变（径向渐变）是不支持 animation 的*/
+/*单色的 background 是支持animation*/
+/*size: 设置背景比盒子大，同时利用position改变背景位置，以此形成渐变*/
 .gradient{
 	width: 100%;
 	height: 100px;
-	background: red;
-	/*background: linear-gradient(90deg, #ffc700 0%, #e91e1e 100%);
-*/	animation: gradient 2s infinite;
+	/*background: red;*/
+	background: linear-gradient(to right, red, orange, yellow, green, blue, purple);
+	background-size: 200% 100%;
+    background-repeat: no-repeat;
+	animation: gradient 5s infinite;
 }
 @keyframes gradient{
-	50%{
+	/*50%{
 		background: blue;
-	}
+	}*/
 	/*50%{
 		background: linear-gradient(90deg, #e91e1e 0%, #6f27b0 100%);
 	}*/
+	50%{
+		background-position: 50%;
+	}
 }
+
+.font{
+	font-size: 80px;
+}
+/*
+font-family定义顺序
+body {
+    font-family: tahoma, arial, 'Hiragino Sans GB', '\5b8b\4f53', sans-serif;
+}
+字体名称有空格时需要用引号
+使用 tahoma 作为首选的西文字体，小字号下结构清晰端整、阅读辨识容易；
+用户电脑未预装 tohoma，则选择 arial 作为替代的西文字体，覆盖 windows 和 MAC OS；
+Hiragino Sans GB 为冬青黑体，首选的中文字体，保证了 MAC 用户的观看体验；
+Windows 下没有预装冬青黑体，则使用 ‘\5b8b\4f53’ 宋体为替代的中文字体方案，小字号下有着不错的效果；
+最后使用无衬线系列字体 sans-serif 结尾，保证旧版本操作系统用户能选中一款电脑预装的无衬线字体，向下兼容。*/
+
+/*:root匹配html标签
+p:empty没有子元素（元素，文本）
+p:not(x) 排除x
+*/
+:root{
+	background: lightblue;
+}
+
+.pseudo span:empty{
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	background: #000;
+}
+.pseudo span:not(.not){
+	color: red;
+	font-size: 20px;
+}
+
+/*在一个标签内画一条斜线
+1. 用after画一条线，然后transform旋转
+2. 添加一个背景图片
+3. linear-gradient: 设置方向和透明度
+4. border画一个三角形, after和before重叠
+5. clip-path: polygon()画出一条线，并且用background进行直译;
+*/
+.diagonal div{
+	position: relative;
+	display: inline-block;
+	width: 100px;
+	height: 100px;
+	margin: 10px;
+	border: 1px solid #000;
+}
+.diagonal .after:after{
+	content: '';
+    display: block;
+    position: absolute;
+    width: 142px;
+    height: 1px;
+    background: #000;
+    transform-origin: top left;
+    transform: rotateZ(45deg);
+}
+.diagonal .background{
+	background:  linear-gradient(45deg, transparent 49.5%, deeppink 49.5%, deeppink 50.5%, transparent 50.5%);
+}
+.diagonal .triangle:before{
+	content: '';
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	border-width: 50px;
+    border-style: solid;
+    border-top-color: transparent;
+    border-bottom-color: blue;
+    border-left-color: blue;
+    border-right-color: transparent;
+}
+.diagonal .triangle:after{
+	content: '';
+    display: block;
+    position: absolute;
+    top: 2px;
+    left: 0;
+    border-width: 49px;
+    border-style: solid;
+    border-top-color: transparent;
+    border-bottom-color: lightblue;
+    border-left-color: lightblue;
+    border-right-color: transparent;
+}
+.clip-path:after{
+	content: "";
+	display: block;
+	width: 100%;
+	height: 100%;
+	clip-path: polygon(1px 0, 1px 1px, 99px 100px, 100px 100px);
+	background: red;
+}
+
+.tab>div{
+	width: 400px;
+	height: 300px;
+}
+.tab .list-head{
+	width: 400px;
+	font-size: 0;
+}
+.tab a{
+	display: inline-block;
+	width: 100px;
+	background: blue;
+	font-size: 14px;
+}
+/*css就近原则：后面的覆盖前面的*/
+/*#test-a:link{
+	background: red;
+}
+#test-a:visited{
+	background: purple;
+}
+#test-a:active{
+	background: green;
+}
+#test-a:hover{
+	background: blue;
+}*/
+
+.tab a:hover{
+	cursor: pointer;
+}
+/*.tab .list-head a:visited{
+	background: orange;
+}*/
+.list-body .list{
+	display: none;
+}
+.list-body .list:target{
+	display: block;
+	height: 60px;
+	background: lightgreen;
+}
+#list1:target~.list-head a:first-child{
+	background: red;
+}
+#list2:target~.list-head a:last-child{
+	background: red;
+}
+/*#list2:target{
+	display: block;
+}
+*/
+
+
+
+
 
 
 
