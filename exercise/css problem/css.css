@@ -1,4 +1,4 @@
-body, div, p{
+body, div, p, ul, li{
 	margin: 0;
 	padding: 0;
 }
@@ -559,19 +559,27 @@ p:not(x) 排除x
 	background: red;
 }
 
+/*
+CSS实现点击时进行tab切换
+1. a链接href实现# =>target
+2. label for属性,然后选中某个input:checked(radio, checkbox)
+3. 兄弟选择器~
+ */
+.tab{
+	font-size: 18px;
+}
 .tab>div{
-	width: 400px;
-	height: 300px;
+	display: inline-block;
+	width: 200px;
+	height: 100px;
 }
 .tab .list-head{
 	width: 400px;
-	font-size: 0;
 }
 .tab a{
 	display: inline-block;
 	width: 100px;
-	background: blue;
-	font-size: 14px;
+	background: #2196f3;
 }
 /*css就近原则：后面的覆盖前面的*/
 /*#test-a:link{
@@ -602,20 +610,65 @@ p:not(x) 排除x
 	background: lightgreen;
 }
 #list1:target~.list-head a:first-child{
-	background: red;
+	background: #fff;
 }
 #list2:target~.list-head a:last-child{
-	background: red;
+	background: #fff;
 }
 /*#list2:target{
 	display: block;
 }
 */
+.tab .list-item>div{
+	display: none;
+}
+.tab input{
+	display: none;
+}
+.label label{
+	background: #fff;
+}
+.tab #list2-1:checked~.label label:first-child{
+	background: #2196f3;
+}
+.tab #list2-2:checked~.label label:last-child{
+	background: #2196f3;
+}
+.tab #list2-1:checked~.list-item div:first-child{
+	display: block;
+	width: 100px;
+	height: 50xp;
+	background: #2196f3;
+}
+.tab #list2-2:checked~.list-item div:last-child{
+	display: block;
+	width: 100px;
+	height: 50xp;
+	background: #2196f3;
+}
 
-
-
-
-
+/*
+让表格中最外边格的边消失:
+margin取负数以及overflow:hidden
+ */
+.disapear-border{
+	margin-left: 20px;
+}
+.disapear-border ul{
+	width: 135px;
+	overflow: hidden;
+}
+.disapear-border ul li{
+	margin-left: -2px;
+	list-style: none;
+}
+.disapear-border span{
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	border-left: 1px solid blue;
+	text-align: center;
+}
 
 
 
