@@ -6,7 +6,100 @@
 </head>
 <body>
 	<script type="text/javascript">
-		
+		var startTime;
+		//一个简单promise
+		console.log('脚本最开始')
+		var promise = new Promise(function(resolve, reject){
+			console.log('这里创建promise，看到参数函数立即执行')
+			resolve('resolve');
+			console.log('resolve后的内容，这里还是会再执行');
+		})
+		promise.then(function(value){
+			console.log('直接接受promise：', value);
+		})
+		//状态变化
+		promise = new Promise(function(resolve, reject){
+			startTime = Date.now();
+			setTimeout(function(){
+				resolve('resolve');
+				reject('reject');
+			}, 3000);
+		})
+		console.log(Date.now() - startTime, ' promise当前状态：', promise);
+		var interval = setInterval(function(){
+			console.log(Date.now() - startTime, ' promise当前状态：', promise);
+		}, 1000);
+		setTimeout(function(){
+			clearInterval(interval);
+		}, 3000);
+		//then方法
+		promise.then(function(){
+			console.log('第一个resovle');
+		})
+		//这个变量在pending状态，我把它改了。还是对象的问题，只是引用！
+		//不能通过这个对象来直接决议
+		promise = new Promise(function(resolve, reject){
+			reject('reject');
+		})
+		promise.then(function(){
+			console.log('第二个resolve');
+		},
+		function(){
+			console.log('第二个reject');
+		})
+		//then注册回调函数
+		promise = new Promise((resolve, reject)=>{
+			resolve('resolve');
+		})
+		var p1 = promise.then(()=>{
+			console.log('第一个resolve then');
+		})
+		.then(function(){
+			console.log('第一个resolve then后继续执行then')
+		})
+		var p2 = promise.then(()=>{
+			console.log('第二个resolve then');
+		})
+		.then(()=>{
+			console.log('第二个resolve then后继续执行then');
+		})
+		console.log('promise和第一个then结果是否相同', promise === p1);		
+		console.log('promise注册的两个then结果是否相同：', promise === p1);
+		//catch
+		promise = new Promise((resolve, reject)=>{
+			throw new Error('promise error');
+		});
+		// promise.then(null, ()=>{
+		// 	console.log('故意throw Error，注册的reject回调');
+		// })
+		promise
+		.catch((err)=>{
+			console.log('故意throw Error catch error: ', err);
+			console.log(promise);
+		})
+		promise = new Promise((resolve, reject)=>{
+			resolve();
+			throw new Error('promise error');
+			console.log('抛出错误后的部分');
+		});
+		promise.then(()=>{
+			console.log('resolve后，throw Error，注册的resolve回调');
+		})		
+		.catch((err)=>{
+			console.log('resolve后，throw Error，注册的catch回调: ', err);
+			console.log(promise);
+		})
+		//catch中再抛错误
+		promise = new Promise((resolve, reject)=>{
+			throw new Error('第一次错误');
+		});
+		promise.catch((err)=>{
+			console.log('第一个catch: ', err);
+			throw new Error('第二次错误');
+		})		
+		.catch((err)=>{
+			console.log('第二个catch: ', err);
+		})
 	</script>
 </body>
 </html>

@@ -1,0 +1,4 @@
+教程地址：https://doc.react-china.org/docs/components-and-props.html
+1. render里html结构最外只能有一个，比如<div></div><div></div>这样就会报错，只能外面再包一层
+2. React.createClass()这个已经不再用了
+3. setState有问题
