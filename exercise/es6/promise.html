@@ -100,6 +100,77 @@
 		.catch((err)=>{
 			console.log('第二个catch: ', err);
 		})
+		
+		promise = new Promise((resolve, reject)=>{
+			throw new Error('catch前: 抛出错误')
+		})
+		promise.catch(err=>{
+			console.log('catch到抛出的错误: ', err);
+			//这个错误不能被catch到吗？？
+			throw new Error('catch后再抛出错误');
+		})
+		//promise.all
+		function tickPromise(index, t){
+			return new Promise((resolve, reject)=>{
+				setTimeout(function(){
+					resolve();
+					console.log('Promise.all 这是第' + index + '个promise');
+				}, t);
+			})
+		}
+		Promise.all([Promise.reject('reject'), tickPromise(1, 1000)])
+		.then(
+			function(){
+				console.log('Promise.all reject先执行完：resolve');
+			},
+			function(){
+				console.log('Promise.all reject先执行完：reject');
+			}
+		)
+		Promise.all([new Promise((resolve, reject)=>{
+			throw new Error('all中有一个抛出错误')
+		}), tickPromise(2, 2000)])
+		.then(
+			function(){
+				console.log('Promise.all all中有一个抛出错误：resolve');
+			},
+			function(){
+				console.log('Promise.all all中有一个抛出错误：reject');
+			}
+		)
+		tickPromise(3, 3000)
+		.then(function(){
+			console.log('promise all中一个promise的then函数');
+		})
+		Promise.all([new Error()])
+		.then(
+			function(){
+				console.log('new Error: resolve');
+			},
+			function(){
+				console.log('new Error: reject')
+			}
+		)
+		//Promise.resolve
+		console.log('Promise.resolve: 参数是rejected promise', Promise.resolve(Promise.reject()));
+		console.log('Promise.resolve: 参数是thenable对象', Promise.resolve({
+			then: function(resolve, reject){
+				console.log('Promise.resolve: thenable对象的then函数');
+				resolve();
+			}
+		}));
+		console.log('Promise.resolve: 参数只是个普通的对象或值', Promise.resolve('abc'));
+		//Promise.reject
+		console.log('Promise.reject: ', Promise.reject(Promise.resolve()));
 	</script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+

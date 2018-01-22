@@ -93,7 +93,7 @@ class RefComponent extends Component{
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick(){
-    //this.refs里面
+    //this.refs可以直接访问到添加了ref属性的组件
     this.refs.myInput.focus();
   }
   render(){

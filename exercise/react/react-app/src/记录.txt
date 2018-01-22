@@ -1,4 +1,6 @@
 教程地址：https://doc.react-china.org/docs/components-and-props.html
 1. render里html结构最外只能有一个，比如<div></div><div></div>这样就会报错，只能外面再包一层
 2. React.createClass()这个已经不再用了
-3. setState有问题
+3. manifest.json: Web应用程序清单在一个JSON文本文件中提供有关应用程序的信息（如名称，作者，图标和描述）。manifest 的目的是将Web应用程序安装到设备的主屏幕，为用户提供更快的访问和更丰富的体验
+https://developer.mozilla.org/zh-CN/docs/Web/Manifest
+4. react-scripts 模块: webpack配置

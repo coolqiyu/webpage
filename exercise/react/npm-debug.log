@@ -1,7 +1,6 @@
 0 info it worked if it ends with ok
 1 verbose cli [ 'D:\\node\\node.exe',
 1 verbose cli   'D:\\node\\node_modules\\npm\\bin\\npm-cli.js',
-1 verbose cli   'run',
 1 verbose cli   'start' ]
 2 info using npm@3.10.10
 3 info using node@v6.11.0
@@ -9,7 +8,7 @@
 4 verbose stack     at Error (native)
 5 verbose cwd E:\webpage\exercise\react
 6 error Windows_NT 6.1.7601
-7 error argv "D:\\node\\node.exe" "D:\\node\\node_modules\\npm\\bin\\npm-cli.js" "run" "start"
+7 error argv "D:\\node\\node.exe" "D:\\node\\node_modules\\npm\\bin\\npm-cli.js" "start"
 8 error node v6.11.0
 9 error npm  v3.10.10
 10 error path E:\webpage\exercise\package.json
