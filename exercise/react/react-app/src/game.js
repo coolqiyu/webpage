@@ -2,6 +2,27 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './game.css';
 
+function calculateWinner(squares){
+    //要判断哪些连线
+    const lines = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ];
+    const linesLen = lines.length;
+    for(let i = 0; i < linesLen; i++){
+        const [a, b, c] = lines[i];
+        //要加一个squares[a]，不然都是null也会通过
+        if(squares[a] && squares[a] === squares[b] && squares[b] === squares[c])
+            return squares[a];
+    }
+    return null;
+}
 class Square extends React.Component{
     constructor(){
         super();
@@ -29,14 +50,22 @@ class Square extends React.Component{
 class Board extends React.Component{
     constructor(){
         super();
-        this.state={
-            Squares: Array(9).fill(null)
+        this.state = {
+            Squares: Array(9).fill(null),
+            isXPlayer: true,
+            winner: null
         }
     }
     handleClick(i){
         const squares = this.state.Squares.slice();
-        squares[i] = 'X';
-        this.setState({Squares: squares});
+        let winner = null;
+        //已经有人获胜或者当前位置不为null，不能再设置
+        if(this.state.winner || squares[i]);
+        else{
+                squares[i] = this.state.isXPlayer ? 'X' : 'O';
+                winner = calculateWinner(squares);
+                this.setState({Squares: squares, isXPlayer: !this.state.isXPlayer, winner: winner});
+        }       
     }
     renderSquare(i){
         // 给Square传一个value属性，这里把父组件的state设置为子组件的属性
@@ -49,7 +78,12 @@ class Board extends React.Component{
         );
     }
     render(){
-        const status = "Nex player X";
+        let status;
+        if(this.state.winner)
+            status = "Winner player is " + this.state.winner;
+        else{
+            status = "Next player " + (this.state.isXPlayer ? 'X' : 'O');
+        }
         return (
             <div>
                 <div className="status">{status}</div>
