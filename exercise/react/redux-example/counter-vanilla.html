@@ -1,0 +1,76 @@
+<!DOCTYPE <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Redux basic example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
+</head>
+<body>
+    <div>
+        <p>
+            Clicked: <span id="value">0</span> times
+            <button id="increment">+</button>
+            <button id="decrement">-</button>
+            <button id="incrementIfOdd">Increment if odd</button>
+            <button id="incrementAsync">Increment async</button>
+        </p>
+    </div>
+    <script>
+        // 一个counter函数，以state和action为输入。counter是reducer吗？
+        function counter(state, action){
+            console.log("counter");
+            if(typeof state === 'undefined')
+                return 0;
+            switch(action.type){
+                case 'INCREMENT':
+                    return state + 1
+                case 'DECREMENT':
+                    return state - 1
+                default:
+                    return state
+            }
+        }
+        //创建一个store，并以上面的counter（reducer）为参数
+        console.log("create store");
+        //初始化：当 store 创建后，Redux 会 dispatch 一个 action 到 reducer 上，来用初始的 state 来填充 store
+        //所以下面这个创建后就会执行一次counter
+        var store = Redux.createStore(counter)
+        console.log("has create store");
+        var valueEl = document.getElementById('value')
+        function render(){
+            console.log("render");
+            //getState: 返回应用当前的state树
+            valueEl.innerHTML = store.getState().toString();
+        }
+        render()
+        //subscribe：添加一个变化监听器，当dispatch action时会执行回调用 函数
+        store.subscribe(render)
+        document.getElementById('increment')
+        .addEventListener('click', function(){
+            //dispatch分发action，以触发state变化
+            //参数是一个普通对象（action）
+            console.log("dispatch: INCREMENT")
+            store.dispatch({type: 'INCREMENT'})
+        })
+        document.getElementById('decrement')
+        .addEventListener('click', function(){
+            console.log("dispatch: DECREMENT")
+            store.dispatch({type: 'DECREMENT'})
+        })
+        document.getElementById('incrementIfOdd')
+        .addEventListener('click', function () {
+          if (store.getState() % 2 !== 0) {
+            store.dispatch({ type: 'INCREMENT' })
+          }
+        })
+      document.getElementById('incrementAsync')
+        .addEventListener('click', function () {
+          setTimeout(function () {
+            store.dispatch({ type: 'INCREMENT' })
+          }, 1000)
+        })
+    </script>
+</body>
+</html>
