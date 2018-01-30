@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>class</title>
+</head>
+<body>
+	<script type="text/javascript">
+	class Point{
+		constructor(x, y){
+			this.x = x;
+			this.y = y;
+		}
+		toString(){
+			this.z = 2;
+			return '(' + this.x + ',' + this.y + ')';
+		}
+	}
+	console.log('class Point类型：', typeof Point);
+	var point = new Point();
+	console.log('构造函数：', point.constructor);
+	console.log('两个constructor是否相等：', point.constructor === Point.prototype.constructor);
+	function FPoint(x, y){
+		this.x = x;
+		this.y = y;
+	}
+	var fpoint = new FPoint();
+	console.log("直接由函数定义的new出来的构造函数：", fpoint.constructor);
+	console.log("new Point的结果：", point);
+	console.log("point.prototype是什么：", Point.prototype)
+	
+
+	function Test(){}
+	Test.prototype.fun1 = function(){};
+	console.log('直接用function new 出来的prototype：', Object.keys(Test.prototype));//fun1
+	class noConstructor{
+
+	}
+	var noconstructor = new noConstructor();
+	console.log('隐式会添加一个constructor: ', noConstructor.prototype);
+	var p1 = new Point();
+	var p2 = new Point();
+	console.log("共享原型对象：", p1.__proto__ === p2.__proto__);
+	var pProto = Object.getPrototypeOf(point);
+	pProto.newAttr = 1;
+	console.log('getPrototypeOf在原型对象上添加一个属性：', p1.newAttr);
+	Point.prototype.newAttr2 = 2;
+	console.log('直接用Point.prototype添加一个属性：', p1.newAttr2);
+	var NewPoint = class{};
+	var newpoint = new NewPoint();
+	console.log('用class表达式定义后实例的一个对象：', newpoint);
+	console.log('class的name属性：', NewPoint.name);
+
+	var MyPoint2 = class p{};
+	//var mypoint = new p();//报错：p未定义，只能在类内部使用
+	var f = function f1(){}
+	//f1();
+
+	class StaticClass{
+		static constructor(){
+			this.x = 1;
+			console.log('在static中的this：', this);
+		}
+		constructor(){
+			this.x = 2;
+			console.log('在非static中的this：', this);
+		}
+	}
+	var staticObj = new StaticClass();
+	StaticClass.constructor();
+	console.log('实例对象：', staticObj);
+	//不能与类名相同
+	// class Point{
+	// 	//console.log(new.target);
+	// }
+	
+	function Point1(){
+		console.log("new.target结果：", new.target);
+	}
+	Point1();
+	var p = new Point1();
+
+	var targetClass = class me{
+		constructor(){
+			console.log('class中constructor里的new.target', new.target===targetClass);
+		}
+		print(){
+			console.log('class中print里的new.target', new.target);
+		}
+	}
+	var tclass = new targetClass();
+	tclass.print();
+	</script>
+</body>
+</html>
