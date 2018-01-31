@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>flex实例</title>
+    <style>
+        .container {
+            display: flex;
+            width: 500px;
+            height: 500px;
+            border: 1px solid #000;
+        }
+
+        .item {
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            background: rgb(248, 17, 17);
+            border: 2px solid rgb(22, 226, 22);
+            font-size: 30px;
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <div id="js-box" class="container">
+            <div class="row">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+        </div>
+        <div class="row">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+        </div>
+        </div>
+    </section>
+    <section>
+        <div>
+            <span>flex-direction子元素的方向</span>
+            <select id="js-flex-direction">
+                <option>row</option>
+                <option>row-reverse</option>
+                <option>column</option>
+                <option>column-reverse</option>
+            </select>
+        </div>
+        <div>
+            <span>主轴上子元素布局justify-content</span>
+            <select id="js-justify-content">
+                <option>baseline</option>
+                <option>center</option>
+                <option>end</option>
+                <option>flex-end</option>
+                <option>flex-start</option>
+                <option>left</option>
+                <option>right</option>
+                <option>space-around</option>
+                <option>space-between</option>
+                <option>space-evenly</option>
+                <option>start</option>
+                <option>stretch</option>
+                <option>unsafe</option>
+            </select>
+        </div>
+        <div>
+            <span>侧轴上子元素布局align-items</span>
+            <select id="js-align-items">
+                <option>baseline</option>
+                <option>center</option>
+                <option>end</option>
+                <option>flex-end</option>
+                <option>flex-start</option>
+                <option>left</option>
+                <option>right</option>
+                <option>self-end</option>
+                <option>self-start</option>
+                <option>start</option>
+                <option>stretch</option>
+                <option>unsafe</option>
+                <option>safe</option>
+            </select>
+        </div><div>
+                <span>主轴行布局align-content</span>
+                <select id="js-align-content">
+                    <option>baseline</option>
+                    <option>center</option>
+                    <option>end</option>
+                    <option>flex-end</option>
+                    <option>flex-start</option>
+                    <option>left</option>
+                    <option>right</option>
+                    <option>space-around</option>
+                    <option>space-between</option>
+                    <option>space-evenly</option>
+                    <option>start</option>
+                    <option>stretch</option>
+                    <option>unsafe</option>
+                </select>
+            </div>
+    </section>
+    <script>
+        var flexDirection = document.getElementById('js-flex-direction');
+        var flexBox = document.getElementById('js-box');
+        var justifyContent = document.getElementById('js-justify-content');
+        var alignItems = document.getElementById('js-align-items');
+        var alignContent = document.getElementById('js-align-content');
+
+        flexDirection.addEventListener('change', function () {
+            flexBox.style.flexDirection = flexDirection.selectedOptions[0].innerText;
+        })
+        justifyContent.addEventListener('change', function () {
+            flexBox.style.justifyContent = justifyContent.selectedOptions[0].innerText;
+        })
+        alignItems.addEventListener('change', function () {
+            flexBox.style.alignItems = alignItems.selectedOptions[0].innerText;
+        })
+        alignContent.addEventListener('change', function () {
+            flexBox.style.alignContent = alignContent.selectedOptions[0].innerText;
+        })
+    </script>
+</body>
+
+</html>
