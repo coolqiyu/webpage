@@ -32,18 +32,20 @@
 /*第二页是聊天部分*/
 .second-page .icon{
     display: inline-block;
-    width: 35px;
-    height: 35px;
+    background-repeat: no-repeat;
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
     /*怎么显示一个icon svg显示*/
     background-size: 100%;
+    align-items: center;
 }
 .second-page .back-icon{
     background-image: url('./icon/back.svg');
-    align-items: center;
 }
 .second-page .people-icon{
     background-image: url('./icon/people.svg');
-    align-items: center;
+    margin-right: 5px;
 }
 .second-page .voice-icon{
     background-image: url('./icon/voice.svg');
@@ -58,13 +60,19 @@
     position: fixed;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     top: 0;
     left: 0;
     width: 100%;
     height: 45px;
     background: #2b2b2b;
+    font-size: 15px;
     color: #fff;
 }
+.second-page header span{
+    vertical-align: middle;
+}
+
 /*新加一个类，这样可以更通用，而不是每次去改css样式*/
 .hide{
     display: none;
@@ -74,4 +82,85 @@
 .avatar{
     width: 40px;
     height: 40px;
+}
+.second-page footer{
+    position: fixed;
+    display: flex;
+    bottom: 0;
+    width: 100%;
+    height: 45px;
+    align-items: center;
+    justify-content: space-around;
+}
+main{
+    margin: 45px 0;
+    padding: 10px;
+}
+main .msg{
+    margin: 10px 0;
+    display: flex;
+}
+main .msg-left{
+    flex-direction: row;
+}
+main .msg-right{
+    flex-direction: row-reverse;
+}
+main .msg>i{    
+    height: 40px;
+    width: 40px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+main .msg-left>i{
+    background-image: url('./icon/girl.svg');
+}
+main .msg-right>i{
+    background-image: url('./icon/boy.svg');
+}
+main .msg>p{
+    position: relative;
+    min-width: 30%;
+    max-width: 70%;
+    border-radius: 5%;
+    padding: 5px;
+}
+main .msg-left>p{
+    margin-left: 15px;
+    background: #fff;
+}
+main .msg-left>p::before{
+    content: "";
+    position: absolute;
+    display: block;
+    top: 5px;
+    left: -5px;
+    transform: rotateZ(45deg);
+    z-index: -1;
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-radius: 30%;   
+}
+main .msg-right>p{
+    margin-right: 15px;
+    background: #55c75a;
+}
+main .msg-right>p::after{
+    content: "";
+    position: absolute;
+    display: block;
+    top: 5px;
+    right: -5px;
+    transform: rotateZ(45deg);
+    z-index: -1;
+    width: 10px;
+    height: 10px;
+    border-radius: 30%;  
+    background: #55c75a;
+}
+footer .input-msg{
+    display: inline-block;
+    height: 80%;
+    flex-grow: .9;
 }

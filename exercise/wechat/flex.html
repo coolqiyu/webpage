@@ -24,25 +24,27 @@
             text-align: center;
             vertical-align: middle;
         }
+        .hide{
+            display: none;
+        }
     </style>
 </head>
 
 <body>
     <section>
         <div id="js-box" class="container">
-            <div class="row">
             <div class="item">1</div>
             <div class="item">2</div>
             <div class="item">3</div>
             <div class="item">4</div>
+            <div class="item">5</div>
+            <div class="item">6</div>
+            <div class="item">7</div>
+            <div class="item">8</div>
         </div>
-        <div class="row">
-            <div class="item">1</div>
-            <div class="item">2</div>
-            <div class="item">3</div>
-            <div class="item">4</div>
-        </div>
-        </div>
+    </section>
+    <section>
+        展示<input id="js-child-count" type="text" name="" value="8">个子元素（最多8个）
     </section>
     <section>
         <div>
@@ -89,32 +91,69 @@
                 <option>unsafe</option>
                 <option>safe</option>
             </select>
-        </div><div>
-                <span>主轴行布局align-content</span>
-                <select id="js-align-content">
-                    <option>baseline</option>
-                    <option>center</option>
-                    <option>end</option>
-                    <option>flex-end</option>
-                    <option>flex-start</option>
-                    <option>left</option>
-                    <option>right</option>
-                    <option>space-around</option>
-                    <option>space-between</option>
-                    <option>space-evenly</option>
-                    <option>start</option>
-                    <option>stretch</option>
-                    <option>unsafe</option>
-                </select>
-            </div>
+        </div>
+        <div>
+            <span>主轴行布局align-content</span>
+            <select id="js-align-content">
+                <option>baseline</option>
+                <option>center</option>
+                <option>end</option>
+                <option>flex-end</option>
+                <option>flex-start</option>
+                <option>left</option>
+                <option>right</option>
+                <option>space-around</option>
+                <option>space-between</option>
+                <option>space-evenly</option>
+                <option>start</option>
+                <option>stretch</option>
+                <option>unsafe</option>
+            </select>
+        </div>
+        <div>
+            <span>是否换行flex-wrap</span>
+            <select id="js-flex-wrap">
+                <option>nowrap</option>
+                <option>wrap</option>
+                <option>wrap-reverse</option>
+            </select>
+        </div>
+        <div>
+        <span>设置某个元素的扩展大小(相对于剩余空间)</span>
+        选择第<input type="" name="" id="js-grow-index">个元素<br/>
+        值：<input type="" name="" id="js-grow-value">
+        <button id="js-grow-submit">确定</button>
+        </div>
+        <div>
+        <span>当超过容器大小时，设置某个元素的收缩大小(相对于超过的空间)</span>
+        选择第<input type="" name="" id="js-shrink-index">个元素<br/>
+        值：<input type="" name="" id="js-shrink-value">
+        <button id="js-shrink-submit">确定</button>
+        </div>
     </section>
     <script>
         var flexDirection = document.getElementById('js-flex-direction');
+        var childCount = document.getElementById('js-child-count');
         var flexBox = document.getElementById('js-box');
+        var flexItems = flexBox.children;
         var justifyContent = document.getElementById('js-justify-content');
         var alignItems = document.getElementById('js-align-items');
         var alignContent = document.getElementById('js-align-content');
-
+        var flexWrap = document.getElementById('js-flex-wrap');
+        var growIndex = document.getElementById('js-grow-index');
+        var growValue = document.getElementById('js-grow-value');
+        var growSubmit = document.getElementById('js-grow-submit');
+        var shrinkIndex = document.getElementById('js-shrink-index');
+        var shrinkValue = document.getElementById('js-shrink-value');
+        var shrinkSubmit = document.getElementById('js-shrink-submit');
+        childCount.addEventListener('change', function(){
+            var cnt = childCount.value;
+            var children = flexBox.children;
+            for(var i = 0; i < cnt; i++)
+                children[i].classList.remove('hide');
+            for(var i = cnt; i < 8; i++)
+                children[i].classList.add('hide');
+        })
         flexDirection.addEventListener('change', function () {
             flexBox.style.flexDirection = flexDirection.selectedOptions[0].innerText;
         })
@@ -126,6 +165,15 @@
         })
         alignContent.addEventListener('change', function () {
             flexBox.style.alignContent = alignContent.selectedOptions[0].innerText;
+        })
+        flexWrap.addEventListener('change', function () {
+            flexBox.style.flexWrap = flexWrap.selectedOptions[0].innerText;
+        })
+        growSubmit.addEventListener('click', function () {
+            flexItems[growIndex.value].style.flexGrow = growValue.value;
+        })
+        shrinkSubmit.addEventListener('click', function () {
+            flexItems[shrinkIndex.value].style.flexShrink = shrinkValue.value;
         })
     </script>
 </body>
