@@ -12,11 +12,11 @@
 </head>
 
 <body>
-    <section class="first-page hide">
+    <section id="js-first-page" class="first-page hide">
         <p class="greet">过年了，避免不了的家庭聚会中，久未见面的七大姑八大姨又出现了，想要和你“唠唠嗑”</p>
         <button class="btn" id="js-continue-btn">点击继续</button>
     </section>
-    <section class="second-page">
+    <section id="js-second-page" class="second-page">
         <header>
             <div class="left">
                 <i class="icon back-icon"></i>
@@ -26,23 +26,23 @@
             <i class="icon people-icon"></i>
         </header>
         <main>
-            <div class="msg-left msg">
-                <i></i><p>你好呀</p>
-            </div>
-             <div class="msg-right msg">
-                <i></i><p>你好呀</p>
-            </div>
         </main>
         <footer>
             <i class="icon voice-icon"></i>
             <input class="input-msg" type="text" />
             <i class="icon smile-icon"></i>
             <i class="icon add-icon"></i>
-        </footer>
-        <div></div>
+        </footer>           
+        <div class="answer-list" id="js-answer"></div>
+        <div id="js-result" class="result">
+        <p id="js-tip">43545464</p>
+        <div class="tips-icon">
+        <i class="icon replay-icon"></i><i class="icon share-icon"></i>
+        </div>
+        </div>
     </section>
 </body>
-
+<script type="text/javascript" src="./index.js"></script>
 </html>
 
 
@@ -54,4 +54,13 @@
 4. icon库
 http://www.iconfont.cn/search/index?q=add
 5. 一个量图工具http://www.getmarkman.com/
+6. 第二个页面中增加聊天内容，然后元素里面又包含了类，这种应该怎么做？
+- 1. 弄一个child元素，然后直接clone
+- 2. 用innerHTML添加（这种的话，和页面样式还是有关联，个人感觉不是很好）
+- 3.视频中的方法：给一个template str，然后根据该str生成dom节点并插入
+7. footer要固定在最底下，然后还要上移，这个上移的大小需要由js来控制，如果在js中写死的话，不太好
+- 写一个样式类，然后修改类就好了吧，我觉得所有调整样式的方式都可以用这种方法来避免在js中写死值
+8. 视频：把所有事件绑定操作放在一个函数
+9. 事件委托中，用event.currentTarget和event.target来分别表示事件绑定的目标和事件触发的对象
+这样来层层向上parentNode，直到找到绑定的目标对象
 -->

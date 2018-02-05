@@ -15,8 +15,6 @@
         }
 
         .item {
-            width: 100px;
-            height: 100px;
             line-height: 100px;
             background: rgb(248, 17, 17);
             border: 2px solid rgb(22, 226, 22);
@@ -43,10 +41,14 @@
             <div class="item">8</div>
         </div>
     </section>
-    <section>
+    <div>
         展示<input id="js-child-count" type="text" name="" value="8">个子元素（最多8个）
-    </section>
+    </div>
     <section>
+    <div>
+    子元素宽度：<input id="js-width" type="text" name="">px
+    子元素高度：<input id="js-height" type="text" name="">px
+    </div>
         <div>
             <span>flex-direction子元素的方向</span>
             <select id="js-flex-direction">
@@ -133,6 +135,8 @@
     </section>
     <script>
         var flexDirection = document.getElementById('js-flex-direction');
+        var itemWidth = document.getElementById('js-width');
+        var itemHeight = document.getElementById('js-height');
         var childCount = document.getElementById('js-child-count');
         var flexBox = document.getElementById('js-box');
         var flexItems = flexBox.children;
@@ -153,6 +157,22 @@
                 children[i].classList.remove('hide');
             for(var i = cnt; i < 8; i++)
                 children[i].classList.add('hide');
+        })
+        itemWidth.addEventListener('change', function(){
+            var width = itemWidth.value;
+            if(width <= 0)
+                return;
+            Array.prototype.forEach.call(flexItems, function(item){
+                item.style.width = width + 'px';
+            })
+        })
+        itemHeight.addEventListener('change', function(){
+            var height = itemHeight.value;
+            if(height <= 0)
+                return;
+            Array.prototype.forEach.call(flexItems, function(item){
+                item.style.height = height + 'px';
+            })
         })
         flexDirection.addEventListener('change', function () {
             flexBox.style.flexDirection = flexDirection.selectedOptions[0].innerText;
