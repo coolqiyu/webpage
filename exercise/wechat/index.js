@@ -62,12 +62,19 @@ function setQuestion(){
 }
 
 answerDiv.addEventListener('click', function(e){
-	if(e.target.hasAttribute('data-score')){
-		score += Number(e.target.getAttribute('data-score'));
-		answerDiv.innerHTML = '';
-		main.appendChild(str2DOM(`<div class="msg-right msg"><i></i><p>${e.target.innerText}</p></div>`));
-		toggleClass();
-		nextQuestion(1000);
+	let target = e.target;
+	let currentTarget = e.currentTarget;
+	while(target !== currentTarget){
+		if(target.hasAttribute('data-score')){
+			score += Number(e.target.getAttribute('data-score'));
+			answerDiv.innerHTML = '';
+			main.appendChild(str2DOM(`<div class="msg-right msg"><i></i><p>${e.target.innerText}</p></div>`));
+			toggleClass();
+			nextQuestion(1000);
+			return;
+		}
+		else
+			target = target.parentNode;
 	}
 })
 
@@ -102,6 +109,7 @@ function endGame(){
 			main.appendChild(str2DOM(`<div class="msg-left msg"><i></i><p>${item.msg}</p></div>`));
 			resultDiv.style.display = 'flex';
 			document.getElementById('js-tip').innerHTML = `<p>${item.msg}</p>`;
+			document.body.appendChild(str2DOM(`<div class=modal></div>`));
 			return false;
 		}
 		return true;

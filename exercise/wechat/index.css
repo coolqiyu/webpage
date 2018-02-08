@@ -200,6 +200,7 @@ footer .input-msg{
 .result{
     display: none;
     position: absolute;
+    z-index: 100;
     align-self: center;
     top: 50%;
     transform: translateY(-50%);
@@ -221,4 +222,13 @@ footer .input-msg{
 }
 .share-icon{
     background-image: url('./icon/share.svg');
+}
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #000;
+    opacity: .5;
 }

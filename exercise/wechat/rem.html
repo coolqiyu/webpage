@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=2, user-scalable=no">
+	<!-- width改变layout viewport -->
+	<title>rem布局</title>
+	<style type="text/css">
+	body, div{
+		margin: 0;
+		padding: 0;
+	}
+	div{
+		box-sizing: border-box;
+	}
+	.iphone5{
+		width: 320px;
+	    height: 320px;
+	    background: linear-gradient(to right, rgba(54, 226, 248, 0.5) 95%, rgba(0, 0, 0, 0) 5%), linear-gradient(to bottom, rgba(54, 226, 248, 0.5) 95%, rgba(0, 0, 0, 0) 5%);
+	   /* background: linear-gradient(red, yellow 10%, green 20%);*/
+	    background-size: 10%;
+	    background-repeat: repeat;
+	}
+	</style>
+</head>
+<body>
+	<div class="iphone5"></div>
+</body>
+</html>
+<!-- 
+px: css逻辑像素，浏览器使用
+dp, pt: 物理像素，这个是固定不变的
+dpr: 1px = (dpr)^2 * dp
+
+iphone5像素640*1136, dpr=2
+=>640dp*1136dp = 320px*568px 
+
+dpi: 打印机每英寸可喷的墨汁点
+ppi: 屏幕每英寸的像素数量，即单位英寸内的像素密度
+-->
