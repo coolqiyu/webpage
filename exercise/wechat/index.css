@@ -1,3 +1,38 @@
+.category-page, .first-page, .second-page{
+    display: none;
+}
+[page-type='category']
+.category-page{
+    display: flex;
+}
+[page-type='introduction']
+.first-page{
+    display: flex;
+}
+[page-type='chat']
+.second-page{
+    display: flex;
+}
+.category-page{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.category-page .js-category{
+    width: 80%;
+    height: 18%;
+    background: #E91E63;
+    border-radius: 10px;
+    font-size: 40px;
+    color: aliceblue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 /*第一页的欢迎内容*/
 .first-page{
     /*充满整个页面法一*/
@@ -12,7 +47,6 @@
     left: 0;
     width: 100%;
     height: 100%;
-    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -31,7 +65,6 @@
 }
 /*第二页是聊天部分*/
 .second-page{
-    display: flex;
     flex-direction: column;
 }
 .second-page .icon{
@@ -97,12 +130,12 @@ main{
     overflow: scroll;
 }
 .show-selector main{
-    margin-bottom: 200px;
+    margin-bottom: 155px;
 }
 .msg{
     margin: 10px 0;
     display: flex;
-    align-items: center;
+    align-items: start;
 }
 .msg-left{
     flex-direction: row;
@@ -124,9 +157,9 @@ main{
 }
 .msg>p{
     position: relative;
-    max-width: 70%;
     border-radius: 5%;
     padding: 5px;
+    max-width: 70%;
 }
 .msg-left>p{
     margin-left: 15px;
@@ -147,7 +180,7 @@ main{
 }
 .msg-right>p{
     margin-right: 15px;
-    background: #55c75a;
+    background: #37cc3d;
 }
 .msg-right>p::after{
     content: "";
@@ -160,7 +193,7 @@ main{
     width: 10px;
     height: 10px;
     border-radius: 30%;  
-    background: #55c75a;
+    background: #37cc3d;
 }
 .second-page footer{
     position: fixed;
@@ -188,14 +221,20 @@ footer .input-msg{
     width: 100%;
     height: 0;
     bottom: 0;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     background: #fff;
     transition: height .3s;
 }
+.answer-list .msg{
+    width: 100%;
+    justify-content: center;
+}
 .show-selector .answer-list{
     height: 155px;
+    overflow: scroll;
 }
 .result{
     display: none;
@@ -208,10 +247,13 @@ footer .input-msg{
     height: 20%;
     padding: 10px;
     flex-direction: column;
-    justify-content: center;  
+    justify-content: space-evenly;  
     align-items: center;  
     border-radius: 10px;
     background: #fff;
+}
+.result:hover .close-icon{
+    display: block;
 }
 .tips-icon{
     display: flex;
@@ -222,6 +264,15 @@ footer .input-msg{
 }
 .share-icon{
     background-image: url('./icon/share.svg');
+}
+.second-page .close-icon{
+    display: none;
+    position: absolute;
+    top: 5px;
+    right: 5px;    
+    width: 15px;
+    height: 15px;
+    background-image: url('./icon/close.svg');
 }
 .modal{
     position: fixed;

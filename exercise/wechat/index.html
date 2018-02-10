@@ -11,18 +11,20 @@
     <title>微信聊天</title>
 </head>
 
-<body>
-    <section id="js-first-page" class="first-page hide">
-        <p class="greet">过年了，避免不了的家庭聚会中，久未见面的七大姑八大姨又出现了，想要和你“唠唠嗑”</p>
+<body page-type='category'>
+    <section id="js-category-page" class="category-page">
+    </section>
+    <section id="js-first-page" class="first-page">
+        <p id='js-greet' class="greet"></p>
         <button class="btn" id="js-continue-btn">点击继续</button>
     </section>
     <section id="js-second-page" class="second-page">
         <header>
             <div class="left">
-                <i class="icon back-icon"></i>
+                <i id="js-back" class="icon back-icon"></i>
                 <span>微信</span>
             </div>
-            <h1>大姑妈</h1>
+            <h1 id="js-host"></h1>
             <i class="icon people-icon"></i>
         </header>
         <main>
@@ -35,13 +37,16 @@
         </footer>           
         <div class="answer-list" id="js-answer"></div>
         <div id="js-result" class="result">
-        <p id="js-tip">43545464</p>
+        <i id="js-close" class="icon close-icon"></i>
+        <p id="js-tip"></p>
         <div class="tips-icon">
-        <i class="icon replay-icon"></i><i class="icon share-icon"></i>
+        <i id="js-replay" class="icon replay-icon"></i><i class="icon share-icon"></i>
         </div>
         </div>
+        <div id="js-modal" class='modal hide'></div>
     </section>
 </body>
+<script type="text/javascript" src="./config.js"></script>
 <script type="text/javascript" src="./index.js"></script>
 </html>
 
@@ -63,4 +68,5 @@ http://www.iconfont.cn/search/index?q=add
 8. 视频：把所有事件绑定操作放在一个函数
 9. 事件委托中，用event.currentTarget和event.target来分别表示事件绑定的目标和事件触发的对象
 这样来层层向上parentNode，直到找到绑定的目标对象
+10. 总是滚动到最底下
 -->
