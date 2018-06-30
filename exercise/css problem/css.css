@@ -669,7 +669,37 @@ margin取负数以及overflow:hidden
 	border-left: 1px solid blue;
 	text-align: center;
 }
-
-
-
-
+/*
+元素平均分配
+1. flex
+2. text-align内联元素如何在它的父元素中布局
+justified：文本的左右边放置到line盒子的左右边，除了最后一行（添加text-align-last或者加一个伪元素）
+注：需要在html中每一个元素后加一个空格或换行
+*/
+.average .row{
+	background: pink;
+	width: 300px;
+	height: 20px;
+}
+.average .flex{
+	display: flex;
+	justify-content: space-between;
+}
+.average .row span{
+	display: inline-block;
+	height: 100%;
+	width: 20px;
+	border-radius: 100%;
+	background: grey;
+	text-align: center;
+}
+.average .text-align{
+	text-align: justify;
+	/*text-align-last: justify;*/
+}
+.average .text-align::after{
+	content: '';
+	display: inline-block;
+	position: relative;
+	width: 100%;
+}

@@ -39,6 +39,7 @@ function getList(){
 /*
 何时添加图片？
 1. 文档高度 = 滚动条隐藏的高度 + 可视区的高度
+2. 当达到
 */
 var docH, scrollH = 0, viewH = window.innerHeight;
 document.onmousewheel = function(e){

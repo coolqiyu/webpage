@@ -195,6 +195,7 @@ app.route('/next_route')
  */
 //路由级，需要再使用app.use(router)
 //这个和app.route()是不是一样的？
+//router对象是独立的中间件，可以看作是一个mini应用
 var router = express.Router();
 router.use('/router', function(req, res, next){
 	console.log('router.use');

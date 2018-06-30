@@ -4,9 +4,17 @@
 	<meta charset="UTF-8">
 	<title>小球碰撞</title>
 	<style type="text/css">
+		body{
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+			background-color: #000;
+		}
 		div{
 			width: 50px;
 			height: 50px;
+			opacity: 0;
+			transition: opacity 2s;
 			position: absolute;
 			border-radius: 25px;
 		}
@@ -14,48 +22,98 @@
 </head>
 <body>
 	<script type="text/javascript">
-		var balls = [];
-		var ballCnt = 0;
+	var balls = [];
+	var cordinates = [];
+	var ballCnt = 0, maxBallCnt = 3;
+	var winWidth = window.innerWidth;
+	var winHeight = window.innerHeight;
+	var d = 100;//球的直径
+	var maxLeft = winWidth - d, maxTop = winHeight - d, maxSpeed = 8;
 	//在(x, y)位置生成一个小球
 	function createBall(obj, x, y){
-		obj.style.backgroundColor = "#000";
+		obj.style.backgroundColor = random_color();
 		//碰撞时在碰撞的位置生成一个新的小球
 		obj.style.left = x + 'px';
 		obj.style.top = y + 'px';
+		obj.cordinate = [x + d / 2,y + d / 2];
 		//小球的移动速度
-		obj.speedX = Math.random() * 10;
-		obj.speedY = Math.random() * 10;
+		obj.speedX = random_num(0, maxSpeed);
+		obj.speedY = random_num(0, maxSpeed);
 	}
 	var interval = setInterval(function(){
 		//添加小球
-		if(ballCnt < 30){
+		if(ballCnt < maxBallCnt){
 			//new的对象怎么和元素变成同一个？
 			var ball = document.createElement('div');
-			createBall(ball, Math.random() * 800, Math.random() * 500);
+			createBall(ball, random_num(0, maxLeft), random_num(0, maxTop));
 			balls.push(ball);
+			cordinates.push(ball.cordinate);
 			document.body.appendChild(ball);
+			setTimeout(function(){				
+				ball.style.opacity = '1';
+			}, 500);
 		}
 		else
-			cancelInterval(interval);
+			clearInterval(interval);
 	}, 2000);
-	setInterval(function(){
+	setInterval(function(){		
 		ballCnt = balls.length;
+		//移动每个小球
 		for(var i = 0; i < ballCnt; i++){
 			move(balls[i]);
-		}
-		//移动每个小球
+			cordinates[i][0] = parseFloat(balls[i].style.left) + d / 2;	
+			cordinates[i][1] = parseFloat(balls[i].style.top) + d / 2;
+		}		
+		//检测碰撞
+		checkCollid();
 	}, 1000/60);
 	function move(obj){
 		var top = parseFloat(getComputedStyle(obj).top) + obj.speedY;
 		var left = parseFloat(getComputedStyle(obj).left) + obj.speedX;
-		if(top > 800 || top < 0){
+		var flag = false;//是否碰撞
+		if(top > maxTop || top < 0){
+			top = (top < 0) ? 0 : maxTop;
 			obj.speedY = (-obj.speedY);
+			flag = true;
 		}
-		if(left > 500 || left < 0){
+		if(left > maxLeft || left < 0){
+			left = (left < 0) ? 0 : maxLeft;
 			obj.speedX = (-obj.speedX);
+			flag = true;
 		}
 		obj.style.top =  top + 'px';
 		obj.style.left = left + 'px';
+		if(flag)
+		obj.style.backgroundColor = random_color();
+	}
+	//检测球间是否碰撞
+	function checkCollid(){
+		cordinates.sort(function(a, b){
+			return a[0] > b[0];
+		});
+		for(var i = 0; i < ballCnt - 1; i++){
+			for(var j = i + 1; j < ballCnt; j++){
+				if(Math.abs(cordinates[i][0] - cordinates[j][0]) > d)
+					break;
+
+				//水平方向间距小于直径，检查垂直方向是否小于直径
+				if(Math.abs(cordinates[i][1] - cordinates[j][1]) <= d){
+					reverse(balls[i], balls[j]);
+					console.log('kkkk');
+				}
+			}
+		}
+	}
+	function random_num(min, max){
+		return Math.random() * (max - min) + min;
+	}
+	function reverse(obj){
+		// obj.speedX = (-obj.speedX);
+		// obj.speedY = (-obj.speedY);
+		obj.backgroundColor = random_color();
+	}
+	function random_color(){
+		return 'rgb(' + Math.floor(random_num(0, 256)) + ',' + Math.floor(random_num(0, 256)) + ',' + Math.floor(random_num(0, 256)) + ')';
 	}
 </script>
 </body>

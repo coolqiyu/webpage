@@ -52,6 +52,8 @@
 	<div id="gradient">
 		定时背景色渐变
 	</div>
+	<iframe height="300px" width="700px" src="../carousel/carousel.html"></iframe>
+	
 	<script type="text/javascript">
 		/*====两个矩形变形====*/
 		var parent = document.getElementById('rectTrans');
@@ -168,13 +170,14 @@
 		if(navigator.userAgent.match(/Trident/i) && navigator.userAgent.match(/MSIE [7|8|9].0/i)){
 			//通过正则检测浏览器信息是否是ie 并且 ie版本是不是 7或者8或者9 之一
 			gradient.style.filter = "progid:DXImageTransform.Microsoft.gradient( startColorstr=" + colorL + ", endColorstr=" + colorR + ",GradientType=0 )";
-		}else{
+		}
+		else{
 				gradient.style.background='-webkit-linear-gradient(left,'+colorL+','+colorR+')' //谷歌
 				gradient.style.background='-ms-linear-gradient(left,'+colorL+','+colorR+')'  //ie 10 11
 				gradient.style.background='-moz-gradient(left,'+colorL+','+colorR+')'  //firefox
-				}
 			}
 		}
+		
 	</script>
 </body>
 </html>

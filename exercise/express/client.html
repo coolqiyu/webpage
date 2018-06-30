@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>express和websocket</title>
+</head>
+<body>
+<form action="/login" method="POST">
+	<span>用户名：</span><input id="js-username" type="text" name="username">
+	<span>密码：</span><input id="js-password" type="text" name="password">
+	<input type="submit" name="">登录
+	</form>
+	<p>一个express中利用websocket进行的通信</p>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+	var socket = io.connect("http://localhost");
+
+	socket.on('news', function(data){
+		console.log("socket news");
+	})
+	</script>
+</body>
+</html>

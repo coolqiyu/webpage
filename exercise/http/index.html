@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+	<title>接口日志</title>
+	<script src='./myAjax.js'></script>	
+</head>
+<body>
+	<div></div>
+	<script>
+	var div = document.getElementsByTagName('div')[0];
+	setInterval(function(){
+		myAjax({
+			url:"http://localhost:8880/log",
+			method:'GET',
+			data:{
+				search: window.location.search,
+			}
+			success:function(res){
+				var p = document.createElement('p');
+				p.innerHTML = res;
+				div.append(p);
+			}
+		});
+	}, 1000);
+	</script>
+</body>
+</html>

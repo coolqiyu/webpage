@@ -23,11 +23,12 @@ Canvas.banner = {}; -->
 	*{
 		margin: 0;
 		padding: 0;
-	}
-	#canvas{
-		width: 1000px;
-		height: 1000px;
 		overflow: hidden;
+	}
+	canvas{
+/*		width: 100%;
+		height: 100%;*/
+		/**/
 		background: black;
 	}
 	</style>
@@ -40,18 +41,16 @@ Canvas.banner = {}; -->
 	//作者：zll
 	//最后更新：2017/08/27
 	Canvas.chrBomb = {};
-	Canvas.chrBomb.width = window.innerWidth;
-	Canvas.chrBomb.height = window.innerHeight;
 	//alert(Canvas.chrBomb.width + "   " + Canvas.chrBomb.height);
 	Canvas.chrBomb.canvas = document.getElementById('canvas');
-	// 如果不是在这里设置宽、高，canvas上画不出图像
-	// Canvas.chrBomb.canvas.width = Canvas.chrBomb.width;
-	// Canvas.chrBomb.canvas.height = Canvas.chrBomb.height;
-	alert(Canvas.chrBomb.canvas.width + "  " + Canvas.chrBomb.canvas.height); 
+	// 要为canvas设置宽、高，默认值为（300，150），如果不设置，canvas上画不出图像
+	Canvas.chrBomb.width = Canvas.chrBomb.canvas.width = window.innerWidth;
+	Canvas.chrBomb.height = Canvas.chrBomb.canvas.height = window.innerHeight;
+
 	Canvas.chrBomb.ctx = Canvas.chrBomb.canvas.getContext("2d");
 	Canvas.chrBomb.particals = [];
 	Canvas.chrBomb.chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	Canvas.chrBomb.num = 2;
+	Canvas.chrBomb.num = 20;
 	//粒子的构造函数
 	Canvas.chrBomb.partical = function(ctx, chars){
 		this.init(ctx, chars);
@@ -61,52 +60,48 @@ Canvas.banner = {}; -->
 		init: function(ctx, chars){
 			this.ctx = ctx;
 			this.x = Canvas.chrBomb.width / 2;//起始位置x
-
 			this.y = Canvas.chrBomb.height;//起始位置y
 			//this.chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; 要显示的字母
 			this.char = chars[Math.floor(Math.random() * chars.length)];
-			this.speedX = Math.floor(Math.random() * 20 + 1);//x方向速度
-			this.speedY = Math.floor(Math.random() * 20 + 1);//y方向速度
-			this.direct = Math.floor(Math.random()) == 0? 0:1;//向左还是向右
+			this.speedX = Math.random() * 20 - 10;//x方向速度
+			this.speedY = Math.random() * 10;//y方向速度
 		},
-		draw: function(ctx){
-			ctx.fillStyle = "blue";
-			ctx.font="50px Arial";
+		draw: function(){
+			this.ctx.fillStyle = "blue";
+			this.ctx.font="10px Arial";
 			//alert(this.char + "  " + this.x + "   " + this.y);
-			ctx.fillText(this.char,this.x, this.y);
+			this.ctx.fillText(this.char,this.x, this.y);
 			//ctx.fillText("A",100, 100);
-			//.update();
+			this.update();
 		},
 		update: function(){
 			//更新坐标位置
-			if(this.direct){
-				this.x += this.speedX;
-			}
-			else{
-				this.x -= this.speedX;
-			}
-			this.Y -= this.speedY;
-		}
+			this.x += this.speedX;
+			this.y -= this.speedY;
+			this.y *= 0.99;
+		}		
 	};
 	Canvas.chrBomb.charGen = function(){
 		// var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		// var num = 20;
 		//生成num个粒子
-		for(var i = 0; i < Canvas.chrBomb.num; i++){
+		//for(var i = 0; i < Canvas.chrBomb.num; i++){
 			Canvas.chrBomb.particals.push(new Canvas.chrBomb.partical(Canvas.chrBomb.ctx, Canvas.chrBomb.chars));			
-		}
+		//}
 	};
+	//清除画布
+	Canvas.chrBomb.fadeCanvas = function(){
+		Canvas.chrBomb.ctx.fillStyle = "rgba(0, 0, 0, .5)"
+		Canvas.chrBomb.ctx.fillRect(0, 0, Canvas.chrBomb.width, Canvas.chrBomb.height)
+	}
 	Canvas.chrBomb.charEmit = function(){
-		Canvas.chrBomb.ctx.fillStyle = "blue";
-			// Canvas.chrBomb.ctx.font="100px Arial";
-			// Canvas.chrBomb.ctx.fillText("A",30, 300);
-			// Canvas.chrBomb.ctx.fillText("B",30, 300);
-			// Canvas.chrBomb.ctx.fillText("C",30, 300);
-		for(var i = 0; i < Canvas.chrBomb.num; i++){
-			Canvas.chrBomb.particals[i].draw(Canvas.chrBomb.ctx);
+		Canvas.chrBomb.fadeCanvas();		
+		Canvas.chrBomb.charGen();		
+		for(var i = 0; i < Canvas.chrBomb.particals.length; i++){
+			Canvas.chrBomb.particals[i].draw();
 		}
 	};
-	Canvas.chrBomb.charGen();	
+	//Canvas.chrBomb.charGen();	
 	setInterval(Canvas.chrBomb.charEmit, 30);
 	</script>
 </body>

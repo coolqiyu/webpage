@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>wsocket</title>
+</head>
+<body>
+<h1>Echo Test</h1>
+<input id = 'sendTxt' type="text" name="">
+<input id = 'sendBtn' type="button" name="" value="发送">
+<div id = 'recv'></div>
+<script>
+
+/*
+基本操作
+1. 创建一个socket
+var websocket = new WebSocket("ws://ip地址:端口")
+2. 通过下列方式来定义不同情况下的回调函数
+websocket.onopen = function(){}
+*/
+var recv = document.getElementById('recv');
+//创建一个socket
+//写地址时，如果只有ip，则要添加端口
+ var websocket = new WebSocket("ws://127.0.0.1:3000");//服务器地址
+ //下面是几个回调函数
+ //打开访问
+websocket.onopen = function(){
+	console.log('web socket open')
+	//当连接打开后，点击才能发送消息
+	document.getElementById('sendBtn').onclick = function(){
+	var txt = document.getElementById('sendTxt').value;
+	websocket.send(txt);
+}
+}
+//关闭后
+websocket.onclose = function(){
+	console.log('web socket close');
+	div.innerHTML = 'web socket close';
+}
+//接收到服务端消息时，e是发过来的消息
+websocket.onmessage = function(e){
+	var msg = JSON.parse(e.data);//把数据反格式化成一个对象
+	// div.innerHTML = e.data;
+	showMessage(msg);
+}
+function showMessage(msg){
+	var div = document.createElement('div');
+	// 根据type设置不同的字体颜色来区分
+	switch(msg.type){
+		case "enter":
+			div.style.color = "red";
+			break;
+		case "leave":
+			div.style.color = "blue";
+			break;
+		case "message":
+			div.style.color = "green";
+			break;
+	}
+	div.innerHTML = msg.content;
+	recv.appendChild(div);
+}
+//network中
+//upgrade: websocket
+//header: frame   绿色：发送的    白色：接收到的
+</script>
+</body>
+</html>

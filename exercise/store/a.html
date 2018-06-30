@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+<script type="text/javascript">
+//1.
+var name = "1";
+function Fn(){
+	(function(){
+		this.name = "2";
+	}).call(window);
+}
+Fn.prototype.create = function(){
+	this.name = "3";
+}
+console.log(new new Fn().create().name);//3 new create()
+
+//2.
+var val = 'goudan';
+console.log('val is ' + (val === 'goudan')?'goudan':'other');//goudan  +的优先级高
+
+//3 在每个作用域都要先把声明先提升一下下，先查找后执行
+//IIFE 匿名函数自执行
+var name = 'goudan';
+(function(){
+	if(name === 'goudan'){
+		var name = 'dachui';//这里会先提升，所以判断时是用里面的name
+		console.log('bye' + name);
+	}
+	else{
+		console.log('hello'+name);
+	}
+})();//hello undefined
+
+//4
+(function(){
+	var a = b = 5;//b是全局的，没有对b作用var
+})();
+console.log(b);
+</script>
+</html>

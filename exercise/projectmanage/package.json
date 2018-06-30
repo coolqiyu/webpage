@@ -1,0 +1,27 @@
+{
+  "name": "projectmanage",
+  "version": "1.0.0",
+  "description": "project manage",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "projectmanage@git.com"
+  },
+  "keywords": [
+    "project",
+    "manage",
+    "webpack"
+  ],
+  "author": "zll",
+  "license": "ISC",
+  "dependencies": {
+    "webpack": "^3.10.0"
+  },
+  "devDependencies": {
+    "css-loader": "^0.28.7"
+  }
+}

@@ -20,18 +20,10 @@ function addEvent(obj, type, fn, capture){
 /*
 chrome/firefox: obj.addEventListener(type, fn, capture)
 ie: obj.attachEvent(on + type, fn)
-firefox滚轮事件：obj.addEventListener('DOMMouseScroll', fn, capture)
+firefox滚,轮事件：obj.addEventListener('DOMMouseScroll', fn, capture)
 */
 	var fname;
-	switch(fn.name){
-		case ""://chrome中匿名函数
-		break;
-		case undefined://ie中没有该属性，不能解决匿名的问题
-		fname = fn.toString().match(/\s+\w+[\s\(]/g)[0].slice(1, -1);
-		break;
-		default:
-		fname = fn.name;
-	}
+	
 	obj.addEventListener?obj.addEventListener(type, fn, capture):obj.attachEvent('on' + type, fn);//兼容ie
 	//兼容firefox
 	if(type == 'mousewheel'){
@@ -44,6 +36,27 @@ firefox滚轮事件：obj.addEventListener('DOMMouseScroll', fn, capture)
 		e.wheel = e.wheelDelta || e.detail * (-40);
 		fn.call(obj, e);
 	}
+}
+
+function getFuncName(fn){
+	var fname;
+	switch(fn.name){
+		case ""://chrome/firefox中匿名函数
+			fname = 'anonymous';
+			break;
+		case undefined://ie中没有该属性，
+			var r = fn.toString().match(/^function\s+\w+[\s\(]/g);
+			if(!r){//匿名函数
+				
+				fname = 'anonymous';
+			}
+			else
+				fname = r[0].match(/\s{1}\w+[\s\(]/g)[0].slice(1, -1);
+			break;
+		default:
+			fname = fn.name;
+	}
+	return fname;
 }
 /*
 自定义动画
